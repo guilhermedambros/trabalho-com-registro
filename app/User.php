@@ -32,9 +32,12 @@ class User extends Authenticatable
 
     protected $fillable = [
         'name',
+        'pessoa_id',
         'email',
         'email_verified_at',
         'password',
+        'two_factor_secret',
+        'two_factor_recovery_codes',
         'remember_token',
         'created_at',
         'updated_at',
@@ -76,5 +79,10 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    public function pessoa()
+    {
+        return $this->belongsTo(Pessoa::class, 'pessoa_id');
     }
 }
