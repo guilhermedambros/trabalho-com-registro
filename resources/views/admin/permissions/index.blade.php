@@ -44,19 +44,19 @@
                                 {{ $permission->title ?? '' }}
                             </td>
                             <td>
-                                @can('permission_show')
+                                @can('permissao_ver')
                                     <a class="btn-sm btn-indigo" href="{{ route('admin.permissions.show', $permission->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @can('permission_edit')
+                                @can('permissao_editar')
                                     <a class="btn-sm btn-blue" href="{{ route('admin.permissions.edit', $permission->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
-                                @can('permission_delete')
+                                @can('permissao_excluir')
                                     <form action="{{ route('admin.permissions.destroy', $permission->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -82,7 +82,7 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('permission_delete')
+@can('permissao_excluir')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,

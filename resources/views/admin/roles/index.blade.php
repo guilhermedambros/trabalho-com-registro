@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@can('role_create')
+@can('perfil_criar')
     <div class="block my-4">
         <a class="btn-md btn-green" href="{{ route('admin.roles.create') }}">
             {{ trans('global.add') }} {{ trans('cruds.role.title_singular') }}
@@ -52,19 +52,19 @@
                                 @endforeach
                             </td>
                             <td>
-                                @can('role_show')
+                                @can('perfil_ver')
                                     <a class="btn-sm btn-indigo" href="{{ route('admin.roles.show', $role->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @can('role_edit')
+                                @can('perfil_editar')
                                     <a class="btn-sm btn-blue" href="{{ route('admin.roles.edit', $role->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
-                                @can('role_delete')
+                                @can('perfil_excluir')
                                     <form action="{{ route('admin.roles.destroy', $role->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -90,7 +90,7 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('role_delete')
+@can('perfil_excluir')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,

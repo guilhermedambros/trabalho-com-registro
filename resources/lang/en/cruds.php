@@ -2,12 +2,12 @@
 
 return [
     'userManagement' => [
-        'title'          => 'User management',
-        'title_singular' => 'User management',
+        'title'          => 'Usuários',
+        'title_singular' => 'Usuário',
     ],
     'permission'     => [
-        'title'          => 'Permissions',
-        'title_singular' => 'Permission',
+        'title'          => 'Permissões',
+        'title_singular' => 'Permissão',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => '',
@@ -22,8 +22,8 @@ return [
         ],
     ],
     'role'           => [
-        'title'          => 'Roles',
-        'title_singular' => 'Role',
+        'title'          => 'Perfis',
+        'title_singular' => 'Perfil',
         'fields'         => [
             'id'                 => 'ID',
             'id_helper'          => '',
@@ -40,8 +40,8 @@ return [
         ],
     ],
     'user'           => [
-        'title'          => 'Users',
-        'title_singular' => 'User',
+        'title'          => 'Usuários',
+        'title_singular' => 'Usuário',
         'fields'         => [
             'id'                       => 'ID',
             'id_helper'                => '',
@@ -65,13 +65,13 @@ return [
             'deleted_at_helper'        => '',
         ],
     ],
-    'project'        => [
-        'title'          => 'Projects',
-        'title_singular' => 'Project',
+    'maquina'        => [
+        'title'          => 'Máquinas',
+        'title_singular' => 'Maquina',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => '',
-            'name'              => 'Name',
+            'name'              => 'Descrição',
             'name_helper'       => '',
             'users'             => 'Users',
             'users_helper'      => '',
@@ -83,9 +83,53 @@ return [
             'deleted_at_helper' => '',
         ],
     ],
-    'folder'         => [
-        'title'          => 'Folders',
-        'title_singular' => 'Folder',
+    'relatorios'         => [
+        'title'          => 'Relatórios',
+        'title_singular' => 'Relatório',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => '',
+            'name'              => 'Name',
+            'name_helper'       => '',
+            'project'           => 'Project',
+            'project_helper'    => '',
+            'files'             => 'Files',
+            'files_helper'      => '',
+            'created_at'        => 'Created at',
+            'created_at_helper' => '',
+            'updated_at'        => 'Updated at',
+            'updated_at_helper' => '',
+            'deleted_at'        => 'Deleted at',
+            'deleted_at_helper' => '',
+            'folder'            => 'Folder',
+            'folder_helper'     => '',
+        ],
+    ],
+    'servico'         => [
+        'title'          => 'Serviços',
+        'title_singular' => 'Serviço',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => '',
+            'name'              => 'Name',
+            'name_helper'       => '',
+            'project'           => 'Project',
+            'project_helper'    => '',
+            'files'             => 'Files',
+            'files_helper'      => '',
+            'created_at'        => 'Created at',
+            'created_at_helper' => '',
+            'updated_at'        => 'Updated at',
+            'updated_at_helper' => '',
+            'deleted_at'        => 'Deleted at',
+            'deleted_at_helper' => '',
+            'folder'            => 'Folder',
+            'folder_helper'     => '',
+        ],
+    ],
+    'pessoa'         => [
+        'title'          => 'Associados',
+        'title_singular' => 'Associado',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => '',

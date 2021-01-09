@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@can('user_create')
+@can('usuario_criar')
     <div class="block my-4">
         <a class="btn-md btn-green" href="{{ route('admin.users.create') }}">
             {{ trans('global.add') }} {{ trans('cruds.user.title_singular') }}
@@ -64,19 +64,19 @@
                                 @endforeach
                             </td>
                             <td>
-                                @can('user_show')
+                                @can('usuario_ver')
                                     <a class="btn-sm btn-indigo" href="{{ route('admin.users.show', $user->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @can('user_edit')
+                                @can('usuario_editar')
                                     <a class="btn-sm btn-blue" href="{{ route('admin.users.edit', $user->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
-                                @can('user_delete')
+                                @can('usuario_excluir')
                                     <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -99,7 +99,7 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('user_delete')
+@can('usuario_excluir')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,

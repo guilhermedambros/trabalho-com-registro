@@ -12,10 +12,10 @@
 
             </i>
 
-            <span class="mx-4">Dashboard</span>
+            <span class="mx-4">Painel</span>
         </a>
 
-        @can('user_management_access')
+        @can('gerenciamento_usuario')
             <div class="nav-dropdown">
                 <a class="nav-link" href="#">
                     <i class="fa-fw fas fa-users">
@@ -26,7 +26,7 @@
                     <i class="fa fa-caret-down ml-auto" aria-hidden="true"></i>
                 </a>
                 <div class="dropdown-items mb-1 hidden">
-                        @can('permission_access')
+                        @can('permissao_acessar')
                         <a class="nav-link{{ request()->is('admin/permissions*') ? ' active' : '' }}" href="{{ route('admin.permissions.index') }}">
                             <i class="fa-fw fas fa-unlock-alt">
 
@@ -35,7 +35,7 @@
                             <span class="mx-4">{{ trans('cruds.permission.title') }}</span>
                         </a>
                     @endcan
-                    @can('role_access')
+                    @can('perfil_acessar')
                         <a class="nav-link{{ request()->is('admin/roles*') ? ' active' : '' }}" href="{{ route('admin.roles.index') }}">
                             <i class="fa-fw fas fa-briefcase">
 
@@ -44,7 +44,7 @@
                             <span class="mx-4">{{ trans('cruds.role.title') }}</span>
                         </a>
                     @endcan
-                    @can('user_access')
+                    @can('usuario_acessar')
                         <a class="nav-link{{ request()->is('admin/users*') ? ' active' : '' }}" href="{{ route('admin.users.index') }}">
                             <i class="fa-fw fas fa-user">
 
@@ -56,22 +56,40 @@
                 </div>
             </div>
         @endcan
-        @can('project_access')
-            <a class="nav-link{{ request()->is('admin/projects*') ? ' active' : '' }}" href="{{ route('admin.projects.index') }}">
-                <i class="fa-fw fas fa-project-diagram">
+        @can('pessoa_acessar')
+            <a class="nav-link{{ request()->is('admin/projects*') ? ' active' : '' }}" href="#">
+                <i class="fa-fw fas fa-users">
 
                 </i>
 
-                <span class="mx-4">{{ trans('cruds.project.title') }}</span>
+                <span class="mx-4">{{ trans('cruds.pessoa.title') }}</span>
             </a>
         @endcan
-        @can('folder_access')
-            <a class="nav-link{{ request()->is('admin/folders*') ? ' active' : '' }}" href="{{ route('admin.folders.index') }}">
-                <i class="fa-fw fas fa-folder">
+        @can('maquina_acessar')
+            <a class="nav-link{{ request()->is('admin/folders*') ? ' active' : '' }}" href="#">
+                <i class="fa-fw fas fa-truck">
 
                 </i>
 
-                <span class="mx-4">{{ trans('cruds.folder.title') }}</span>
+                <span class="mx-4">{{ trans('cruds.maquina.title') }}</span>
+            </a>
+        @endcan
+        @can('servico_acessar')
+            <a class="nav-link{{ request()->is('admin/projects*') ? ' active' : '' }}" href="#">
+                <i class="fa-fw fas fa-list-ol">
+
+                </i>
+
+                <span class="mx-4">{{ trans('cruds.servico.title') }}</span>
+            </a>
+        @endcan
+        @can('relatorios_acessar')
+            <a class="nav-link{{ request()->is('admin/folders*') ? ' active' : '' }}" href="#">
+                <i class="fa-fw fas fa-print">
+
+                </i>
+
+                <span class="mx-4">{{ trans('cruds.relatorios.title') }}</span>
             </a>
         @endcan
         @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))

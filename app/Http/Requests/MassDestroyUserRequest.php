@@ -11,7 +11,7 @@ class MassDestroyUserRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('usuario_excluir'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }

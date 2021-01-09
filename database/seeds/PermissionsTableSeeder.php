@@ -10,111 +10,135 @@ class PermissionsTableSeeder extends Seeder
         $permissions = [
             [
                 'id'    => 1,
-                'title' => 'user_management_access',
+                'title' => 'gerenciamento_usuario',
             ],
             [
                 'id'    => 2,
-                'title' => 'permission_create',
+                'title' => 'permissao_criar',
             ],
             [
                 'id'    => 3,
-                'title' => 'permission_edit',
+                'title' => 'permissao_editar',
             ],
             [
                 'id'    => 4,
-                'title' => 'permission_show',
+                'title' => 'permissao_ver',
             ],
             [
                 'id'    => 5,
-                'title' => 'permission_delete',
+                'title' => 'permissao_excluir',
             ],
             [
                 'id'    => 6,
-                'title' => 'permission_access',
+                'title' => 'permissao_acessar',
             ],
             [
                 'id'    => 7,
-                'title' => 'role_create',
+                'title' => 'perfil_criar',
             ],
             [
                 'id'    => 8,
-                'title' => 'role_edit',
+                'title' => 'perfil_editar',
             ],
             [
                 'id'    => 9,
-                'title' => 'role_show',
+                'title' => 'perfil_ver',
             ],
             [
                 'id'    => 10,
-                'title' => 'role_delete',
+                'title' => 'perfil_excluir',
             ],
             [
                 'id'    => 11,
-                'title' => 'role_access',
+                'title' => 'perfil_acessar',
             ],
             [
                 'id'    => 12,
-                'title' => 'user_create',
+                'title' => 'usuario_criar',
             ],
             [
                 'id'    => 13,
-                'title' => 'user_edit',
+                'title' => 'usuario_editar',
             ],
             [
                 'id'    => 14,
-                'title' => 'user_show',
+                'title' => 'usuario_ver',
             ],
             [
                 'id'    => 15,
-                'title' => 'user_delete',
+                'title' => 'usuario_excluir',
             ],
             [
                 'id'    => 16,
-                'title' => 'user_access',
+                'title' => 'usuario_acessar',
             ],
             [
                 'id'    => 17,
-                'title' => 'project_create',
+                'title' => 'maquina_criar',
             ],
             [
                 'id'    => 18,
-                'title' => 'project_edit',
+                'title' => 'maquina_editar',
             ],
             [
                 'id'    => 19,
-                'title' => 'project_show',
+                'title' => 'maquina_ver',
             ],
             [
                 'id'    => 20,
-                'title' => 'project_delete',
+                'title' => 'maquina_excluir',
             ],
             [
                 'id'    => 21,
-                'title' => 'project_access',
+                'title' => 'maquina_acessar',
             ],
             [
                 'id'    => 22,
-                'title' => 'folder_create',
+                'title' => 'servico_criar',
             ],
             [
                 'id'    => 23,
-                'title' => 'folder_edit',
+                'title' => 'servico_editar',
             ],
             [
                 'id'    => 24,
-                'title' => 'folder_show',
+                'title' => 'servico_ver',
             ],
             [
                 'id'    => 25,
-                'title' => 'folder_delete',
+                'title' => 'servico_excluir',
             ],
             [
                 'id'    => 26,
-                'title' => 'folder_access',
+                'title' => 'servico_acessar',
             ],
             [
                 'id'    => 27,
-                'title' => 'profile_password_edit',
+                'title' => 'pessoa_criar',
+            ],
+            [
+                'id'    => 28,
+                'title' => 'pessoa_editar',
+            ],
+            [
+                'id'    => 29,
+                'title' => 'pessoa_ver',
+            ],
+            [
+                'id'    => 30,
+                'title' => 'pessoa_excluir',
+            ],
+            [
+                'id'    => 31,
+                'title' => 'pessoa_acessar',
+            ],
+            [
+                'id'    => 32,
+                'title' => 'senha_editar',
+            ],
+            [
+                'id'    => 33,
+                'title' => 'relatorios_acessar',
             ],
         ];
 
