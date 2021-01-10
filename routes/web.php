@@ -26,15 +26,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
     Route::resource('users', 'UsersController');
 
-    // Projects
-    Route::delete('projects/destroy', 'ProjectsController@massDestroy')->name('projects.massDestroy');
-    Route::resource('projects', 'ProjectsController');
-
-    // Folders
-    Route::delete('folders/destroy', 'FoldersController@massDestroy')->name('folders.massDestroy');
-    Route::post('folders/media', 'FoldersController@storeMedia')->name('folders.storeMedia');
-    Route::post('folders/ckmedia', 'FoldersController@storeCKEditorImages')->name('folders.storeCKEditorImages');
-    Route::resource('folders', 'FoldersController');
+  
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
 // Change password
@@ -43,3 +35,7 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
         Route::post('password', 'ChangePasswordController@update')->name('password.update');
     }
 });
+
+ // Pessoas
+ Route::delete('pessoas/destroy', 'PessoasController@massDestroy')->name('pessoas.massDestroy');
+ Route::resource('pessoas', 'PessoasController');

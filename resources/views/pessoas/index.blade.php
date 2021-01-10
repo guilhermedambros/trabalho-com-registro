@@ -1,33 +1,36 @@
 @extends('layouts.admin')
 @section('content')
-@can('project_create')
+@can('pessoa_criar')
     <div class="block my-4">
-        <a class="btn-md btn-green" href="{{ route('admin.projects.create') }}">
-            {{ trans('global.add') }} {{ trans('cruds.project.title_singular') }}
+        <a class="btn-md btn-green" href="{{ route('pessoas.create') }}">
+            {{ trans('global.add') }} {{ trans('cruds.pessoa.title_singular') }}
         </a>
     </div>
 @endcan
 <div class="main-card">
     <div class="header">
-        {{ trans('cruds.project.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.pessoa.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="body">
         <div class="w-full">
-            <table class="stripe hover bordered datatable datatable-Project">
+            <table class="stripe hover bordered datatable datatable-Pessoa">
                 <thead>
                     <tr>
                         <th width="10">
 
                         </th>
                         <th>
-                            {{ trans('cruds.project.fields.id') }}
+                            {{ trans('cruds.pessoa.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.project.fields.name') }}
+                            {{ trans('cruds.pessoa.fields.nome') }}
                         </th>
                         <th>
-                            {{ trans('cruds.project.fields.users') }}
+                            {{ trans('cruds.pessoa.fields.email') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.pessoa.fields.tipo_pessoa') }}
                         </th>
                         <th>
                             &nbsp;
@@ -35,37 +38,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($projects as $key => $project)
-                        <tr data-entry-id="{{ $project->id }}">
+                    @foreach($pessoas as $key => $pessoa)
+                        <tr data-entry-id="{{ $pessoa->id }}">
                             <td>
 
                             </td>
                             <td>
-                                {{ $project->id ?? '' }}
+                                {{ $pessoa->id ?? '' }}
                             </td>
                             <td>
-                                {{ $project->name ?? '' }}
+                                {{ $pessoa->nome ?? '' }}
                             </td>
                             <td>
-                                @foreach($project->users as $key => $item)
-                                    <span class="badge blue">{{ $item->name }}</span>
-                                @endforeach
+                                {{ $pessoa->email ?? '' }}
                             </td>
                             <td>
-                                @can('project_show')
-                                    <a class="btn-sm btn-indigo" href="{{ route('admin.projects.show', $project->id) }}">
+                                {{ $pessoa->tipo_pessoa->descricao ?? '' }}
+                            </td>
+                            
+                            <td>
+                                @can('pessoa_ver')
+                                    <a class="btn-sm btn-indigo" href="{{ route('pessoas.show', $pessoa->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @can('project_edit')
-                                    <a class="btn-sm btn-blue" href="{{ route('admin.projects.edit', $project->id) }}">
+                                @can('pessoa_editar')
+                                    <a class="btn-sm btn-blue" href="{{ route('pessoas.edit', $pessoa->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
-                                @can('project_delete')
-                                    <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                @can('pessoa_excluir')
+                                    <form action="{{ route('pessoas.destroy', $pessoa->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn-sm btn-red" value="{{ trans('global.delete') }}">
@@ -87,11 +92,11 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('project_delete')
+@can('pessoa_excluir')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.projects.massDestroy') }}",
+    url: "{{ route('pessoas.massDestroy') }}",
     className: 'btn-red',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
@@ -122,7 +127,7 @@
     order: [[ 1, 'desc' ]],
     pageLength: 100,
   });
-  let table = $('.datatable-Project:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  let table = $('.datatable-Pessoa:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();

@@ -57,7 +57,7 @@
             </div>
         @endcan
         @can('pessoa_acessar')
-            <a class="nav-link{{ request()->is('admin/projects*') ? ' active' : '' }}" href="#">
+            <a class="nav-link{{ request()->is('admin/projects*') ? ' active' : '' }}" href="{{ route('pessoas.index') }}">
                 <i class="fa-fw fas fa-users">
 
                 </i>

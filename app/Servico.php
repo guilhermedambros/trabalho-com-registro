@@ -34,7 +34,7 @@ class Servico extends Model
     public function maquinas()
     {
         return $this->belongsToMany(Maquina::class, 'servico_maquina', 'servico_id', 'maquina_id')
-                    ->withPivot('valor')
+                    ->withPivot('valor', 'tempo')
                     ->withTimestamps();
     }
 }
