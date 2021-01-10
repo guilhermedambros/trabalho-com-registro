@@ -57,6 +57,21 @@
                 @endif
                 <span class="block">{{ trans('cruds.user.fields.roles_helper') }}</span>
             </div>
+            <div class="mb-3">
+                <label for="pessoa_id" class="text-xs required">{{ trans('cruds.user.fields.pessoa') }}</label>
+
+                <div class="form-group">
+                    <select  id="pessoa_id" name="pessoa_id" class="{{ $errors->has('pessoa_id') ? ' is-invalid' : '' }}" required>
+                        <option value="">{{ trans('global.select') }}</option>
+                    @foreach($pessoas as $pessoa)
+                        <option value="{{$pessoa->id}}">{{ $pessoa->nome }}</option>
+                    @endforeach
+                    </select>
+                </div>
+                @if($errors->has('pessoa_id'))
+                    <p class="invalid-feedback">{{ $errors->first('pessoa_id') }}</p>
+                @endif
+            </div>
         </div>
 
         <div class="footer">

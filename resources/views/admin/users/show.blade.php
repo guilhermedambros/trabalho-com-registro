@@ -47,6 +47,14 @@
                 </tr>
                 <tr>
                     <th>
+                        {{ trans('cruds.user.fields.pessoa') }}
+                    </th>
+                    <td>
+                        {{ $user->pessoa->nome ?? 'Sem vínculo' }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
                         {{ trans('cruds.user.fields.roles') }}
                     </th>
                     <td>

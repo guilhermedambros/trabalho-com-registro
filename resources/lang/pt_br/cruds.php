@@ -63,6 +63,7 @@ return [
             'updated_at_helper' => '',
             'deleted_at'        => 'Excluído em',
             'deleted_at_helper'        => '',
+            'pessoa'        => 'Vínculo com Pessoa',
         ],
     ],
     'maquina'        => [

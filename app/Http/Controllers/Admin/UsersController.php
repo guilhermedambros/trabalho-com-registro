@@ -8,6 +8,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Role;
 use App\User;
+use App\Pessoa;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,8 +29,9 @@ class UsersController extends Controller
         abort_if(Gate::denies('usuario_criar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::all()->pluck('title', 'id');
+        $pessoas = Pessoa::orderBy('nome')->get();
 
-        return view('admin.users.create', compact('roles'));
+        return view('admin.users.create', compact('roles', 'pessoas'));
     }
 
     public function store(StoreUserRequest $request)
@@ -45,10 +47,11 @@ class UsersController extends Controller
         abort_if(Gate::denies('usuario_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::all()->pluck('title', 'id');
+        $pessoas = Pessoa::orderBy('nome')->get();
 
         $user->load('roles');
 
-        return view('admin.users.edit', compact('roles', 'user'));
+        return view('admin.users.edit', compact('roles', 'user', 'pessoas'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
