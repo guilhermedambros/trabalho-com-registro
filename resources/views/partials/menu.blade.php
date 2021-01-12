@@ -66,7 +66,7 @@
             </a>
         @endcan
         @can('maquina_acessar')
-            <a class="nav-link{{ request()->is('admin/folders*') ? ' active' : '' }}" href="#">
+            <a class="nav-link{{ request()->is('admin/projects*') ? ' active' : '' }}" href="{{ route('maquinas.index') }}">
                 <i class="fa-fw fas fa-truck">
 
                 </i>

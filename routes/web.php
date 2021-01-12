@@ -39,3 +39,7 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
  // Pessoas
  Route::delete('pessoas/destroy', 'PessoasController@massDestroy')->name('pessoas.massDestroy');
  Route::resource('pessoas', 'PessoasController');
+
+// Maquinas
+Route::delete('maquinas/destroy', 'MaquinasController@massDestroy')->name('pessoas.massDestroy');
+Route::resource('maquinas', 'MaquinasController');
