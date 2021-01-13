@@ -75,7 +75,7 @@
             </a>
         @endcan
         @can('servico_acessar')
-            <a class="nav-link{{ request()->is('admin/projects*') ? ' active' : '' }}" href="#">
+            <a class="nav-link{{ request()->is('admin/projects*') ? ' active' : '' }}" href="{{ route('servicos.index') }}">
                 <i class="fa-fw fas fa-list-ol">
 
                 </i>

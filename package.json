@@ -26,5 +26,10 @@
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
     },
-    "dependencies": {}
+    "dependencies": {
+        "choices.js": "^9.0.1",
+        "pikaday": "^1.8.2",
+        "moment": "^2.24.0",
+        "vanilla-masker": "^1.2.0"
+    }
 }

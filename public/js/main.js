@@ -6,8 +6,8 @@ $(document).ready(function () {
   })
 
   $('.date').datetimepicker({
-    format: 'YYYY-MM-DD',
-    locale: 'en',
+    format: 'DD/MM/YYYY',
+    locale: 'pt-br',
     icons: {
       up: 'fas fa-chevron-up',
       down: 'fas fa-chevron-down',

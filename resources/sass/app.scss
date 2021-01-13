@@ -4,6 +4,13 @@
 
 @tailwind utilities;
 
+
+// Pikaday
+@import '../../node_modules/pikaday/css/pikaday.css';
+
+// Choices.js
+@import '../../node_modules/choices.js/public/assets/styles/choices.min.css';
+
 // Global
 .alert {
   @apply w-full shadow-md rounded-lg overflow-hidden mb-4 py-4 px-6 font-medium;

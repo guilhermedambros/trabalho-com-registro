@@ -26,7 +26,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
     Route::resource('users', 'UsersController');
 
-  
+    // Route::resource('servicos', 'ServicosController');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
 // Change password
@@ -43,3 +43,7 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 // Maquinas
 Route::delete('maquinas/destroy', 'MaquinasController@massDestroy')->name('pessoas.massDestroy');
 Route::resource('maquinas', 'MaquinasController');
+
+// Servicos
+Route::delete('servicos/destroy', 'ServicosController@massDestroy')->name('servicos.massDestroy');
+Route::resource('servicos', 'ServicosController');

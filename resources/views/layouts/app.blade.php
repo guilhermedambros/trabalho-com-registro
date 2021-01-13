@@ -8,6 +8,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ trans('panel.site_title') }}</title>
+
+    <!-- Scripts -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/alertify.min.js"></script>
+    <script src="{{ mix('js/app.js') }}" defer></script>
+
     <link href="https://cdn.jsdelivr.net/npm/@tailwindcss/custom-forms@0.2.1/dist/custom-forms.min.css" rel="stylesheet" />
     <link href="{{ mix('css/app.css') }}" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
@@ -20,7 +25,7 @@
     @yield('styles')
 </head>
 
-<body>
+<body id="app">
     <div class="flex justify-center items-center h-screen bg-gray-200 px-6">
         @yield("content")
     </div>
