@@ -18,7 +18,7 @@ class CreateServicos extends Migration
             $table->string('descricao');
             $table->string('numero');
             $table->dateTime('data_realizacao')->nullable();
-            $table->foreignId('pessoa_id')->constrained('pessoas');
+            $table->foreignId('beneficiario_pessoa_id')->constrained('pessoas');
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('modified_by')->nullable();
             $table->unsignedInteger('deleted_by')->nullable();

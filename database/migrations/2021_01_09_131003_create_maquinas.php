@@ -17,7 +17,7 @@ class CreateMaquinas extends Migration
             $table->id();
             $table->string('descricao');
             $table->decimal('valor_hora', 8, 2);
-            // OUTRAS COLUNAS ??????????
+            $table->foreignId('proprietario_pessoa_id')->constrained('pessoas');
             $table->foreignId('tipo_maquina_id')->constrained('tipo_maquinas');
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('modified_by')->nullable();

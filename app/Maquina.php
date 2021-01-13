@@ -19,6 +19,7 @@ class Maquina extends Model
     protected $fillable = [
         'id',
         'descricao',
+        'proprietario_pessoa_id',
         'valor_hora',
         'tipo_maquina_id',
         'created_by',
@@ -29,6 +30,11 @@ class Maquina extends Model
     public function tipo_maquina()
     {
         return $this->belongsTo(TipoMaquina::class, 'tipo_maquina_id');
+    }
+
+    public function proprietario()
+    {
+        return $this->belongsTo(Pessoa::class, 'proprietario_pessoa_id');
     }
 
     public function servicos()

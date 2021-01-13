@@ -20,16 +20,16 @@ class Servico extends Model
     protected $fillable = [
         'id',
         'descricao',
-        'pessoa_id',
+        'beneficiario_pessoa_id',
         'numero',
         'created_by',
         'modified_by',
         'deleted_by',
     ];
 
-    public function pessoa()
+    public function beneficiario()
     {
-        return $this->belongsTo(Pessoa::class, 'pessoa_id');
+        return $this->belongsTo(Pessoa::class, 'beneficiario_pessoa_id');
     }
 
     public function maquinas()
