@@ -21,6 +21,7 @@ class Servico extends Model
         'id',
         'descricao',
         'pessoa_id',
+        'numero',
         'created_by',
         'modified_by',
         'deleted_by',

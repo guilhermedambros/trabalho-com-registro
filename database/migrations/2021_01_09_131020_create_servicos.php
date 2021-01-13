@@ -16,6 +16,7 @@ class CreateServicos extends Migration
         Schema::create('servicos', function (Blueprint $table) {
             $table->id();
             $table->string('descricao');
+            $table->string('numero');
             $table->dateTime('data_realizacao')->nullable();
             $table->foreignId('pessoa_id')->constrained('pessoas');
             $table->unsignedInteger('created_by');

@@ -34,9 +34,6 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app',
-});
 
 if (document.querySelectorAll(".date_mask")) {
     VMasker(document.querySelectorAll(".date_mask")).maskPattern("99/99/9999");
@@ -55,7 +52,7 @@ let telMask = ['(99) 9999-99999', '(99) 99999-9999'];
 let tel = document.querySelectorAll('.phone');
 for (let el of tel) {
     VMasker(el).maskPattern(telMask[0]);
-    el.addEventListener('input', inputHandler.bind(undefined, telMask, 14), false);
+    tel.addEventListener('input', inputHandler.bind(undefined, telMask, 14), false);
 }
 
 let docMask = ['999.999.999-999', '99.999.999/9999-99'];

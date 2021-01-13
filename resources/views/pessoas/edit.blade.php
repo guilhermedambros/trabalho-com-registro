@@ -34,7 +34,7 @@
                 <label for="documento" class="text-xs required">{{ trans('cruds.pessoa.fields.documento') }}</label>
 
                 <div class="form-group">
-                    <input type="documento" id="documento" name="documento" class="{{ $errors->has('documento') ? ' is-invalid' : '' }}" value="{{ old('documento', $pessoa->documento) }}" required>
+                    <input type="documento" id="documento" name="documento" class=" cpf {{ $errors->has('documento') ? ' is-invalid' : '' }}" value="{{ old('documento', $pessoa->documento) }}" required>
                 </div>
                 @if($errors->has('documento'))
                     <p class="invalid-feedback">{{ $errors->first('documento') }}</p>
