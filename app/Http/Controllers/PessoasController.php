@@ -27,7 +27,8 @@ class PessoasController extends Controller
     {
         abort_if(Gate::denies('pessoa_criar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $tipo_pessoas = TipoPessoa::orderBy('descricao')->get();
+        $tipo_pessoas = TipoPessoa::all()->pluck('descricao', 'id');
+        
         return view('pessoas.create', compact('tipo_pessoas'));
     }
 
@@ -38,9 +39,9 @@ class PessoasController extends Controller
         $pessoa->email = $request->email;
         $pessoa->documento = $request->documento;
         $pessoa->telefone = $request->telefone;
-        $pessoa->tipo_pessoa_id = $request->tipo_pessoa_id;
         $pessoa->created_by = \Auth::user()->id;
         $pessoa->save();
+        $pessoa->tipo_pessoas()->sync($request->input('tipo_pessoas', []));
         
 
         return redirect()->route('pessoas.index');
@@ -50,13 +51,14 @@ class PessoasController extends Controller
     {
         abort_if(Gate::denies('pessoa_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $tipo_pessoas = TipoPessoa::orderBy('descricao')->get();
+        $tipo_pessoas = TipoPessoa::all()->pluck('descricao', 'id');
         return view('pessoas.edit', compact('tipo_pessoas', 'pessoa'));
     }
 
     public function update(UpdatePessoaRequest $request, Pessoa $pessoa)
     {
         $pessoa->update($request->all());
+        $pessoa->tipo_pessoas()->sync($request->input('tipo_pessoas', []));
 
         return redirect()->route('pessoas.index');
     }
@@ -64,7 +66,7 @@ class PessoasController extends Controller
     public function show(Pessoa $pessoa)
     {
         abort_if(Gate::denies('pessoa_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $pessoa->load('tipo_pessoas');
 
         return view('pessoas.show', compact('pessoa'));
     }

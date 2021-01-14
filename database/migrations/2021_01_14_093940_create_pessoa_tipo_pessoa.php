@@ -16,7 +16,7 @@ class CreatePessoaTipoPessoa extends Migration
         Schema::create('pessoa_tipo_pessoa', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pessoa_id')->constrained('pessoas');
-            $table->foreignId('maquina_id')->constrained('maquinas');
+            $table->foreignId('tipo_pessoa_id')->constrained('tipo_pessoas');
         });
     }
 

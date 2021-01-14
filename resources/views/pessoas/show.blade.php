@@ -130,9 +130,12 @@
                         {{ trans('cruds.pessoa.fields.tipo_pessoa') }}
                     </th>
                     <td>
-                        {{ $pessoa->tipo_pessoa->descricao ?? '' }}
+                        @foreach($pessoa->tipo_pessoas as $key => $tipo_pessoa)
+                            <span class="label label-info">{{ $tipo_pessoa->descricao }},</span>
+                        @endforeach
                     </td>
                 </tr>
+                
                 <tr>
                     <th>
                         {{ trans('cruds.pessoa.fields.data_nascimento') }}

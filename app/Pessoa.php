@@ -39,7 +39,7 @@ class Pessoa extends Model implements Auditable
         'deleted_by',
     ];
 
-    public function tipos_pessoa()
+    public function tipo_pessoas()
     {
         return $this->belongsToMany(TipoPessoa::class, 'pessoa_tipo_pessoa', 'pessoa_id', 'tipo_pessoa_id');
     }

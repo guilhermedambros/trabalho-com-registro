@@ -49,20 +49,22 @@
                 @endif
             </div>
             <div class="mb-3">
-                <label for="tipo_pessoa_id" class="text-xs required">{{ trans('cruds.pessoa.fields.tipo_pessoa') }}</label>
-
-                <div class="form-group">
-                    <select  id="tipo_pessoa_id" name="tipo_pessoa_id" class="{{ $errors->has('tipo_pessoa_id') ? ' is-invalid' : '' }}" required>
-                        <option value="">{{ trans('global.select') }}</option>
-                    @foreach($tipo_pessoas as $tipo_pessoa)
-                        <option value="{{$tipo_pessoa->id}}">{{ $tipo_pessoa->descricao }}</option>
-                    @endforeach
-                    </select>
+                <label for="tipo_pessoas" class="text-xs">{{ trans('cruds.pessoa.fields.tipo_pessoa') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn-sm btn-indigo select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn-sm btn-indigo deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                 </div>
-                @if($errors->has('tipo_pessoa_id'))
-                    <p class="invalid-feedback">{{ $errors->first('tipo_pessoa_id') }}</p>
+                <select class="select2{{ $errors->has('tipo_pessoas') ? ' is-invalid' : '' }}" name="tipo_pessoas[]" id="tipo_pessoas" multiple>
+                    @foreach($tipo_pessoas as $id => $tipo_pessoas)
+                        <option value="{{ $id }}" {{ in_array($id, old('tipo_pessoas', [])) ? 'selected' : '' }}>{{ $tipo_pessoas }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('roles'))
+                    <p class="invalid-feedback">{{ $errors->first('roles') }}</p>
                 @endif
+                <span class="block">{{ trans('cruds.user.fields.roles_helper') }}</span>
             </div>
+           
             
         </div>
 
