@@ -30,7 +30,7 @@
                             {{ trans('cruds.servico.fields.data_realizacao') }}
                         </th>
                         <th>
-                            {{ trans('cruds.servico.fields.pessoa_id') }}
+                            {{ trans('cruds.servico.fields.beneficiario_pessoa_id') }}
                         </th>
                         <th>
                             &nbsp;
@@ -53,7 +53,7 @@
                                 {{ $servico->data_realizacao ?? '' }}
                             </td>
                             <td>
-                                {{ $servico->pessoa->nome ?? '' }}
+                                {{ $servico->beneficiario->nome ?? '' }}
                             </td>
                             
                             <td>

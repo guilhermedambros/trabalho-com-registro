@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyPessoaRequest;
-use App\Http\Requests\StorePessoaRequest;
-use App\Http\Requests\UpdatePessoaRequest;
+use App\Http\Requests\MassDestroyServicoRequest;
+use App\Http\Requests\StoreServicoRequest;
+use App\Http\Requests\UpdateServicoRequest;
 use App\Role;
 use App\Servico;
 use App\Pessoa;
@@ -36,15 +36,20 @@ class ServicosController extends Controller
         return view('servicos.create', compact('servicos', 'pessoas'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(StoreServicoRequest $request)
     {
-        //
+        $servicos = new Servico([
+            'descricao' => $request->descricao,
+            'numero' => $request->numero,
+            'data_realizacao' => $request->data_realizacao,
+            'beneficiario_pessoa_id' => $request->beneficiario_pessoa_id,
+        ]);
+
+        if ($servicos->save()) {
+            return redirect('servicos')->with('success', 'Serviço cadastrado!');
+        } else {
+            return redirect('servicos')->with('error', 'Ocorreu um erro!');
+        }
     }
 
     /**
@@ -66,7 +71,9 @@ class ServicosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $servicos = Servico::find($id);
+        $pessoas = Pessoa::all();
+        return view('servicos.edit', compact('servicos', 'pessoas'));
     }
 
     /**
@@ -76,9 +83,15 @@ class ServicosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateServicoRequest $request, $id)
     {
-        //
+        $servicos = Servico::find($id);
+        $servicos->fill($request->all());
+        if ($servicos->update()) {
+            return redirect()->route('servicos.index')->with('success', 'Serviço atualizado!');
+        } else {
+            return redirect()->route('servicos.index')->with('error', 'Ocorreu um erro!');
+        }
     }
 
     /**

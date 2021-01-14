@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+use App\Traits\RecordSignature;
 
 class Servico extends Model
 {
-    use HasFactory;
+    use HasFactory, RecordSignature;
     public $table = 'servicos';
     
     protected $dates = [
@@ -26,6 +28,28 @@ class Servico extends Model
         'modified_by',
         'deleted_by',
     ];
+
+    public function fromDateTime($value)
+    {
+        return Carbon::parse(parent::fromDateTime($value))->format('Y-m-d H:i:s');
+    }
+
+    public function setDataRealizacaoAttribute($date)
+    {
+        if (isset($date)) {
+            $date = str_replace('/', '-', $date);
+            $date = date("Y-m-d H:i:s", strtotime($date));
+            $this->attributes['data_realizacao'] = $date;
+        } else {
+            $this->attributes['data_realizacao'] = null;
+        }
+    }
+
+    public function getDataRealizacaoAttribute()
+    {
+        $this->attributes['data_realizacao'] = date('d/m/Y', strtotime($this->attributes['data_realizacao']));
+        return $this->attributes['data_realizacao'];
+    }
 
     public function beneficiario()
     {
