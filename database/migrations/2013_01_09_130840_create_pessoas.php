@@ -29,7 +29,6 @@ class CreatePessoas extends Migration
             $table->string('cidade')->nullable();
             $table->string('estado')->nullable();
             $table->dateTime('data_nascimento')->nullable();
-            $table->foreignId('tipo_pessoa_id')->constrained('tipo_pessoas');
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('modified_by')->nullable();
             $table->unsignedInteger('deleted_by')->nullable();

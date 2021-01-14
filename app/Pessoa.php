@@ -32,14 +32,13 @@ class Pessoa extends Model
         'complemento',
         'cidade',
         'estado',
-        'tipo_pessoa_id',
         'created_by',
         'modified_by',
         'deleted_by',
     ];
 
-    public function tipo_pessoa()
+    public function tipos_pessoa()
     {
-        return $this->belongsTo(TipoPessoa::class, 'tipo_pessoa_id');
+        return $this->belongsToMany(TipoPessoa::class, 'pessoa_tipo_pessoa', 'pessoa_id', 'tipo_pessoa_id');
     }
 }

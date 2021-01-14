@@ -19,4 +19,9 @@ class TipoPessoa extends Model
         'id',
         'descricao',
     ];
+
+    public function pessoas()
+    {
+        return $this->belongsToMany(TipoPessoa::class, 'pessoa_tipo_pessoa', 'tipo_pessoa_id', 'pessoa_id');
+    }
 }
