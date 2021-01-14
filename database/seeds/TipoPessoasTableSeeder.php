@@ -18,6 +18,7 @@ class TipoPessoasTableSeeder extends Seeder
             ['descricao' => 'Não Associado'],
             ['descricao' => 'Terceiro'],
             ['descricao' => 'Outros'],
+            ['descricao' => 'Prestador de serviço'],
         ];
 
         TipoPessoa::insert($tipo_pessoas);
