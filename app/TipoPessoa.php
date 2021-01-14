@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class TipoPessoa extends Model
+class TipoPessoa extends Model  implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
     public $table = 'tipo_pessoas';
 
     protected $dates = [

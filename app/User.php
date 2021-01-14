@@ -11,10 +11,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use \DateTimeInterface;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class User extends Authenticatable
+class User extends Authenticatable  implements Auditable
 {
     use SoftDeletes, Notifiable, HasApiTokens;
+    use \OwenIt\Auditing\Auditable;
 
     public $table = 'users';
 
