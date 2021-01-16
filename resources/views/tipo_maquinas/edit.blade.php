@@ -27,7 +27,7 @@
                 <label for="valor_hora_subsidiado" class="text-xs required">{{ trans('cruds.tipo_maquina.fields.valor_hora_subsidiado') }}</label>
 
                 <div class="form-group">
-                    <input type="valor_hora_subsidiado" id="valor_hora_subsidiado" name="valor_hora_subsidiado" class="{{ $errors->has('valor_hora_subsidiado') ? ' is-invalid' : '' }}" value="{{ old('valor_hora_subsidiado', $tipo_maquina->valor_hora_subsidiado) }}" required>
+                    <input type="valor_hora_subsidiado" id="valor_hora_subsidiado" name="valor_hora_subsidiado" class="money {{ $errors->has('valor_hora_subsidiado') ? ' is-invalid' : '' }}" value="{{ old('valor_hora_subsidiado', $tipo_maquina->valor_hora_subsidiado) }}" required>
                 </div>
                 @if($errors->has('valor_hora_subsidiado'))
                     <p class="invalid-feedback">{{ $errors->first('valor_hora_subsidiado') }}</p>

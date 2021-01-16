@@ -63,7 +63,7 @@ return [
             'updated_at_helper' => '',
             'deleted_at'        => 'Excluído em',
             'deleted_at_helper'        => '',
-            'pessoa'        => 'Vínculo com Pessoa',
+            'pessoa'        => 'Vínculo com Produtor',
         ],
     ],
     'maquina'        => [
@@ -135,8 +135,8 @@ return [
         ],
     ],
     'pessoa'         => [
-        'title'          => 'Pessoas',
-        'title_singular' => 'Pessoa',
+        'title'          => 'Produtores',
+        'title_singular' => 'Produtor',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => '',
@@ -168,14 +168,51 @@ return [
             'complemento'       => 'Complemento',
             'cidade'            => 'Cidade',
             'estado'            => 'Estado',
-            'tipo_pessoa'       => 'Tipo de pessoa',
+            'tipo_pessoa'       => 'Tipo do produtor',
             'created_by'        => 'Criado por',
             'modified_by'       => 'Alterado por',
             'deleted_by'        => 'Excluído por',
             'data_nascimento'   => 'Data de nascimento',
         ],
     ],
-
+    'tipo_maquina'         => [
+        'title'          => 'Tipos de Máquinas',
+        'title_singular' => 'Tipo de Máquina',
+        'fields'         => [
+            'id'                    => 'Código',
+            'id_helper'             => '',
+            'descricao'             => 'Descricao',
+            'valor_hora_subsidiado' => 'Valor subsidiado por hora (R$)',
+            'created_by'            => 'Criado por',
+            'modified_by'           => 'Alterado por',
+            'deleted_by'            => 'Excluído por', 
+            'created_at'            => 'Criado em',
+            'created_at_helper'     => '',
+            'updated_at'            => 'Última atualização',
+            'updated_at_helper'     => '',
+            'deleted_at'            => 'Excluído em',
+        ]
+    ],
+    'saldo_periodo'         => [
+        'title'          => 'Gestão de saldos',
+        'title_singular' => 'Saldo do período vigente',
+        'fields'         => [
+            'id'                    => 'Código',
+            'id_helper'             => '',
+            'ano_exercicio'         => 'Ano referente',
+            'pessoa_id'             => 'Produtor',
+            'saldo_leves'           => 'Saldo em máquinas leves',
+            'saldo_pesadas'         => 'Saldo em máquinas pesadas',
+            'modified_by'           => 'Alterado por',
+            'deleted_by'            => 'Excluído por', 
+            'created_by'            => 'Criado por',
+            'created_at'            => 'Criado em',
+            'created_at_helper'     => '',
+            'updated_at'            => 'Última atualização',
+            'updated_at_helper'     => '',
+            'deleted_at'            => 'Excluído em',
+        ]
+    ],
     'list'        => [
         'title'          => 'Listas',
         'title_singular' => 'Lista',

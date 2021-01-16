@@ -148,6 +148,46 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 35,
                 'title' => 'saldos_acessar',
             ],
+            [
+                'id'    => 36,
+                'title' => 'tipo_maquina_criar',
+            ],
+            [
+                'id'    => 37,
+                'title' => 'tipo_maquina_editar',
+            ],
+            [
+                'id'    => 38,
+                'title' => 'tipo_maquina_ver',
+            ],
+            [
+                'id'    => 39,
+                'title' => 'tipo_maquina_excluir',
+            ],
+            [
+                'id'    => 40,
+                'title' => 'tipo_maquina_acessar',
+            ],
+            [
+                'id'    => 41,
+                'title' => 'saldo_periodo_criar',
+            ],
+            [
+                'id'    => 42,
+                'title' => 'saldo_periodo_editar',
+            ],
+            [
+                'id'    => 43,
+                'title' => 'saldo_periodo_ver',
+            ],
+            [
+                'id'    => 44,
+                'title' => 'saldo_periodo_excluir',
+            ],
+            [
+                'id'    => 45,
+                'title' => 'saldo_periodo_acessar',
+            ],
         ];
 
         Permission::insert($permissions);

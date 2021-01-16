@@ -57,7 +57,7 @@
             </div>
         @endcan
         @can('pessoa_acessar')
-            <a class="nav-link{{ request()->is('admin/projects*') ? ' active' : '' }}" href="{{ route('pessoas.index') }}">
+            <a class="nav-link{{ request()->is('pessoas*') ? ' active' : '' }}" href="{{ route('pessoas.index') }}">
                 <i class="fa-fw fas fa-users">
 
                 </i>
@@ -65,8 +65,26 @@
                 <span class="mx-4">{{ trans('cruds.pessoa.title') }}</span>
             </a>
         @endcan
+        @can('saldos_gerenciamento')
+            <a class="nav-link{{ request()->is('saldo_periodos*') ? ' active' : '' }}" href="{{ route('saldo_periodos.index') }}">
+                <i class="fa-fw fas fa-pie-chart">
+
+                </i>
+
+                <span class="mx-4">{{ trans('cruds.saldo_periodo.title') }}</span>
+            </a>
+        @endcan
+        @can('tipo_maquina_acessar')
+            <a class="nav-link{{ request()->is('tipo_maquinas*') ? ' active' : '' }}" href="{{ route('tipo_maquinas.index') }}">
+                <i class="fa-fw fas fa-truck">
+
+                </i>
+
+                <span class="mx-4">{{ trans('cruds.tipo_maquina.title') }}</span>
+            </a>
+        @endcan
         @can('maquina_acessar')
-            <a class="nav-link{{ request()->is('admin/projects*') ? ' active' : '' }}" href="{{ route('maquinas.index') }}">
+            <a class="nav-link{{ request()->is('maquinas*') ? ' active' : '' }}" href="{{ route('maquinas.index') }}">
                 <i class="fa-fw fas fa-truck">
 
                 </i>
@@ -75,7 +93,7 @@
             </a>
         @endcan
         @can('servico_acessar')
-            <a class="nav-link{{ request()->is('admin/projects*') ? ' active' : '' }}" href="{{ route('servicos.index') }}">
+            <a class="nav-link{{ request()->is('servicos*') ? ' active' : '' }}" href="{{ route('servicos.index') }}">
                 <i class="fa-fw fas fa-list-ol">
 
                 </i>
