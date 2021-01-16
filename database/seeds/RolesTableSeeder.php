@@ -21,7 +21,7 @@ class RolesTableSeeder extends Seeder
                 'title' => 'Associado',
             ],
             [
-                'id'    => 3,
+                'id'    => 4,
                 'title' => 'Prestador de serviço',
             ],
         ];
