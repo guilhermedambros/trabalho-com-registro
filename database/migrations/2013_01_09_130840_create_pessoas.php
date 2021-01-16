@@ -18,7 +18,7 @@ class CreatePessoas extends Migration
             $table->string('documento');
             $table->string('nome');
             $table->string('email');
-            $table->string('rg')->nullable();
+            $table->string('inscricao')->nullable();
             $table->string('telefone', 20)->nullable();
             $table->string('celular', 20)->nullable();
             $table->string('cep', 8)->nullable();

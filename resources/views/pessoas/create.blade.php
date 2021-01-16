@@ -78,13 +78,13 @@
             </div>
             
             <div class="mb-3">
-                <label for="rg" class="text-xs">{{ trans('cruds.pessoa.fields.rg') }}</label>
+                <label for="inscricao" class="text-xs">{{ trans('cruds.pessoa.fields.inscricao') }}</label>
 
                 <div class="form-group">
-                    <input type="rg" id="rg" name="rg" class="{{ $errors->has('rg') ? ' is-invalid' : '' }}" value="{{ old('rg') }}">
+                    <input type="inscricao" id="inscricao" name="inscricao" class="{{ $errors->has('inscricao') ? ' is-invalid' : '' }}" value="{{ old('inscricao') }}">
                 </div>
-                @if($errors->has('rg'))
-                    <p class="invalid-feedback">{{ $errors->first('rg') }}</p>
+                @if($errors->has('inscricao'))
+                    <p class="invalid-feedback">{{ $errors->first('inscricao') }}</p>
                 @endif
             </div>
             <div class="mb-3">

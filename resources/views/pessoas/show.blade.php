@@ -47,6 +47,14 @@
                 </tr>
                 <tr>
                     <th>
+                        {{ trans('cruds.pessoa.fields.inscricao') }}
+                    </th>
+                    <td>
+                        {{ $pessoa->inscricao ?? '' }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
                         {{ trans('cruds.pessoa.fields.telefone') }}
                     </th>
                     <td>

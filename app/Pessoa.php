@@ -26,7 +26,7 @@ class Pessoa extends Model implements Auditable
         'documento',
         'nome',
         'email',
-        'rg',
+        'inscricao',
         'telefone',
         'celular',
         'cep',

@@ -153,7 +153,7 @@ return [
             'documento'         => 'Documento',
             'nome'              => 'Nome',
             'email'             => 'E-mail',
-            'rg'                => 'RG',
+            'inscricao'         => 'Inscrição',
             'telefone'          => 'Telefone',
             'celular'           => 'Celular',
             'cep'               => 'CEP',

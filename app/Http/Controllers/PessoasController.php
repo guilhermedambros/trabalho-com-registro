@@ -41,7 +41,7 @@ class PessoasController extends Controller
         $pessoa->documento = $request->documento;
         $pessoa->telefone = $request->telefone;
         $pessoa->celular = $request->celular ?? null;
-        $pessoa->rg = $request->rg ?? null;
+        $pessoa->inscricao = $request->inscricao ?? null;
         $pessoa->cep = $request->cep ?? null;
         $pessoa->endereco = $request->endereco ?? null;
         $pessoa->bairro = $request->bairro ?? null;
