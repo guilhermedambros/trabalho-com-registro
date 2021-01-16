@@ -52,7 +52,7 @@ let telMask = ['(99) 9999-99999', '(99) 99999-9999'];
 let tel = document.querySelectorAll('.phone');
 for (let el of tel) {
     VMasker(el).maskPattern(telMask[0]);
-    tel.addEventListener('input', inputHandler.bind(undefined, telMask, 14), false);
+    el.addEventListener('input', inputHandler.bind(undefined, telMask, 14), false);
 }
 
 let docMask = ['999.999.999-999', '99.999.999/9999-99'];
@@ -67,8 +67,8 @@ for (let cpf of doc) {
 }
 
 VMasker(document.querySelectorAll('.cep')).maskPattern('99999-999');
+VMasker(document.querySelectorAll('.cep')).maskPattern('99999-999');
 
-VMasker(document.querySelectorAll(".number")).maskNumber();
 
 VMasker(document.querySelectorAll(".money")).maskMoney({
     precision: 2,
@@ -169,6 +169,13 @@ var startDate,
         updateEndDate();
     }
 
+
+let dateMask = ['99/99/9999'];
+let el_date = document.querySelectorAll('.datepicker');
+for (let item of el_date) {
+    VMasker(item).maskPattern(dateMask[0]);
+    item.addEventListener('input', inputHandler.bind(undefined, dateMask, 10), false);
+}
 var els = document.getElementsByClassName("datepicker");
 Array.from(els).forEach((element) => {
     new Pikaday({

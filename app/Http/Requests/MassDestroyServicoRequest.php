@@ -2,16 +2,16 @@
 
 namespace App\Http\Requests;
 
-use App\Project;
+use App\Servico;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
 
-class MassDestroyProjectRequest extends FormRequest
+class MassDestroyServicoRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('project_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('servico_excluir'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
@@ -20,7 +20,7 @@ class MassDestroyProjectRequest extends FormRequest
     {
         return [
             'ids'   => 'required|array',
-            'ids.*' => 'exists:projects,id',
+            'ids.*' => 'exists:servicos,id',
         ];
     }
 }

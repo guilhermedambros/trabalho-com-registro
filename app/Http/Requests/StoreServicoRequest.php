@@ -19,13 +19,21 @@ class StoreServicoRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome'     => [
-                'string',
-                'required',
-            ],
             'descricao'  => [
                 'string',
                 'required',
+            ],
+            'endereco'  => [
+                'string',
+                'required',
+            ],
+            'data_realizacao'  => [
+                'required',
+            ],
+            'numero'  => [
+                'string',
+                'required',
+                'unique:servicos'
             ],
             'beneficiario_pessoa_id'    => [
                 'integer',

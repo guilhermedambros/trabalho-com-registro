@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@can('folder_create')
+@can('permissao_criar')
     <div class="block my-4">
         <a class="btn-md btn-green" href="{{ route('admin.permissions.create') }}">
             {{ trans('global.add') }} {{ trans('cruds.permission.title_singular') }}

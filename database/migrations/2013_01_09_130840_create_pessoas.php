@@ -15,10 +15,10 @@ class CreatePessoas extends Migration
     {
         Schema::create('pessoas', function (Blueprint $table) {
             $table->id();
-            $table->string('documento')->unique();
+            $table->string('documento');
             $table->string('nome');
             $table->string('email');
-            $table->string('rg')->nullable();
+            $table->string('inscricao')->nullable();
             $table->string('telefone', 20)->nullable();
             $table->string('celular', 20)->nullable();
             $table->string('cep', 8)->nullable();
@@ -27,8 +27,7 @@ class CreatePessoas extends Migration
             $table->string('numero')->nullable();
             $table->string('complemento')->nullable();
             $table->string('cidade')->nullable();
-            $table->string('estado')->nullable();
-            $table->dateTime('data_nascimento')->nullable();
+            $table->date('data_nascimento')->nullable();
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('modified_by')->nullable();
             $table->unsignedInteger('deleted_by')->nullable();

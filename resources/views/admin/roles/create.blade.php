@@ -3,6 +3,9 @@
 <div class="main-card">
     <div class="header">
         {{ trans('global.create') }} {{ trans('cruds.role.title_singular') }}
+        <a class="btn-md btn-gray" href="{{ route('admin.roles.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
     </div>
 
     <form method="POST" action="{{ route("admin.roles.store") }}" enctype="multipart/form-data">

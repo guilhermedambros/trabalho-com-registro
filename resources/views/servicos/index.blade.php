@@ -8,6 +8,19 @@
     </div>
 @endcan
 <div class="main-card">
+
+    @if (session()->has('message'))
+    <div class="alert alert-success">
+        <strong>{{ session('message') }}</strong>
+    </div>
+    @endif
+    
+    @error('message')
+    <div class="alert alert-danger">
+        <strong>{{ session('errors')->first('message') }}</strong>
+    </div>
+    @enderror
+
     <div class="header">
         {{ trans('cruds.servico.title_singular') }} {{ trans('global.list') }}
     </div>
