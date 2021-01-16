@@ -5,7 +5,7 @@
         {{ trans('global.edit') }} {{ trans('cruds.maquina.title_singular') }}
     </div>
 
-    <form method="POST" action="{{ route($routes, old('id') ?? $maquinas->id ?? null) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route($routes, old('id') ?? $maquinas['id'] ?? null) }}" enctype="multipart/form-data">
         @csrf
         @method($method)
         <div class="body">
@@ -13,31 +13,33 @@
                 <label for="descricao" class="text-xs required">{{ trans('cruds.maquina.fields.descricao') }}</label>
 
                 <div class="form-group">
-                    <input type="text" id="descricao" name="descricao" class="{{ $errors->has('descricao') ? ' is-invalid' : '' }}" value="{{ old('descricao') ?? $maquinas->descricao ?? null }}" required>
+                    <input type="text" id="descricao" name="descricao" class="{{ $errors->has('descricao') ? ' is-invalid' : '' }}" value="{{ old('descricao') ?? $maquinas['descricao'] ?? null }}" required>
                 </div>
                 @if($errors->has('descricao'))
-                    <p class="invalid-feedback">{{ $errors->first('descricao') }}</p>
+                    <p class="invalid-feedback">{{ $errors->first('maquinas->descricao') }}</p>
                 @endif
             </div>
+            
+
             <div class="mb-3">
                 <label for="valor_hora" class="number-xs required">{{ trans('cruds.maquina.fields.valor_hora') }}</label>
 
                 <div class="form-group">
-                    <input type="number" id="valor_hora" name="valor_hora" class="{{ $errors->has('valor_hora') ? ' is-invalid' : '' }} date" value="{{ old('valor_hora') ?? $maquinas->valor_hora ?? null }}" required>
+                    <input type="money" id="valor_hora" name="valor_hora" class="money text" value="$maquinas['valor_hora]'" required>
                 </div>
                 @if($errors->has('valor_hora'))
                     <p class="invalid-feedback">{{ $errors->first('valor_hora') }}</p>
                 @endif
             </div>
             <div class="mb-3">
-                <label for="tipo_maquina_id" class="text-xs required">{{ trans('cruds.maquina.fields.tipo_maquina_id') }}</label>
+                <label for="tipo_maquina_id" class="text-xs required">{{ trans('cruds.maquina.fields.tipo_maquina') }}</label>
 
                 <div class="form-group">
                     <select  id="tipo_maquina_id" name="tipo_maquina_id" class="{{ $errors->has('tipo_maquina_id') ? ' is-invalid' : '' }} select" required>
                         <option value="">{{ trans('global.select') }}</option>
-                        {{$selectedvalue = $maquinas->tipo_maquina_id ?? null}}
+                        {{$selectedvalue = $maquina->tipo_maquina_id ?? null}}
                     @foreach($maquinas as $maquina)
-                        <option value="{{$tipo_maquina->id}}" {{ $selectedvalue == $maquina->id ? 'selected="selected"' : '' }}>{{ $maquina->descricao }}</option>
+                        <option value="{{$tipo_maquinas['id']}}" {{ $selectedvalue == $maquina->id ? 'selected="selected"' : '' }}>{{ $maquina->descricao }}</option>
                     @endforeach
                     </select>
                 </div>
@@ -56,4 +58,14 @@
         </div>
     </form>
 </div>
+@endsection
+@section('scripts')
+@parent
+<script>
+    public function passes($attribute, $value){
+    // verifica se está no formato 9.999.999.999,99 e quantos milhares forem necessários.
+    $expressao = "/^([1-9]{1}[\d]{0,2}(\.[\d]{3})*(\,[\d]{0,2})?|[1-9]{1}[\d]{0,}(\,[\d]{0,2})?|0(\,[\d]{0,2})?|(\,[\d]{1,2})?)$/";
+    return (preg_match($expressao,$value));
+  }
+</script>
 @endsection

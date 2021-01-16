@@ -11,25 +11,26 @@
                 {{ session('status') }}
             </div>
         @endif
-        <div class="painel">    
-            <div class="row">
-                <span class="d-block p-2 bg-primary text-white" >
-                    <a href="#" class="img-fluid" role="button" aria-pressed="true"><i class="fa fa-plus"></i> Cadastrar Pessoa</a>
-                </span> 
-                <span class="d-block p-2 bg-primary text-white" >
-                    <a href="#" class="img-fluid" role="button" aria-pressed="true"><i class="fa fa-plus"></i> Cadastrar Máquina</a>
-                </span> 
-            </div>
-            <div class="row">
-                <span class="d-block p-2 bg-primary text-white" >
-                    <a href="#" class="img-fluid" role="button" aria-pressed="true"><i class="fa fa-plus"></i> Cadastrar Serviço</a>
-                </span>  
-                <span class="d-block p-2 bg-primary text-white" >
-                    <a href="#" class="img-fluid" role="button" aria-pressed="true"><i class="fa fa-plus"></i> Gerar Relatório</a>
-                </span> 
-            </div>
+    <div class="painel">    
+        <div class="bg-gray-200 flex justify-between items-center py-20 px-20">
+        <div class="mr-4 text-center">
+            <img src="{{ asset('storage/img_avatar.png') }}" alt="" class="w-full mr-2 rounded">
+            <a href="{{ route('pessoas.index') }}" class="img-fluid" role="button" aria-pressed="true">Produtor</a>
+        </div>
+        <div class="mr-5 text-center">
+            <img src="{{ asset('storage/tractor-emoji.png') }}" alt="" class="w-full mr-2 rounded">
+            <a href="{{ route('maquinas.index') }}" class="img-fluid" role="button" aria-pressed="true">Máquinas</a>
+        </div>
+        <div class="mr-5 text-center">
+            <img src="{{ asset('storage/servicos_maquinas.jpg') }}" alt="" class="w-full mr-2 rounded">
+            <a href="{{ route('servicos.index') }}" class="img-fluid" role="button" aria-pressed="true">Serviços</a>
+        </div>
+        <div class="mr-5 text-center">
+            <img src="{{ asset('storage/relatorio.png') }}" alt="" class="w-full mr-2 rounded">
+            <a href="#" class="img-fluid" role="button" aria-pressed="true"> Gerar Relatório</a>
         </div>
     </div>
+       
 </div>
 @endsection
 @section('scripts')

@@ -38,8 +38,9 @@ class MaquinasController extends Controller
     {
         //
         $maquinas = Maquina::all();
-        //$servicos = [];
-        return view('maquinas.create', compact('maquinas'));
+        $tipo_maquinas = TipoMaquina::query();
+        //dd($maquinas);
+        return view('maquinas.create', compact('maquinas','tipo_maquinas'));
     }
 
     /**
