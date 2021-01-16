@@ -192,7 +192,27 @@ return [
             'updated_at_helper'     => '',
             'deleted_at'            => 'Excluído em',
         ]
-        ],
+    ],
+    'saldo_periodo'         => [
+        'title'          => 'Gestão de saldos',
+        'title_singular' => 'Saldo do período vigente',
+        'fields'         => [
+            'id'                    => 'Código',
+            'id_helper'             => '',
+            'ano_exercicio'         => 'Ano referente',
+            'pessoa_id'             => 'Pessoa',
+            'saldo_leves'           => 'Saldo em máquinas leves',
+            'saldo_pesadas'         => 'Saldo em máquinas pesadas',
+            'modified_by'           => 'Alterado por',
+            'deleted_by'            => 'Excluído por', 
+            'created_by'            => 'Criado por',
+            'created_at'            => 'Criado em',
+            'created_at_helper'     => '',
+            'updated_at'            => 'Última atualização',
+            'updated_at_helper'     => '',
+            'deleted_at'            => 'Excluído em',
+        ]
+    ],
     'list'        => [
         'title'          => 'Listas',
         'title_singular' => 'Lista',

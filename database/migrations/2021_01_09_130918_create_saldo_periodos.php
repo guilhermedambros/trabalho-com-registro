@@ -17,7 +17,7 @@ class CreateSaldoPeriodos extends Migration
             $table->id();
             $table->integer('ano_exercicio');
             $table->decimal('saldo_pesadas', 8, 2);
-            $table->decimal('saldo_agricolas', 8, 2);
+            $table->decimal('saldo_leves', 8, 2);
             $table->foreignId('pessoa_id')->constrained('pessoas');
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('modified_by')->nullable();

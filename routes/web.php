@@ -43,6 +43,10 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
  Route::delete('tipo_maquinas/destroy', 'TipoMaquinasController@massDestroy')->name('tipo_maquinas.massDestroy');
  Route::resource('tipo_maquinas', 'TipoMaquinasController');
 
+ // Saldo Periodo
+ Route::delete('saldo_periodos/destroy', 'SaldoPeriodosController@massDestroy')->name('saldo_periodos.massDestroy');
+ Route::resource('saldo_periodos', 'SaldoPeriodosController');
+
 // Maquinas
 Route::delete('maquinas/destroy', 'MaquinasController@massDestroy')->name('maquinas.massDestroy');
 Route::resource('maquinas', 'MaquinasController');

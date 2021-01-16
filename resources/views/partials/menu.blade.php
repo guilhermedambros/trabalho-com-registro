@@ -65,6 +65,15 @@
                 <span class="mx-4">{{ trans('cruds.pessoa.title') }}</span>
             </a>
         @endcan
+        @can('saldos_gerenciamento')
+            <a class="nav-link{{ request()->is('saldo_periodos*') ? ' active' : '' }}" href="{{ route('saldo_periodos.index') }}">
+                <i class="fa-fw fas fa-pie-chart">
+
+                </i>
+
+                <span class="mx-4">{{ trans('cruds.saldo_periodo.title') }}</span>
+            </a>
+        @endcan
         @can('tipo_maquina_acessar')
             <a class="nav-link{{ request()->is('tipo_maquinas*') ? ' active' : '' }}" href="{{ route('tipo_maquinas.index') }}">
                 <i class="fa-fw fas fa-truck">
