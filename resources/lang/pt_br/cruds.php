@@ -63,7 +63,7 @@ return [
             'updated_at_helper' => '',
             'deleted_at'        => 'Excluído em',
             'deleted_at_helper'        => '',
-            'pessoa'        => 'Vínculo com Pessoa',
+            'pessoa'        => 'Vínculo com Produtor',
         ],
     ],
     'maquina'        => [
@@ -135,8 +135,8 @@ return [
         ],
     ],
     'pessoa'         => [
-        'title'          => 'Pessoas',
-        'title_singular' => 'Pessoa',
+        'title'          => 'Produtores',
+        'title_singular' => 'Produtor',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => '',
@@ -168,7 +168,7 @@ return [
             'complemento'       => 'Complemento',
             'cidade'            => 'Cidade',
             'estado'            => 'Estado',
-            'tipo_pessoa'       => 'Tipo de pessoa',
+            'tipo_pessoa'       => 'Tipo do produtor',
             'created_by'        => 'Criado por',
             'modified_by'       => 'Alterado por',
             'deleted_by'        => 'Excluído por',
@@ -200,7 +200,7 @@ return [
             'id'                    => 'Código',
             'id_helper'             => '',
             'ano_exercicio'         => 'Ano referente',
-            'pessoa_id'             => 'Pessoa',
+            'pessoa_id'             => 'Produtor',
             'saldo_leves'           => 'Saldo em máquinas leves',
             'saldo_pesadas'         => 'Saldo em máquinas pesadas',
             'modified_by'           => 'Alterado por',
