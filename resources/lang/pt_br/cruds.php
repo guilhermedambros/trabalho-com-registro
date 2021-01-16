@@ -130,8 +130,8 @@ return [
         ],
     ],
     'pessoa'         => [
-        'title'          => 'Associados',
-        'title_singular' => 'Associado',
+        'title'          => 'Pessoas',
+        'title_singular' => 'Pessoa',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => '',
