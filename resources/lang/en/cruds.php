@@ -148,4 +148,21 @@ return [
             'data_nascimento'   => 'Data de nascimento',
         ],
     ],
+    'tipo_maquina'         => [
+        'title'          => 'Tipos de Máquinas',
+        'title_singular' => 'Tipo de Máquina',
+        'fields'         => [
+            'id'                => 'Código',
+            'id_helper'         => '',
+            'descricao'         => 'Descricao',
+            'valor_hora_subsidiado'       => 'Valor subsidiado por hora (R$)',
+            'created_at'        => 'Created at',
+            'created_at_helper' => '',
+            'updated_at'        => 'Updated at',
+            'updated_at_helper' => '',
+            'deleted_at'        => 'Deleted at',
+            'deleted_at_helper' => '',
+            'data_nascimento'   => 'Data de nascimento',
+        ],
+    ],
 ];

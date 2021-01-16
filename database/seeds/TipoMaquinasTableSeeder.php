@@ -13,8 +13,8 @@ class TipoMaquinasTableSeeder extends Seeder
     public function run()
     {
         $tipo_maquinas = [
-            ['descricao' => 'Pessada'],
-            ['descricao' => 'Leve'],
+            ['descricao' => 'Pesada', 'valor_hora_subsidiado' => 65.00],
+            ['descricao' => 'Leve', 'valor_hora_subsidiado' => 65.00],
         ];
 
         TipoMaquina::insert($tipo_maquinas);

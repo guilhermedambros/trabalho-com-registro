@@ -8,7 +8,7 @@
         </a>
     </div>
 
-    <form method="POST" action="{{ route("pessoas.store") }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route("pessoas.store") }}">
         @csrf
         <div class="body">
             <div class="mb-3">

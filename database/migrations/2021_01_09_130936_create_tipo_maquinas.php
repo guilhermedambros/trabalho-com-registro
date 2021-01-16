@@ -16,7 +16,9 @@ class CreateTipoMaquinas extends Migration
         Schema::create('tipo_maquinas', function (Blueprint $table) {
             $table->id();
             $table->string('descricao');
+            $table->decimal('valor_hora_subsidiado', 8, 2)->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
