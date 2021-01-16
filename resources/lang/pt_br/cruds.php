@@ -72,8 +72,11 @@ return [
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => '',
-            'name'              => 'Descrição',
+            'descricao'         => 'Descrição',
             'name_helper'       => '',
+            'valor_hora'        => 'Valor Hora',
+            'tipo_maquina'      => 'Tipo Máquina',
+            'proprietario'      => 'Proprietário',
             'users'             => 'Users',
             'users_helper'      => '',
             'created_at'        => 'Criado em',
@@ -188,6 +191,14 @@ return [
             'updated_at'            => 'Última atualização',
             'updated_at_helper'     => '',
             'deleted_at'            => 'Excluído em',
+        ]
+        ],
+    'list'        => [
+        'title'          => 'Listas',
+        'title_singular' => 'Lista',
+        'fields'         => [
+            'id'                => 'ID',
+        
         ],
     ],
 ];
