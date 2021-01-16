@@ -53,7 +53,9 @@
                                 {{ $pessoa->email ?? '' }}
                             </td>
                             <td>
-                                {{ $pessoa->tipo_pessoa->descricao ?? '' }}
+                                @foreach($pessoa->tipo_pessoas as $key => $item)
+                                    <span class="badge blue">{{ $item->descricao }}</span>
+                                @endforeach
                             </td>
                             
                             <td>

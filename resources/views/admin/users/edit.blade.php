@@ -3,6 +3,9 @@
 <div class="main-card">
     <div class="header">
         {{ trans('global.edit') }} {{ trans('cruds.user.title_singular') }}
+        <a class="btn-md btn-gray" href="{{ route('admin.users.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
     </div>
 
     <form method="POST" action="{{ route("admin.users.update", [$user->id]) }}" enctype="multipart/form-data">

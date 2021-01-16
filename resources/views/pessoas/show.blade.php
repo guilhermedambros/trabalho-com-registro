@@ -47,14 +47,6 @@
                 </tr>
                 <tr>
                     <th>
-                        {{ trans('cruds.pessoa.fields.rg') }}
-                    </th>
-                    <td>
-                        {{ $pessoa->rg ?? '' }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
                         {{ trans('cruds.pessoa.fields.telefone') }}
                     </th>
                     <td>
@@ -119,14 +111,6 @@
                 </tr>
                 <tr>
                     <th>
-                        {{ trans('cruds.pessoa.fields.estado') }}
-                    </th>
-                    <td>
-                        {{ $pessoa->estado ?? '' }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
                         {{ trans('cruds.pessoa.fields.tipo_pessoa') }}
                     </th>
                     <td>
@@ -149,7 +133,7 @@
                         {{ trans('cruds.pessoa.fields.created_by') }}
                     </th>
                     <td>
-                        {{ $pessoa->created_by ?? '' }}
+                        {{ $pessoa->criado_por->name ?? '' }}
                     </td>
                 </tr>
                 <tr>
@@ -157,7 +141,7 @@
                         {{ trans('cruds.pessoa.fields.created_at') }}
                     </th>
                     <td>
-                        {{ $pessoa->created_at ?? '' }}
+                        {{ (isset($pessoa->created_at)) ? date("d/m/Y", strtotime($pessoa->created_at)) : '' }}
                     </td>
                 </tr>
                 <tr>
@@ -165,7 +149,7 @@
                         {{ trans('cruds.pessoa.fields.updated_at') }}
                     </th>
                     <td>
-                        {{ $pessoa->updated_at ?? '' }}
+                        {{ (isset($pessoa->updated_at)) ? date("d/m/Y", strtotime($pessoa->updated_at)) : '' }}
                     </td>
                 </tr>
                 <tr>

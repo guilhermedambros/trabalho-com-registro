@@ -3,6 +3,9 @@
 <div class="main-card">
     <div class="header">
         {{ trans('global.create') }} {{ trans('cruds.permission.title_singular') }}
+        <a class="btn-md btn-gray" href="{{ route('admin.permissions.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
     </div>
 
     <form method="POST" action="{{ route("admin.permissions.store") }}" enctype="multipart/form-data">

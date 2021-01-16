@@ -12,6 +12,7 @@ use App\TipoPessoa;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Helpers\Helpers;
 
 class PessoasController extends Controller
 {
@@ -39,6 +40,15 @@ class PessoasController extends Controller
         $pessoa->email = $request->email;
         $pessoa->documento = $request->documento;
         $pessoa->telefone = $request->telefone;
+        $pessoa->celular = $request->celular ?? null;
+        $pessoa->rg = $request->rg ?? null;
+        $pessoa->cep = $request->cep ?? null;
+        $pessoa->endereco = $request->endereco ?? null;
+        $pessoa->bairro = $request->bairro ?? null;
+        $pessoa->cidade = $request->cidade ?? null;
+        $pessoa->numero = $request->numero ?? null;
+        $pessoa->complemento = $request->complemento ?? null;
+        $pessoa->data_nascimento = $request->data_nascimento ?? null;
         $pessoa->created_by = \Auth::user()->id;
         $pessoa->save();
         $pessoa->tipo_pessoas()->sync($request->input('tipo_pessoas', []));
@@ -50,13 +60,16 @@ class PessoasController extends Controller
     public function edit(Pessoa $pessoa)
     {
         abort_if(Gate::denies('pessoa_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $tipo_pessoas = TipoPessoa::all()->pluck('descricao', 'id');
+        $pessoa->documento = Helpers::removeSpecialChar($pessoa->documento);
         return view('pessoas.edit', compact('tipo_pessoas', 'pessoa'));
+
     }
 
     public function update(UpdatePessoaRequest $request, Pessoa $pessoa)
     {
+        //$request->input('tipo_pessoas') = Helpers::removeSpecialChar($request->input('tipo_pessoas'));
+        //dd($request);
         $pessoa->update($request->all());
         $pessoa->tipo_pessoas()->sync($request->input('tipo_pessoas', []));
 

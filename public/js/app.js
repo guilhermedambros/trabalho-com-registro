@@ -41561,7 +41561,7 @@ try {
   for (var _iterator = tel[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
     var el = _step.value;
     VMasker(el).maskPattern(telMask[0]);
-    tel.addEventListener('input', inputHandler.bind(undefined, telMask, 14), false);
+    el.addEventListener('input', inputHandler.bind(undefined, telMask, 14), false);
   }
 } catch (err) {
   _didIteratorError = true;
@@ -41612,7 +41612,7 @@ try {
 }
 
 VMasker(document.querySelectorAll('.cep')).maskPattern('99999-999');
-VMasker(document.querySelectorAll(".number")).maskNumber();
+VMasker(document.querySelectorAll('.cep')).maskPattern('99999-999');
 VMasker(document.querySelectorAll(".money")).maskMoney({
   precision: 2,
   separator: ',',
@@ -41715,6 +41715,33 @@ if (_startDate) {
 if (_endDate) {
   endDate = _endDate;
   updateEndDate();
+}
+
+var dateMask = ['99/99/9999'];
+var el_date = document.querySelectorAll('.datepicker');
+var _iteratorNormalCompletion3 = true;
+var _didIteratorError3 = false;
+var _iteratorError3 = undefined;
+
+try {
+  for (var _iterator3 = el_date[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+    var item = _step3.value;
+    VMasker(item).maskPattern(dateMask[0]);
+    item.addEventListener('input', inputHandler.bind(undefined, dateMask, 10), false);
+  }
+} catch (err) {
+  _didIteratorError3 = true;
+  _iteratorError3 = err;
+} finally {
+  try {
+    if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
+      _iterator3["return"]();
+    }
+  } finally {
+    if (_didIteratorError3) {
+      throw _iteratorError3;
+    }
+  }
 }
 
 var els = document.getElementsByClassName("datepicker");

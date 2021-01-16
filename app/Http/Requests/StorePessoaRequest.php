@@ -6,6 +6,7 @@ use App\Pessoa;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
+use App\Helpers\Helpers;
 
 class StorePessoaRequest extends FormRequest
 {
@@ -25,11 +26,12 @@ class StorePessoaRequest extends FormRequest
             ],
             'email'    => [
                 'required',
-                'unique:pessoas',
+                'unique:pessoas,id,deleted_at,NULL',
             ],
             'documento' => [
                 'string',
                 'required',
+                'unique:pessoas,id,deleted_at,NULL',
             ],
             'telefone'  => [
                 'string',
@@ -39,5 +41,16 @@ class StorePessoaRequest extends FormRequest
                 'integer',
             ],
         ];
+    }
+
+    //metodo utilizado caso haja necessidade de alterar algum campo antes de validar o form
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'documento' => Helpers::removeSpecialChar($this->documento),//remove caracteres do documento
+            'telefone' => Helpers::removeSpecialChar($this->telefone),//remove caracteres do telefone
+            'celular' => Helpers::removeSpecialChar($this->celular),//remove caracteres do celular
+            'cep' => Helpers::removeSpecialChar($this->cep),//remove caracteres do cep
+        ]);
     }
 }
