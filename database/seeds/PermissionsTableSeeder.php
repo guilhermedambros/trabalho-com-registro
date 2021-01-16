@@ -140,6 +140,14 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 33,
                 'title' => 'relatorios_acessar',
             ],
+            [
+                'id'    => 34,
+                'title' => 'saldos_gerenciamento',
+            ],
+            [
+                'id'    => 35,
+                'title' => 'saldos_acessar',
+            ],
         ];
 
         Permission::insert($permissions);
