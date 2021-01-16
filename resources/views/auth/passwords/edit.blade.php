@@ -12,11 +12,8 @@
                 <label for="email" class="text-xs">{{ trans('cruds.user.fields.email') }}</label>
 
                 <div class="form-group">
-                @can('gerenciamento_usuario')
-                    <input type="email" id="email"  name="email" class="{{ $errors->has('email') ? 'is-invalid' : '' }}" value="{{ old('email', auth()->user()->email) }}" required>
-                @elsecan
                     <input type="email" id="email" readonly="readonly"  name="email" class="{{ $errors->has('email') ? 'is-invalid' : '' }}" value="{{ old('email', auth()->user()->email) }}" required>
-                @endcan
+     
                 </div>
                 @if($errors->has('email'))
                     <p class="invalid-feedback">{{ $errors->first('email') }}</p>
