@@ -23,9 +23,17 @@ class StoreServicoRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'descricao'  => [
+            'endereco'  => [
                 'string',
                 'required',
+            ],
+            'data_realizacao'  => [
+                'required',
+            ],
+            'numero'  => [
+                'string',
+                'required',
+                'unique:servicos'
             ],
             'beneficiario_pessoa_id'    => [
                 'integer',

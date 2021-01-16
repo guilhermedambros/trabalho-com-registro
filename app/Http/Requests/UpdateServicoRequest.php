@@ -6,6 +6,7 @@ use App\Servico;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateServicoRequest extends FormRequest
 {
@@ -19,10 +20,7 @@ class UpdateServicoRequest extends FormRequest
     public function rules()
     {
         return [
-            'numero'     => [
-                'string',
-                'required',
-            ],
+            'numero' => ['required', Rule::unique('servicos')->ignore($this->servico)],
             'descricao' => [
                 'string',
                 'required',
