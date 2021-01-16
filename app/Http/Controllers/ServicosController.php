@@ -10,6 +10,7 @@ use App\Role;
 use App\Servico;
 use App\Pessoa;
 use Gate;
+use Auth;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -40,15 +41,16 @@ class ServicosController extends Controller
     {
         $servicos = new Servico([
             'descricao' => $request->descricao,
+            'endereco' => $request->endereco,
             'numero' => $request->numero,
             'data_realizacao' => $request->data_realizacao,
             'beneficiario_pessoa_id' => $request->beneficiario_pessoa_id,
         ]);
 
         if ($servicos->save()) {
-            return redirect('servicos')->with('success', 'Serviço cadastrado!');
+            return redirect()->route('servicos.index')->with('message', 'Serviço cadastrado!');
         } else {
-            return redirect('servicos')->with('error', 'Ocorreu um erro!');
+            return redirect()->route('servicos.index')->with('error', 'Ocorreu um erro!');
         }
     }
 
@@ -58,9 +60,11 @@ class ServicosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Servico $servico)
     {
-        //
+        abort_if(Gate::denies('servico_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return view('servicos.show', compact('servico'));
     }
 
     /**
@@ -85,10 +89,11 @@ class ServicosController extends Controller
      */
     public function update(UpdateServicoRequest $request, $id)
     {
-        $servicos = Servico::find($id);
-        $servicos->fill($request->all());
-        if ($servicos->update()) {
-            return redirect()->route('servicos.index')->with('success', 'Serviço atualizado!');
+        $servico = Servico::find($id);
+        $servico->fill($request->all());
+
+        if ($servico->save()) {
+            return redirect()->route('servicos.index')->with('message', 'Serviço atualizado!');
         } else {
             return redirect()->route('servicos.index')->with('error', 'Ocorreu um erro!');
         }
@@ -102,6 +107,24 @@ class ServicosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        abort_if(Gate::denies('servico_excluir'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $servico = Servico::findOrFail($id);
+        $msg = 'Ocorreu um erro!';
+        $typeMsg = 'error';
+        if ($servico->delete()) {
+            $msg = 'Servico excluído!';
+            $typeMsg = 'success';
+            $servico->deleted_by = Auth::user()->id;
+            $servico->update();
+        }
+
+        return redirect()->route('servicos.index')->with($typeMsg, $msg);
+    }
+
+    public function massDestroy(MassDestroyServicoRequest $request)
+    {
+        Servico::whereIn('id', request('ids'))->delete();
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

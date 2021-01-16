@@ -20,6 +20,16 @@
                 @endif
             </div>
             <div class="mb-3">
+                <label for="endereco" class="text-xs required">{{ trans('cruds.servico.fields.endereco') }}</label>
+
+                <div class="form-group">
+                    <input type="text" id="endereco" name="endereco" class="{{ $errors->has('endereco') ? ' is-invalid' : '' }}" value="{{ old('endereco') ?? $servicos->endereco ?? null }}" required>
+                </div>
+                @if($errors->has('endereco'))
+                    <p class="invalid-feedback">{{ $errors->first('endereco') }}</p>
+                @endif
+            </div>
+            <div class="mb-3">
                 <label for="data_realizacao" class="text-xs required">{{ trans('cruds.servico.fields.data_realizacao') }}</label>
 
                 <div class="form-group">

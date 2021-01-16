@@ -5,7 +5,7 @@ return [
     'actions'                              => 'Ações',
     'add'                                  => 'Adicionar',
     'allRightsReserved'                    => 'Todos os direitos reservados.',
-    'areYouSure'                           => 'Tem certeza?',
+    'areYouSure'                           => 'Tem certeza que deseja excluir?',
     'clickHereToVerify'                    => 'Clique aqui para verificar',
     'create'                               => 'Criar',
     'dashboard'                            => 'Painel',

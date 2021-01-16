@@ -3,13 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Traits\RecordSignature;
 
+use App\User;
+
 class Servico extends Model
 {
-    use HasFactory, RecordSignature;
+    use SoftDeletes, HasFactory, RecordSignature;
     public $table = 'servicos';
     
     protected $dates = [
@@ -22,6 +25,8 @@ class Servico extends Model
     protected $fillable = [
         'id',
         'descricao',
+        'endereco',
+        'data_realizacao',
         'beneficiario_pessoa_id',
         'numero',
         'created_by',
@@ -29,26 +34,17 @@ class Servico extends Model
         'deleted_by',
     ];
 
-    public function fromDateTime($value)
-    {
-        return Carbon::parse(parent::fromDateTime($value))->format('Y-m-d H:i:s');
-    }
-
     public function setDataRealizacaoAttribute($date)
     {
-        if (isset($date)) {
-            $date = str_replace('/', '-', $date);
-            $date = date("Y-m-d H:i:s", strtotime($date));
-            $this->attributes['data_realizacao'] = $date;
-        } else {
-            $this->attributes['data_realizacao'] = null;
-        }
+        $date = str_replace('/', '-', $date);
+        $date = date("d-m-Y", strtotime($date));
+        $this->attributes['data_realizacao'] = $date;
     }
 
     public function getDataRealizacaoAttribute()
     {
-        $this->attributes['data_realizacao'] = date('d/m/Y', strtotime($this->attributes['data_realizacao']));
-        return $this->attributes['data_realizacao'];
+        $value = str_replace('-', '/', $this->attributes['data_realizacao']);
+        return $value;
     }
 
     public function beneficiario()
@@ -61,6 +57,11 @@ class Servico extends Model
         return $this->belongsToMany(Maquina::class, 'servico_maquina', 'servico_id', 'maquina_id')
                     ->withPivot('valor', 'tempo')
                     ->withTimestamps();
+    }
+
+    public function criado_por()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }
 
