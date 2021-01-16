@@ -9,7 +9,7 @@
 @endcan
 <div class="main-card">
     <div class="header">
-        {{ trans('cruds.maquina.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.maquina.title_singular') }} {{ trans('cruds.list.title_singular') }}
     </div>
 
     <div class="body">
@@ -24,13 +24,16 @@
                             {{ trans('cruds.maquina.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.maquina.fields.nome') }}
+                            {{ trans('cruds.maquina.fields.descricao') }}
                         </th>
                         <th>
-                            {{ trans('cruds.maquina.fields.email') }}
+                            {{ trans('cruds.maquina.fields.valor_hora') }}
                         </th>
                         <th>
-                            {{ trans('cruds.maquina.fields.tipo_pessoa') }}
+                            {{ trans('cruds.maquina.fields.tipo_maquina') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.maquina.fields.proprietario') }}
                         </th>
                         <th>
                             &nbsp;
@@ -47,15 +50,17 @@
                                 {{ $maquina->id ?? '' }}
                             </td>
                             <td>
-                                {{ $maquina->nome ?? '' }}
+                                {{ $maquina->descricao ?? '' }}
                             </td>
                             <td>
-                                {{ $maquina->email ?? '' }}
+                                {{ $maquina->valor_hora ?? '' }}
                             </td>
                             <td>
-                                {{ $maquina->tipo_pessoa->descricao ?? '' }}
+                                {{ $maquina->tipo_maquina->descricao ?? '' }}
                             </td>
-                            
+                            <td>
+                                {{ $maquina->pessoas->nome ?? '' }}
+                            </td>
                             <td>
                                 @can('maquina_ver')
                                     <a class="btn-sm btn-indigo" href="{{ route('maquinas.show', $maquina->id) }}">
