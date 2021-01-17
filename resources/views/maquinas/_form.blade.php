@@ -19,7 +19,6 @@
                     <p class="invalid-feedback">{{ $errors->first('maquinas->descricao') }}</p>
                 @endif
             </div>
-            
 
             <div class="mb-3">
                 <label for="valor_hora" class="number-xs required">{{ trans('cruds.maquina.fields.valor_hora') }}</label>
@@ -38,9 +37,9 @@
                     <select  id="tipo_maquina_id" name="tipo_maquina_id" class="{{ $errors->has('tipo_maquina_id') ? ' is-invalid' : '' }} select" required>
                         <option value="">{{ trans('global.select') }}</option>
                         {{$selectedvalue = $maquina->tipo_maquina_id ?? null}}
-                    @foreach($maquinas as $maquina)
-                        <option value="{{$tipo_maquinas['id']}}" {{ $selectedvalue == $maquina->id ? 'selected="selected"' : '' }}>{{ $maquina->descricao }}</option>
-                    @endforeach
+                        @foreach($tipo_maquinas as $maquina)
+                            <option value="{{$maquina['id']}}" {{ $selectedvalue == $maquina->id ? 'selected="selected"' : '' }}>{{ $maquina->descricao }}</option>
+                        @endforeach
                     </select>
                 </div>
                 @if($errors->has('tipo_maquina_id'))

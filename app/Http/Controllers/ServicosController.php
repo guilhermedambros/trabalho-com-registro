@@ -8,9 +8,11 @@ use App\Http\Requests\StoreServicoRequest;
 use App\Http\Requests\UpdateServicoRequest;
 use App\Role;
 use App\Servico;
+use App\Maquina;
 use App\Pessoa;
 use Gate;
 use Auth;
+use DB;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,25 +35,45 @@ class ServicosController extends Controller
     public function create()
     {
         $pessoas = Pessoa::all();
+        $maquinas = Maquina::all();
         $servicos = [];
-        return view('servicos.create', compact('servicos', 'pessoas'));
+        return view('servicos.create', compact('servicos', 'maquinas', 'pessoas'));
     }
 
     public function store(StoreServicoRequest $request)
     {
-        $servicos = new Servico([
-            'descricao' => $request->descricao,
-            'endereco' => $request->endereco,
-            'numero' => $request->numero,
-            'data_realizacao' => $request->data_realizacao,
-            'beneficiario_pessoa_id' => $request->beneficiario_pessoa_id,
-        ]);
+        // DB::beginTransaction();
+        $success = false;
+        // try {
+            $servico = new Servico([
+                'descricao' => $request->descricao,
+                'endereco' => $request->endereco,
+                'numero' => $request->numero,
+                'data_realizacao' => $request->data_realizacao,
+                'beneficiario_pessoa_id' => $request->beneficiario_pessoa_id,
+            ]);
 
-        if ($servicos->save()) {
-            return redirect()->route('servicos.index')->with('message', 'Serviço cadastrado!');
-        } else {
-            return redirect()->route('servicos.index')->with('error', 'Ocorreu um erro!');
-        }
+            $servico->save();
+            dd($servico->id);
+            $sync_data = [];
+            if (!empty($request['pivot_maquina_id'])) {
+                for ($i=0; $i < count($request['pivot_maquina_id']); $i++) {
+                    $sync_data[$i]['servico_id'] = $servico->id;
+                    $sync_data[$i]['maquina_id'] = $request['pivot_maquina_id'][$i];
+                    $sync_data[$i]['tempo'] = $request['pivot_tempo'][$i];
+                    $sync_data[$i]['valor'] = str_replace(",",".",str_replace(".","",$request['pivot_valor'][$i])) ?: 0;
+                }
+            }
+            // dd($sync_data);
+            $servico->maquinas()->sync($sync_data);
+            $success = true;
+        // }
+
+        // if ($servicos->save()) {
+            // return redirect()->route('servicos.index')->with('message', 'Serviço cadastrado!');
+        // } else {
+        //     return redirect()->route('servicos.index')->with('error', 'Ocorreu um erro!');
+        // }
     }
 
     /**
@@ -77,7 +99,8 @@ class ServicosController extends Controller
     {
         $servicos = Servico::find($id);
         $pessoas = Pessoa::all();
-        return view('servicos.edit', compact('servicos', 'pessoas'));
+        $maquinas = Maquina::all();
+        return view('servicos.edit', compact('servicos', 'maquinas', 'pessoas'));
     }
 
     /**

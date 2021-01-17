@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyPessoaRequest;
-use App\Http\Requests\StorePessoaRequest;
+use App\Http\Requests\MassDestroyMaquinaRequest;
+use App\Http\Requests\StoreMaquinaRequest;
 use App\Http\Requests\UpdatePessoaRequest;
 use App\Role;
 use App\Maquina;
 use App\TipoMaquina;
 use Gate;
+use Auth;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -36,10 +37,8 @@ class MaquinasController extends Controller
      */
     public function create()
     {
-        //
         $maquinas = Maquina::all();
-        $tipo_maquinas = TipoMaquina::query();
-        //dd($maquinas);
+        $tipo_maquinas = TipoMaquina::all();
         return view('maquinas.create', compact('maquinas','tipo_maquinas'));
     }
 
@@ -51,8 +50,14 @@ class MaquinasController extends Controller
      */
     public function store(StoreMaquinaRequest $request)
     {
-        //
-        dd($request);
+        $maquinas = new Maquina([
+            'descricao' => $request->descricao,
+            'tipo_maquina_id' => $request->tipo_maquina_id,
+            'valor_hora' => $request->valor_hora,
+            'proprietario_pessoa_id' => Auth::user()->id,
+        ]);
+        $maquinas->save();
+        return redirect()->route('maquinas.index');
     }
 
     /**

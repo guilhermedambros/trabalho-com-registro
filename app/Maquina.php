@@ -5,9 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\RecordSignature;
+
 class Maquina extends Model
 {
-    use HasFactory;
+    use HasFactory, RecordSignature;
     public $table = 'maquinas';
     
     protected $dates = [
