@@ -45,6 +45,7 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 
  // Saldo Periodo
  Route::delete('saldo_periodos/destroy', 'SaldoPeriodosController@massDestroy')->name('saldo_periodos.massDestroy');
+ Route::get('saldo_periodos/ajusta', 'SaldoPeriodosController@ajusta_saldos_do_periodo_atual')->name('saldo_periodos.ajusta_saldos_do_periodo_atual');
  Route::resource('saldo_periodos', 'SaldoPeriodosController');
 
 // Maquinas

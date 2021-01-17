@@ -84,4 +84,11 @@ class SaldoPeriodosController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    public function ajusta_saldos_do_periodo_atual(){
+        if(SaldoPeriodo::ajusta_saldos_do_periodo_atual())
+            return redirect()->route('admin.home');
+
+        return redirect()->route('saldo_periodos.index');
+    }
 }

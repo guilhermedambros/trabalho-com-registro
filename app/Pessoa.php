@@ -42,6 +42,11 @@ class Pessoa extends Model implements Auditable
         'data_nascimento',
     ];
 
+    public function saldo_periodos()
+    {
+        return $this->hasMany(SaldoPeriodo::class);
+    }
+
     public function setDataNascimentoAttribute($date) {
         $date = str_replace('/', '-', $date );
         $date = date("d-m-Y", strtotime($date));

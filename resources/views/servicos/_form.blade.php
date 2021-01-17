@@ -68,7 +68,7 @@
             <div class="mb-3">
                 <button id="add-field" type="button" class="add-field btn-md mt-6 btn-blue rounded-md">Adicionar Máquina</button>
             </div>
-            @if ($servicos->maquinas)
+            @if (isset($servicos->maquinas))
                 @foreach ($servicos->maquinas as $maquina)
                     @php $tempo = $maquina['pivot']['tempo'] @endphp
                     @php $valor = $maquina['pivot']['valor'] @endphp

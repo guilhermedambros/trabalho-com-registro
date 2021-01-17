@@ -102,7 +102,7 @@
             </a>
         @endcan
         @can('relatorios_acessar')
-            <a class="nav-link{{ request()->is('admin/folders*') ? ' active' : '' }}" href="#">
+            <a class="nav-link{{ request()->is('relatorios*') ? ' active' : '' }}" href="#">
                 <i class="fa-fw fas fa-print">
 
                 </i>
