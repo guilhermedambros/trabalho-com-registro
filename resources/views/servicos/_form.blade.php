@@ -68,31 +68,63 @@
             <div class="mb-3">
                 <button id="add-field" type="button" class="add-field btn-md mt-6 btn-blue rounded-md">Adicionar Máquina</button>
             </div>
-            <div id="div-maquinas" class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
-                <div class="w-full px-2 md:w-1/4">
-                    <label class="text-xs" for="pivot.maquina">Máquina</label>
-                    <select class="id-maquinas w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" name="pivot.maquina_id[]">
-                        {{$selectedvalue = null}}
-                        <option value=""></option>
-                        @foreach ($maquinas as $key => $maquina)
-                            <option value="{{ $maquina->id }}" {{ $selectedvalue == $maquina->id ? 'selected="selected"' : '' }}>
-                                {{ $maquina->descricao }}
-                            </option>
-                        @endforeach
-                    </select>
+            @if ($servicos->maquinas)
+                @foreach ($servicos->maquinas as $maquina)
+                    @php $tempo = $maquina['pivot']['tempo'] @endphp
+                    @php $valor = $maquina['pivot']['valor'] @endphp
+                    <div id="div-maquinas" class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
+                        <div class="w-full px-2 md:w-1/4">
+                            <label class="text-xs" for="pivot.maquina">Máquina</label>
+                            <select class="id-maquinas w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" name="pivot.maquina_id[]">
+                                {{$selectedvalue = $maquina->id}}
+                                <option value=""></option>
+                                @foreach ($maquinas as $key => $maquina)
+                                    <option value="{{ $maquina->id }}" {{ $selectedvalue == $maquina->id ? 'selected="selected"' : '' }}>
+                                        {{ $maquina->descricao }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="w-full px-2 md:w-1/4">
+                            <label class="text-xs" for="pivot.valor">Tempo</label>
+                            <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline number" type="text" id="tempo" name="pivot.tempo[]" value="{{$tempo}}" />
+                        </div>
+                        <div class="w-full px-2 md:w-1/4">
+                            <label class="text-xs" for="formGridCode_last">Valor</label>
+                            <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline money" type="text" id="valor" name="pivot.valor[]" value="{{number_format($valor, 2, ',', '.')}}" />
+                        </div>
+                        <div class="w-full md:w-1/4">
+                            <button id="remove-field" type="button" class="remove-field btn-md mt-6 btn-red rounded-md">Remover Máquina</button>
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <div id="div-maquinas" class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
+                    <div class="w-full px-2 md:w-1/4">
+                        <label class="text-xs" for="pivot.maquina">Máquina</label>
+                        <select class="id-maquinas w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" name="pivot.maquina_id[]">
+                            {{$selectedvalue = null}}
+                            <option value=""></option>
+                            @foreach ($maquinas as $key => $maquina)
+                                <option value="{{ $maquina->id }}" {{ $selectedvalue == $maquina->id ? 'selected="selected"' : '' }}>
+                                    {{ $maquina->descricao }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="w-full px-2 md:w-1/4">
+                        <label class="text-xs" for="pivot.valor">Tempo</label>
+                        <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline number" type="text" id="tempo" name="pivot.tempo[]" />
+                    </div>
+                    <div class="w-full px-2 md:w-1/4">
+                        <label class="text-xs" for="formGridCode_last">Valor</label>
+                        <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline money" type="text" id="valor" name="pivot.valor[]" />
+                    </div>
+                    <div class="w-full md:w-1/4">
+                        <button id="remove-field" type="button" class="remove-field btn-md mt-6 btn-red rounded-md">Remover Máquina</button>
+                    </div>
                 </div>
-                <div class="w-full px-2 md:w-1/4">
-                    <label class="text-xs" for="pivot.valor">Tempo</label>
-                    <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline number" type="text" id="tempo" name="pivot.tempo[]" />
-                </div>
-                <div class="w-full px-2 md:w-1/4">
-                    <label class="text-xs" for="formGridCode_last">Valor</label>
-                    <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline money" type="text" id="valor" name="pivot.valor[]" />
-                </div>
-                <div class="w-full md:w-1/4">
-                    <button id="remove-field" type="button" class="remove-field btn-md mt-6 btn-red rounded-md">Remover Máquina</button>
-                </div>
-            </div>
+            @endif
         </div>
 
         <div class="footer">
@@ -120,9 +152,8 @@
                     let div = document.getElementById('div-maquinas');
                     let newDiv = document.createElement('div');
                     let newSelect = div.cloneNode(true);
-
                     if (newSelect.childNodes.length == 9) {
-                        if (document.querySelectorAll('.id-maquinas').length < optionsLength && optionsLength < 2) {
+                        if (document.querySelectorAll('.id-maquinas').length < optionsLength-1) {
                             newDiv.appendChild(newSelect);
                             newSelect.childNodes[1].childNodes[3].childNodes[1].remove();
                             document.querySelectorAll('.id-maquinas').forEach((key,val) => {
@@ -131,7 +162,7 @@
                             document.getElementById('servicos').appendChild(newDiv);
                         }
                     } else {
-                        if (document.querySelectorAll('.id-maquinas').length < optionsLength) {
+                        if (document.querySelectorAll('.id-maquinas').length < optionsLength-1) {
                             newDiv.appendChild(newSelect);
                             newSelect.childNodes[5].childNodes[1].childNodes[1].remove();
                             document.querySelectorAll('.id-maquinas').forEach((key,val) => {

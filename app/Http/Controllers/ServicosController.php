@@ -42,9 +42,9 @@ class ServicosController extends Controller
 
     public function store(StoreServicoRequest $request)
     {
-        // DB::beginTransaction();
+        DB::beginTransaction();
         $success = false;
-        // try {
+        try {
             $servico = new Servico([
                 'descricao' => $request->descricao,
                 'endereco' => $request->endereco,
@@ -54,26 +54,29 @@ class ServicosController extends Controller
             ]);
 
             $servico->save();
-            dd($servico->id);
             $sync_data = [];
             if (!empty($request['pivot_maquina_id'])) {
                 for ($i=0; $i < count($request['pivot_maquina_id']); $i++) {
-                    $sync_data[$i]['servico_id'] = $servico->id;
                     $sync_data[$i]['maquina_id'] = $request['pivot_maquina_id'][$i];
                     $sync_data[$i]['tempo'] = $request['pivot_tempo'][$i];
                     $sync_data[$i]['valor'] = str_replace(",",".",str_replace(".","",$request['pivot_valor'][$i])) ?: 0;
                 }
             }
-            // dd($sync_data);
+
             $servico->maquinas()->sync($sync_data);
             $success = true;
-        // }
+        } catch (Exception $e) {
+            DB::rollback();
+            return redirect()->route('servicos.index')->with('error', 'Ocorreu um erro!');
+        }
 
-        // if ($servicos->save()) {
-            // return redirect()->route('servicos.index')->with('message', 'Serviço cadastrado!');
-        // } else {
-        //     return redirect()->route('servicos.index')->with('error', 'Ocorreu um erro!');
-        // }
+        if ($success) {
+            DB::commit();
+            return redirect()->route('servicos.index')->with('message', 'Serviço cadastrado!');
+        } else {
+            DB::rollback();
+            return redirect()->route('servicos.index')->with('error', 'Ocorreu um erro!');
+        }
     }
 
     /**
@@ -85,7 +88,6 @@ class ServicosController extends Controller
     public function show(Servico $servico)
     {
         abort_if(Gate::denies('servico_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         return view('servicos.show', compact('servico'));
     }
 
@@ -100,7 +102,15 @@ class ServicosController extends Controller
         $servicos = Servico::find($id);
         $pessoas = Pessoa::all();
         $maquinas = Maquina::all();
-        return view('servicos.edit', compact('servicos', 'maquinas', 'pessoas'));
+
+        $servico_maquinas = [];
+        foreach ($servicos->maquinas as $key => $maquina) {
+            $servico_maquinas[$key][$maquina->pivot->maquina_id]['maquina_id'] = $maquina->pivot->maquina_id;
+            $servico_maquinas[$key][$maquina->pivot->maquina_id]['tempo'] = $maquina->pivot->tempo;
+            $servico_maquinas[$key][$maquina->pivot->maquina_id]['valor'] = $maquina->pivot->valor;
+        }
+
+        return view('servicos.edit', compact('servicos', 'maquinas', 'pessoas', 'servico_maquinas'));
     }
 
     /**
@@ -115,11 +125,17 @@ class ServicosController extends Controller
         $servico = Servico::find($id);
         $servico->fill($request->all());
 
-        if ($servico->save()) {
-            return redirect()->route('servicos.index')->with('message', 'Serviço atualizado!');
-        } else {
-            return redirect()->route('servicos.index')->with('error', 'Ocorreu um erro!');
+        $servico->update();
+        $sync_data = [];
+        if (!empty($request['pivot_maquina_id'])) {
+            for ($i=0; $i < count($request['pivot_maquina_id']); $i++) {
+                $sync_data[$i]['maquina_id'] = $request['pivot_maquina_id'][$i];
+                $sync_data[$i]['tempo'] = $request['pivot_tempo'][$i];
+                $sync_data[$i]['valor'] = str_replace(",",".",str_replace(".","",$request['pivot_valor'][$i]));
+            }
+            $servico->maquinas()->sync($sync_data);
         }
+        return redirect()->route('servicos.index')->with('message', 'Serviço atualizado!');
     }
 
     /**

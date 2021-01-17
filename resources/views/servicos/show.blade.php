@@ -2,12 +2,12 @@
 @section('content')
 <div class="main-card">
     <div class="header">
-        {{ trans('global.show') }} {{ trans('cruds.servico.descricao') }}
+        {{ trans('global.show') }} {{ trans('cruds.servico.fields.descricao') }}
     </div>
 
     <div class="body">
         <div class="block pb-4">
-            <a class="btn-md btn-gray" href="{{ route('servicos.index') }}">
+            <a class="btn-md btn-blue" href="{{ route('servicos.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
         </div>
@@ -61,7 +61,33 @@
                         {{ $servico->beneficiario->nome }}
                     </td>
                 </tr>
-
+                <tr class="border-solid border-4 border-light-blue-500">
+                    <th aria-colspan="2">
+                        {{ trans('cruds.servico.fields.maquinas') }}
+                    </th>
+                    <td>
+                        <table class="striped bordered show-table">
+                            <tr>
+                                @foreach ($servico->maquinas as $maquina)
+                                <td>
+                                    <tr>
+                                        <th>Descrição</th>
+                                        <td>{{ $maquina->descricao }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Valor</th>
+                                        <td>{{ $maquina->pivot->valor }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tempo</th>
+                                        <td>{{ $maquina->pivot->tempo }}</td>
+                                    </tr>
+                                </td>
+                                @endforeach
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
                 <tr>
                     <th>
                         {{ trans('cruds.servico.fields.created_by') }}
@@ -98,7 +124,7 @@
             </tbody>
         </table>
         <div class="block pt-4">
-            <a class="btn-md btn-gray" href="{{ route('servicos.index') }}">
+            <a class="btn-md btn-blue" href="{{ route('servicos.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
         </div>

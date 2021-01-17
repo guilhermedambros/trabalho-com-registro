@@ -132,6 +132,7 @@ return [
             'deleted_at_helper' => '',
             'folder'            => 'Folder',
             'folder_helper'     => '',
+            'maquinas'          => 'Máquinas',
         ],
     ],
     'pessoa'         => [
