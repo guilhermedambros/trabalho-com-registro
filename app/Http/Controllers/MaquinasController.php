@@ -38,9 +38,9 @@ class MaquinasController extends Controller
      */
     public function create()
     {
-        $pessoas = Pessoa::query();
+        $pessoas = Pessoa::all();
         $maquinas = Maquina::all();
-        $tipo_maquinas = TipoMaquina::query();
+        $tipo_maquinas = TipoMaquina::all();
         return view('maquinas.create', compact('pessoas', 'maquinas','tipo_maquinas'));
     }
 
@@ -52,11 +52,11 @@ class MaquinasController extends Controller
      */
     public function store(StoreMaquinaRequest $request)
     {
-        $maquinas = new Maquina([
+        $maquinas = new Maquina([            
+            'proprietario_pessoa_id' => $request->pessoa_id,
             'descricao' => $request->descricao,
-            'tipo_maquina_id' => $request->tipo_maquina_id,
             'valor_hora' => $request->valor_hora,
-            'proprietario_pessoa_id' => Auth::user()->id,
+            'tipo_maquina_id' => $request->tipo_maquina_id,
         ]);
         $maquinas->save();
         return redirect()->route('maquinas.index');
