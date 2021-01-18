@@ -106,4 +106,20 @@ class MaquinasController extends Controller
     {
         //
     }
+
+    public function get_valor_hora(Request $request)
+    {
+        if (!empty($request)) {
+            $maquina = Maquina::find(intval($request->id));
+            $valor_hora = $maquina->valor_hora * $request->tempo;
+            return response()->json([
+                'success' => true,
+                'data' => $valor_hora
+            ]);
+        }
+        return respose()->json([
+            'success' => false,
+            'data' => 'Ocorreu um erro!'
+        ]);
+    }
 }

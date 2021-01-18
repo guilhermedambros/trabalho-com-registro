@@ -51,6 +51,7 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 // Maquinas
 Route::delete('maquinas/destroy', 'MaquinasController@massDestroy')->name('maquinas.massDestroy');
 Route::resource('maquinas', 'MaquinasController');
+Route::post('maquinas/get_valor_hora', 'MaquinasController@get_valor_hora')->name('maquinas.get_valor_hora');
 
 // Servicos
 Route::delete('servicos/destroy', 'ServicosController@massDestroy')->name('servicos.massDestroy');

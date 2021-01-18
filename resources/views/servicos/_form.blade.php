@@ -91,7 +91,7 @@
                         </div>
                         <div class="w-full px-2 md:w-1/4">
                             <label class="text-xs" for="formGridCode_last">Valor</label>
-                            <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline money" type="text" id="valor" name="pivot.valor[]" value="{{number_format($valor, 2, ',', '.')}}" />
+                            <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" id="valor" name="pivot.valor[]" value="{{number_format($valor, 2, ',', '.')}}" readonly="readonly" />
                         </div>
                         <div class="w-full md:w-1/4">
                             <button id="remove-field" type="button" class="remove-field btn-md mt-6 btn-red rounded-md">Remover Máquina</button>
@@ -113,12 +113,12 @@
                         </select>
                     </div>
                     <div class="w-full px-2 md:w-1/4">
-                        <label class="text-xs" for="pivot.valor">Tempo</label>
+                        <label class="text-xs" for="pivot.valor">Tempo (h)</label>
                         <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline number" type="text" id="tempo" name="pivot.tempo[]" />
                     </div>
                     <div class="w-full px-2 md:w-1/4">
-                        <label class="text-xs" for="formGridCode_last">Valor</label>
-                        <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline money" type="text" id="valor" name="pivot.valor[]" />
+                        <label class="text-xs" for="formGridCode_last">Valor (R$)</label>
+                        <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" id="valor" name="pivot.valor[]" readonly="readonly" />
                     </div>
                     <div class="w-full md:w-1/4">
                         <button id="remove-field" type="button" class="remove-field btn-md mt-6 btn-red rounded-md">Remover Máquina</button>
@@ -142,6 +142,7 @@
         let divGeral = document.getElementById('div-maquinas');
         let newDivGeral = document.createElement('div');
         let newSelectGeral = divGeral.cloneNode(true);
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         document.addEventListener('DOMContentLoaded', function() {
             const optionsLength = document.querySelector('.id-maquinas').options.length;
             document.getElementById('add-field').onclick = function() {
@@ -173,6 +174,39 @@
                     }
                 }
             };
+
+            document.querySelectorAll('.id-maquinas').forEach(function(maquinas) {
+                maquinas.addEventListener('change', function() {
+                    let tempo = this.parentElement.parentElement.childNodes[3].childNodes[3]
+                    let valor = this.parentElement.parentElement.childNodes[5].childNodes[3]
+                    fetch(`{{route('maquinas.get_valor_hora')}}`, {
+                        method: 'post',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json, text-plain, */*",
+                            "X-Requested-With": "XMLHttpRequest",
+                            "X-CSRF-TOKEN": token
+                        },
+                        credentials: "same-origin",
+                        body: JSON.stringify({
+                            id: this.value,
+                            tempo: tempo.value
+                        })
+                    })
+                    .then(function(resp) {
+                        return resp.json();
+                    })
+                    .then(function(resp) {
+                        if (resp) {
+                            valor.value = resp['data']
+                        }
+                        return resp;
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+                })
+            })
 
             document.addEventListener('click',function(e) {
                 if (e.target && e.target.classList.contains('number')) {
