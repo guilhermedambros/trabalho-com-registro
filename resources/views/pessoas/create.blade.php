@@ -81,7 +81,7 @@
                 <label for="inscricao" class="text-xs">{{ trans('cruds.pessoa.fields.inscricao') }}</label>
 
                 <div class="form-group">
-                    <input type="inscricao" id="inscricao" name="inscricao" class="{{ $errors->has('inscricao') ? ' is-invalid' : '' }}" value="{{ old('inscricao') }}">
+                    <input type="inscricao" id="inscricao" name="inscricao" class="{{ $errors->has('inscricao') ? ' is-invalid' : '' }}" value="{{ old('inscricao', 366100) }}">
                 </div>
                 @if($errors->has('inscricao'))
                     <p class="invalid-feedback">{{ $errors->first('inscricao') }}</p>
