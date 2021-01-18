@@ -141,7 +141,7 @@ return [
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => '',
-            'name'              => 'Name',
+            'name'              => 'Nome',
             'name_helper'       => '',
             'project'           => 'Project',
             'project_helper'    => '',

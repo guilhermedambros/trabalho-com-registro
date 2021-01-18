@@ -9,6 +9,7 @@ use App\Http\Requests\UpdatePessoaRequest;
 use App\Role;
 use App\Maquina;
 use App\TipoMaquina;
+use App\Pessoa;
 use Gate;
 use Auth;
 use Illuminate\Http\Request;
@@ -37,9 +38,10 @@ class MaquinasController extends Controller
      */
     public function create()
     {
+        $pessoas = Pessoa::query();
         $maquinas = Maquina::all();
-        $tipo_maquinas = TipoMaquina::all();
-        return view('maquinas.create', compact('maquinas','tipo_maquinas'));
+        $tipo_maquinas = TipoMaquina::query();
+        return view('maquinas.create', compact('pessoas', 'maquinas','tipo_maquinas'));
     }
 
     /**

@@ -10,6 +10,23 @@
         @method($method)
         <div class="body">
             <div class="mb-3">
+                <label for="pessoa_id" class="text-xs required">{{ trans('cruds.maquina.fields.proprietario') }}</label>
+
+                <div class="form-group">
+                    <select  id="pessoa_id" name="pessoa_id" class="{{ $errors->has('pessoa_id') ? ' is-invalid' : '' }} select" required>
+                        <option value="">{{ trans('global.select') }}</option>
+                        {{$selectedvalue = $pessoa->pessoa_id ?? null}}
+                        @foreach($pessoas as $pessoa)
+                            <option value="{{$pessoa['id']}}" {{ $selectedvalue == $pessoa->id ? 'selected="selected"' : '' }}>{{ $pessoa->nome }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                @if($errors->has('pessoa_id'))
+                    <p class="invalid-feedback">{{ $errors->first('pessoa_id') }}</p>
+                @endif
+            </div>
+
+            <div class="mb-3">
                 <label for="descricao" class="text-xs required">{{ trans('cruds.maquina.fields.descricao') }}</label>
 
                 <div class="form-group">

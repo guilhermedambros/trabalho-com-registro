@@ -4,12 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Traits\RecordSignature;
 
-class Maquina extends Model
+class Maquina extends Model  implements Auditable
 {
-    use HasFactory, RecordSignature;
+    use HasFactory; 
+    use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
     public $table = 'maquinas';
     
     protected $dates = [
