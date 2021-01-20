@@ -10,19 +10,19 @@
         @method($method)
         <div class="body">
             <div class="mb-3">
-                <label for="pessoa_id" class="text-xs required">{{ trans('cruds.maquina.fields.proprietario') }}</label>
+                <label for="proprietario_pessoa_id" class="text-xs required">{{ trans('cruds.maquina.fields.proprietario') }}</label>
 
                 <div class="form-group">
-                    <select  id="pessoa_id" name="pessoa_id" class="{{ $errors->has('pessoa_id') ? ' is-invalid' : '' }} select" required>
+                    <select  id="proprietario_pessoa_id" name="proprietario_pessoa_id" class="{{ $errors->has('proprietario_pessoa_id') ? ' is-invalid' : '' }} select" required>
                         <option value="">{{ trans('global.select') }}</option>
-                        {{$selectedvalue = $pessoa->pessoa_id ?? null}}
+                        {{$selectedvalue = $pessoa->proprietario_pessoa_id ?? null}}
                         @foreach($pessoas as $pessoa)
                             <option value="{{$pessoa['id']}}" {{ $selectedvalue == $pessoa->id ? 'selected="selected"' : '' }}>{{ $pessoa->nome }}</option>
                         @endforeach
                     </select>
                 </div>
-                @if($errors->has('pessoa_id'))
-                    <p class="invalid-feedback">{{ $errors->first('pessoa_id') }}</p>
+                @if($errors->has('proprietario_pessoa_id'))
+                    <p class="invalid-feedback">{{ $errors->first('proprietario_pessoa_id') }}</p>
                 @endif
             </div>
 

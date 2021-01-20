@@ -52,12 +52,22 @@ class MaquinasController extends Controller
      */
     public function store(StoreMaquinaRequest $request)
     {
-        $maquinas = new Maquina([            
-            'proprietario_pessoa_id' => $request->pessoa_id,
-            'descricao' => $request->descricao,
-            'valor_hora' => $request->valor_hora,
-            'tipo_maquina_id' => $request->tipo_maquina_id,
+        $request->validate([
+            'valor_hora' => 'required',
         ]);
+        
+        $valor_hora = $request['valor_hora']/60;
+        $valor_hora = number_format($valor_hora, 2, '.', '');
+        $created_by = \Auth::user()->id;
+
+        $maquinas = new Maquina([            
+            'proprietario_pessoa_id' => $request->proprietario_pessoa_id,
+            'descricao' => $request->descricao,
+            'valor_hora' => $valor_hora,
+            'tipo_maquina_id' => $request->tipo_maquina_id,
+            'created_by' => $created_by,
+        ]);
+            
         $maquinas->save();
         return redirect()->route('maquinas.index');
     }
