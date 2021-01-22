@@ -111,10 +111,14 @@ class MaquinasController extends Controller
     {
         if (!empty($request)) {
             $maquina = Maquina::find(intval($request->id));
-            $valor_hora = $maquina->valor_hora * $request->tempo;
+            $str_time = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "00:$1:$2", $request->tempo);
+            sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
+            $time_seconds = $hours * 3600 + $minutes * 60 + $seconds;
+            $valor_hora = $maquina->valor_hora * $time_seconds;
+
             return response()->json([
                 'success' => true,
-                'data' => $valor_hora
+                'data' => number_format($valor_hora, 2, ',', '.')
             ]);
         }
         return respose()->json([

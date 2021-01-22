@@ -127,13 +127,17 @@ class ServicosController extends Controller
 
         $servico->update();
         $sync_data = [];
+        // dd($request);
         if (!empty($request['pivot_maquina_id'])) {
+            $servico->maquinas()->wherePivot('servico_id', $id)->detach();
             for ($i=0; $i < count($request['pivot_maquina_id']); $i++) {
                 $sync_data[$i]['maquina_id'] = $request['pivot_maquina_id'][$i];
                 $sync_data[$i]['tempo'] = $request['pivot_tempo'][$i];
                 $sync_data[$i]['valor'] = str_replace(",",".",str_replace(".","",$request['pivot_valor'][$i]));
             }
-            $servico->maquinas()->sync($sync_data);
+            // dd($sync_data);
+            // $servico->maquinas()->sync($sync_data);
+            $servico->maquinas()->attach($sync_data);
         }
         return redirect()->route('servicos.index')->with('message', 'Serviço atualizado!');
     }
