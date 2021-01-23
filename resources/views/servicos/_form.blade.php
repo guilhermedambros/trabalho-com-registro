@@ -75,7 +75,7 @@
                     <div id="div-maquinas" class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
                         <div class="w-full px-2 md:w-1/4">
                             <label class="text-xs" for="pivot.maquina">Máquina</label>
-                            <select class="id-maquinas w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" name="pivot.maquina_id[]">
+                            <select class="id-maquinas w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" name="pivot.maquina_id[]" required>
                                 {{$selectedvalue = $maquina->id}}
                                 <option value=""></option>
                                 @foreach ($maquinas as $key => $maquina)
@@ -87,7 +87,7 @@
                         </div>
                         <div class="w-full px-2 md:w-1/4">
                             <label class="text-xs" for="pivot.valor">Tempo (h:m:s)</label>
-                            <input class="tempo-valor w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline hour-minute" type="text" id="tempo" name="pivot.tempo[]" value="{{$tempo}}" />
+                            <input class="tempo-valor w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline hour-minute" type="text" id="tempo" name="pivot.tempo[]" value="{{$tempo}}" required />
                         </div>
                         <div class="w-full px-2 md:w-1/4">
                             <label class="text-xs" for="formGridCode_last">Valor (R$)</label>
@@ -102,7 +102,7 @@
                 <div id="div-maquinas" class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
                     <div class="w-full px-2 md:w-1/4">
                         <label class="text-xs" for="pivot.maquina">Máquina</label>
-                        <select class="id-maquinas w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" name="pivot.maquina_id[]">
+                        <select class="id-maquinas w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" name="pivot.maquina_id[]" required>
                             {{$selectedvalue = null}}
                             <option value=""></option>
                             @foreach ($maquinas as $key => $maquina)
@@ -114,7 +114,7 @@
                     </div>
                     <div class="w-full px-2 md:w-1/4">
                         <label class="text-xs" for="pivot.valor">Tempo (h:m:s)</label>
-                        <input class="tempo-valor w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline hour-minute" type="text" id="tempo" name="pivot.tempo[]" />
+                        <input class="tempo-valor w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline hour-minute" type="text" id="tempo" name="pivot.tempo[]" required />
                     </div>
                     <div class="w-full px-2 md:w-1/4">
                         <label class="text-xs" for="formGridCode_last">Valor (R$)</label>
