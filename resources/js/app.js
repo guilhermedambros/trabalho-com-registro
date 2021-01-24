@@ -67,8 +67,9 @@ for (let cpf of doc) {
 }
 
 VMasker(document.querySelectorAll('.cep')).maskPattern('99999-999');
-VMasker(document.querySelectorAll('.cep')).maskPattern('99999-999');
 
+VMasker(document.querySelectorAll('.hour-minute')).maskPattern('99:99');
+VMasker(document.querySelectorAll('.time')).maskPattern('99:99:99');
 
 VMasker(document.querySelectorAll(".money")).maskMoney({
     precision: 2,

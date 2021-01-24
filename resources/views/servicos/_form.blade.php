@@ -75,7 +75,7 @@
                     <div id="div-maquinas" class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
                         <div class="w-full px-2 md:w-1/4">
                             <label class="text-xs" for="pivot.maquina">Máquina</label>
-                            <select class="id-maquinas w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" name="pivot.maquina_id[]">
+                            <select class="id-maquinas w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" name="pivot.maquina_id[]" required>
                                 {{$selectedvalue = $maquina->id}}
                                 <option value=""></option>
                                 @foreach ($maquinas as $key => $maquina)
@@ -86,12 +86,12 @@
                             </select>
                         </div>
                         <div class="w-full px-2 md:w-1/4">
-                            <label class="text-xs" for="pivot.valor">Tempo</label>
-                            <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline number" type="text" id="tempo" name="pivot.tempo[]" value="{{$tempo}}" />
+                            <label class="text-xs" for="pivot.valor">Tempo (h:m:s)</label>
+                            <input class="tempo-valor w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline hour-minute" type="text" id="tempo" name="pivot.tempo[]" value="{{$tempo}}" required />
                         </div>
                         <div class="w-full px-2 md:w-1/4">
-                            <label class="text-xs" for="formGridCode_last">Valor</label>
-                            <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline money" type="text" id="valor" name="pivot.valor[]" value="{{number_format($valor, 2, ',', '.')}}" />
+                            <label class="text-xs" for="formGridCode_last">Valor (R$)</label>
+                            <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" id="valor" name="pivot.valor[]" value="{{number_format($valor, 2, ',', '.')}}" readonly="readonly" />
                         </div>
                         <div class="w-full md:w-1/4">
                             <button id="remove-field" type="button" class="remove-field btn-md mt-6 btn-red rounded-md">Remover Máquina</button>
@@ -102,7 +102,7 @@
                 <div id="div-maquinas" class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
                     <div class="w-full px-2 md:w-1/4">
                         <label class="text-xs" for="pivot.maquina">Máquina</label>
-                        <select class="id-maquinas w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" name="pivot.maquina_id[]">
+                        <select class="id-maquinas w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" name="pivot.maquina_id[]" required>
                             {{$selectedvalue = null}}
                             <option value=""></option>
                             @foreach ($maquinas as $key => $maquina)
@@ -113,12 +113,12 @@
                         </select>
                     </div>
                     <div class="w-full px-2 md:w-1/4">
-                        <label class="text-xs" for="pivot.valor">Tempo</label>
-                        <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline number" type="text" id="tempo" name="pivot.tempo[]" />
+                        <label class="text-xs" for="pivot.valor">Tempo (h:m:s)</label>
+                        <input class="tempo-valor w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline hour-minute" type="text" id="tempo" name="pivot.tempo[]" required />
                     </div>
                     <div class="w-full px-2 md:w-1/4">
-                        <label class="text-xs" for="formGridCode_last">Valor</label>
-                        <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline money" type="text" id="valor" name="pivot.valor[]" />
+                        <label class="text-xs" for="formGridCode_last">Valor (R$)</label>
+                        <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" id="valor" name="pivot.valor[]" readonly="readonly" />
                     </div>
                     <div class="w-full md:w-1/4">
                         <button id="remove-field" type="button" class="remove-field btn-md mt-6 btn-red rounded-md">Remover Máquina</button>
@@ -142,6 +142,7 @@
         let divGeral = document.getElementById('div-maquinas');
         let newDivGeral = document.createElement('div');
         let newSelectGeral = divGeral.cloneNode(true);
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         document.addEventListener('DOMContentLoaded', function() {
             const optionsLength = document.querySelector('.id-maquinas').options.length;
             document.getElementById('add-field').onclick = function() {
@@ -155,28 +156,143 @@
                     if (newSelect.childNodes.length == 9) {
                         if (document.querySelectorAll('.id-maquinas').length < optionsLength-1) {
                             newDiv.appendChild(newSelect);
-                            newSelect.childNodes[1].childNodes[3].childNodes[1].remove();
-                            document.querySelectorAll('.id-maquinas').forEach((key,val) => {
-                                newSelect.childNodes[1].childNodes[3].options[key.selectedIndex] = null;
-                            });
+                            // newSelect.childNodes[1].childNodes[3].childNodes[1].remove();
+                            // document.querySelectorAll('.id-maquinas').forEach((key,val) => {
+                            //     newSelect.childNodes[1].childNodes[3].options[key.selectedIndex] = null;
+                            // });
                             document.getElementById('servicos').appendChild(newDiv);
                         }
                     } else {
                         if (document.querySelectorAll('.id-maquinas').length < optionsLength-1) {
                             newDiv.appendChild(newSelect);
-                            newSelect.childNodes[5].childNodes[1].childNodes[1].remove();
-                            document.querySelectorAll('.id-maquinas').forEach((key,val) => {
-                                newSelect.childNodes[1].childNodes[3].options[key.selectedIndex] = null;
-                            });
+                            // newSelect.childNodes[5].childNodes[1].childNodes[1].remove();
+                            // document.querySelectorAll('.id-maquinas').forEach((key,val) => {
+                            //     newSelect.childNodes[1].childNodes[3].options[key.selectedIndex] = null;
+                            // });
                             document.getElementById('maquinas').appendChild(newDiv);
                         }
                     }
                 }
             };
 
+            const on = (selector, eventType, childSelector, eventHandler) => {
+                const elements = document.querySelectorAll(selector)
+                for (element of elements) {
+                    element.addEventListener(eventType, eventOnElement => {
+                        if (eventOnElement.target.matches(childSelector)) {
+                            eventHandler(eventOnElement)
+                        }
+                    })
+                }
+            }
+
+            $(document).on('click', '.id-maquinas', function(e) {
+                $(this).on('change', function(event) {
+                    let tempo = this.parentElement.parentElement.childNodes[3].childNodes[3]
+                    let valor = this.parentElement.parentElement.childNodes[5].childNodes[3]
+                    fetch(`{{route('maquinas.get_valor_hora')}}`, {
+                        method: 'post',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json, text-plain, */*",
+                            "X-Requested-With": "XMLHttpRequest",
+                            "X-CSRF-TOKEN": token
+                        },
+                        credentials: "same-origin",
+                        body: JSON.stringify({
+                            id: this.value,
+                            tempo: tempo.value
+                        })
+                    })
+                    .then(function(resp) {
+                        return resp.json();
+                    })
+                    .then(function(resp) {
+                        if (resp) {
+                            valor.value = resp['data']
+                        }
+                        return resp;
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    })
+                })
+            })
+
+            $(document).on('keyup', '.tempo-valor', function(e) {
+                let id = this.parentElement.parentElement.childNodes[1].childNodes[3]
+                let valor = this.parentElement.parentElement.childNodes[5].childNodes[3]
+                if (id.value) {
+                    fetch(`{{route('maquinas.get_valor_hora')}}`, {
+                        method: 'post',
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json, text-plain, */*",
+                            "X-Requested-With": "XMLHttpRequest",
+                            "X-CSRF-TOKEN": token
+                        },
+                        credentials: "same-origin",
+                        body: JSON.stringify({
+                            id: id.value,
+                            tempo: this.value
+                        })
+                    })
+                    .then(function(resp) {
+                        return resp.json();
+                    })
+                    .then(function(resp) {
+                        if (resp) {
+                            valor.value = resp['data']
+                        }
+                        return resp;
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    })
+                }
+            })
+
             document.addEventListener('click',function(e) {
+
+                // document.querySelectorAll('.id-maquinas').forEach(maquinas => {
+                //     maquinas.addEventListener('change', function() {
+                        // let tempo = this.parentElement.parentElement.childNodes[3].childNodes[3]
+                        // let valor = this.parentElement.parentElement.childNodes[5].childNodes[3]
+                        // fetch(`{{route('maquinas.get_valor_hora')}}`, {
+                        //     method: 'post',
+                        //     headers: {
+                        //         "Content-Type": "application/json",
+                        //         "Accept": "application/json, text-plain, */*",
+                        //         "X-Requested-With": "XMLHttpRequest",
+                        //         "X-CSRF-TOKEN": token
+                        //     },
+                        //     credentials: "same-origin",
+                        //     body: JSON.stringify({
+                        //         id: this.value,
+                        //         tempo: tempo.value
+                        //     })
+                        // })
+                        // .then(function(resp) {
+                        //     return resp.json();
+                        // })
+                        // .then(function(resp) {
+                        //     if (resp) {
+                        //         valor.value = resp['data']
+                        //     }
+                        //     return resp;
+                        // })
+                        // .catch(function(error) {
+                        //     console.log(error);
+                        // })
+                //     })
+                // })
+
                 if (e.target && e.target.classList.contains('number')) {
                     VMasker(document.querySelectorAll(".number")).maskNumber();
+                }
+
+                if (e.target && e.target.classList.contains('hour-minute')) {
+                    VMasker(document.querySelectorAll('.hour-minute')).maskPattern('99:99');
                 }
 
                 if (e.target && e.target.classList.contains('money')) {

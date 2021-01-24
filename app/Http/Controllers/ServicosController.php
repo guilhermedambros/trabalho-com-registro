@@ -128,6 +128,7 @@ class ServicosController extends Controller
         $servico->update();
         $sync_data = [];
         if (!empty($request['pivot_maquina_id'])) {
+            $servico->maquinas()->wherePivot('servico_id', $id)->detach();
             for ($i=0; $i < count($request['pivot_maquina_id']); $i++) {
                 $sync_data[$i]['maquina_id'] = $request['pivot_maquina_id'][$i];
                 $sync_data[$i]['tempo'] = $request['pivot_tempo'][$i];

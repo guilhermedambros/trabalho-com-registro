@@ -41611,7 +41611,8 @@ try {
 }
 
 VMasker(document.querySelectorAll('.cep')).maskPattern('99999-999');
-VMasker(document.querySelectorAll('.cep')).maskPattern('99999-999');
+VMasker(document.querySelectorAll('.hour-minute')).maskPattern('99:99');
+VMasker(document.querySelectorAll('.time')).maskPattern('99:99:99');
 VMasker(document.querySelectorAll(".money")).maskMoney({
   precision: 2,
   separator: ',',
@@ -41899,8 +41900,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! N:\dev\pessoal\ada_dashboard\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! N:\dev\pessoal\ada_dashboard\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\ada\ada_dashboard\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\ada\ada_dashboard\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

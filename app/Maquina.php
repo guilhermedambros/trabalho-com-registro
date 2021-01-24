@@ -11,8 +11,7 @@ use App\Traits\RecordSignature;
 
 class Maquina extends Model  implements Auditable
 {
-    use HasFactory; 
-    use SoftDeletes;
+    use HasFactory, SoftDeletes, RecordSignature;
     use \OwenIt\Auditing\Auditable;
     public $table = 'maquinas';
     
