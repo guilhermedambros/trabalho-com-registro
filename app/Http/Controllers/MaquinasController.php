@@ -56,8 +56,8 @@ class MaquinasController extends Controller
             'valor_hora' => 'required',
         ]);
         
-        $valor_hora = $request['valor_hora']/60;
-        $valor_hora = number_format($valor_hora, 2, '.', '');
+        $valor_hora = $request['valor_hora'];
+        $valor_hora = number_format($valor_hora, 2, ',', '.');
         $created_by = \Auth::user()->id;
 
         $maquinas = new Maquina([            
@@ -92,6 +92,13 @@ class MaquinasController extends Controller
     public function edit($id)
     {
         //
+        $maquinas = Maquina::find($id);
+        $id = $maquinas->id;
+        $pessoas = Pessoa::where('id', '=', $maquinas->proprietario_pessoa_id)->get();
+        $tipo_maquinas = TipoMaquina::where('id', '=', $maquinas->tipo_maquina_id)->get();
+        $valor_hora = $maquinas->valor_hora;
+
+        return view('maquinas.edit', compact('id', 'maquinas', 'pessoas', 'tipo_maquinas', 'valor_hora'));
     }
 
     /**
@@ -103,7 +110,21 @@ class MaquinasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'valor_hora' => 'required',
+        ]);
+
+        $maquinas = Maquina::find($id);
+        
+        $maquinas->update($request->all());
+        
+        $updated_by = \Auth::user()->id;
+    
+        if($maquinas->save()){
+            return redirect()->route('maquinas.index')->with(['tipo'=>'success', 'message' => 'Máquina ' . $maquinas->descricao . ' editada com sucesso!']);
+        }
+
+        return redirect()->back()->with(['tipo'=>'danger', 'message' => 'Não foi possível editar a máquina!'])->withInput();
     }
 
     /**
@@ -112,8 +133,12 @@ class MaquinasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Maquina $maquina)
     {
-        //
+        abort_if(Gate::denies('maquina_excluir'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $maquina->delete();
+
+        return back();
     }
 }

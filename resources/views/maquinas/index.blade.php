@@ -7,6 +7,11 @@
         </a>
     </div>
 @endcan
+@if (session()->has('message'))
+    <div class="alert alert-success">
+        <strong>{{ session('message') }}</strong>
+    </div>
+@endif
 <div class="main-card">
     <div class="header">
         {{ trans('cruds.maquina.title_singular') }} {{ trans('cruds.list.title_singular') }}
@@ -43,7 +48,7 @@
                 <tbody>
                     @foreach($maquinas as $key => $maquina)
                         <tr data-entry-id="{{ $maquina->id }}">
-                            <td>
+                            <td> 
 
                             </td>
                             <td>
@@ -53,7 +58,7 @@
                                 {{ $maquina->descricao ?? '' }}
                             </td>
                             <td>
-                                {{ $maquina->valor_hora ?? '' }}
+                                R$ {{ $maquina->valor_hora ?? '' }}
                             </td>
                             <td>
                                 {{ $maquina->tipo_maquina->descricao ?? '' }}
