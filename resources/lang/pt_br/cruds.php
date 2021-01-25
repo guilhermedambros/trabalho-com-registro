@@ -68,7 +68,7 @@ return [
     ],
     'maquina'        => [
         'title'          => 'Máquinas',
-        'title_singular' => 'Maquina',
+        'title_singular' => 'Máquina',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => '',
