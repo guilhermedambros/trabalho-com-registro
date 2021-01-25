@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Traits\RecordSignature;
 
-class Maquina extends Model  implements Auditable
+class Maquina extends Model implements Auditable
 {
     use HasFactory, SoftDeletes, RecordSignature;
     use \OwenIt\Auditing\Auditable;
