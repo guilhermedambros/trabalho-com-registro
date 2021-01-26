@@ -178,7 +178,16 @@ class MaquinasController extends Controller
                 $str_time = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "$1:$2:00", $request->tempo);
                 sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
                 $time_seconds = $hours * 3600 + $minutes * 60 + $seconds;
-                $valor_hora = (float) $maquina->valor_hora * $time_seconds;
+
+                // MAQUINAS PESADAS
+                if ($maquina->tipo_maquina_id == "1") {
+                    $valor_hora = ((float) $maquina->valor_hora * 0.5) * $time_seconds;
+                }
+
+                // MAQUINAS LEVES
+                if ($maquina->tipo_maquina_id == "2") {
+                    $valor_hora = (float) $maquina->valor_hora * $time_seconds;
+                }
 
                 if ($maquina->tipo_maquina_id == "1") {
                     $saldo->saldo_pesadas = $saldo->saldo_pesadas - Helper::convertHoursToFloat($request->tempo);

@@ -190,40 +190,42 @@
                 $(this).on('change', function(event) {
                     let tempo = this.parentElement.parentElement.childNodes[3].childNodes[3]
                     let valor = this.parentElement.parentElement.childNodes[5].childNodes[3]
-                    fetch(`{{route('maquinas.get_valor_hora')}}`, {
-                        method: 'post',
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Accept": "application/json, text-plain, */*",
-                            "X-Requested-With": "XMLHttpRequest",
-                            "X-CSRF-TOKEN": token
-                        },
-                        credentials: "same-origin",
-                        body: JSON.stringify({
-                            id: this.value,
-                            tempo: tempo.value,
-                            data_realizacao: document.getElementById('data_realizacao').value
+                    if (tempo.value) {
+                        fetch(`{{route('maquinas.get_valor_hora')}}`, {
+                            method: 'post',
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Accept": "application/json, text-plain, */*",
+                                "X-Requested-With": "XMLHttpRequest",
+                                "X-CSRF-TOKEN": token
+                            },
+                            credentials: "same-origin",
+                            body: JSON.stringify({
+                                id: this.value,
+                                tempo: tempo.value,
+                                data_realizacao: document.getElementById('data_realizacao').value
+                            })
                         })
-                    })
-                    .then(function(resp) {
-                        return resp.json();
-                    })
-                    .then(function(resp) {
-                        if (resp) {
-                            valor.value = resp['data']
-                        }
-                        return resp;
-                    })
-                    .catch(function(error) {
-                        console.log(error);
-                    })
+                        .then(function(resp) {
+                            return resp.json();
+                        })
+                        .then(function(resp) {
+                            if (resp) {
+                                valor.value = resp['data']
+                            }
+                            return resp;
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        })
+                    }
                 })
             })
 
             $(document).on('keyup', '.tempo-valor', function(e) {
                 let id = this.parentElement.parentElement.childNodes[1].childNodes[3]
                 let valor = this.parentElement.parentElement.childNodes[5].childNodes[3]
-                if (id.value) {
+                if (id.value && e.target.value.length > 4) {
                     fetch(`{{route('maquinas.get_valor_hora')}}`, {
                         method: 'post',
                         headers: {
