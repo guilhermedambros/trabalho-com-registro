@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-use App\Traits\RecordSignature;
 
+use App\Traits\RecordSignature;
 use App\User;
 
 class Servico extends Model
@@ -55,7 +55,7 @@ class Servico extends Model
     public function maquinas()
     {
         return $this->belongsToMany(Maquina::class, 'servico_maquina', 'servico_id', 'maquina_id')
-                    ->withPivot('valor', 'tempo')
+                    ->withPivot('valor_total', 'valor_subsidiado', 'tempo')
                     ->withTimestamps();
     }
 

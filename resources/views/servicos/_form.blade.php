@@ -2,7 +2,7 @@
 @section('content')
 <div class="main-card">
     <div class="header">
-        {{ trans('global.edit') }} {{ trans('cruds.servico.title_singular') }}
+        {{ $title }} {{ trans('cruds.servico.title_singular') }}
     </div>
 
     <form method="POST" action="{{ route($routes, old('id') ?? $servicos->id ?? null) }}" enctype="multipart/form-data">

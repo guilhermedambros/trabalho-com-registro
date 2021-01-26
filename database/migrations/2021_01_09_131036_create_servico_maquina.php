@@ -18,7 +18,8 @@ class CreateServicoMaquina extends Migration
             $table->foreignId('servico_id')->constrained('servicos');
             $table->foreignId('maquina_id')->constrained('maquinas');
             $table->integer('tempo');
-            $table->decimal('valor', 8, 2);
+            $table->decimal('valor_total', 8, 2);
+            $table->decimal('valor_subsidiado', 8, 2);
             $table->timestamps();
         });
 

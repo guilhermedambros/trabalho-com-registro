@@ -4,6 +4,6 @@
     <div class="header">
         {{ trans('global.create') }} {{ trans('cruds.servico.title_singular') }}
     </div>
-    @include('servicos._form', ['method' => 'POST', 'routes' => 'servicos.store'])
+    @include('servicos._form', ['method' => 'POST', 'title' => 'Criar', 'routes' => 'servicos.store'])
 </div>
 @endsection
