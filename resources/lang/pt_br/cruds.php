@@ -80,6 +80,7 @@ return [
             'proprietario'      => 'Proprietário',
             'users'             => 'Users',
             'users_helper'      => '',
+            'created_by'        => 'Criado por',
             'created_at'        => 'Criado em',
             'created_at_helper' => '',
             'updated_at'        => 'Última atualização',

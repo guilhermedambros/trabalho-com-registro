@@ -7,11 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use App\Traits\RecordSignature;
 
 class Maquina extends Model implements Auditable
 {
-    use HasFactory, SoftDeletes, RecordSignature;
+    use HasFactory, SoftDeletes;
     use \OwenIt\Auditing\Auditable;
     public $table = 'maquinas';
     
