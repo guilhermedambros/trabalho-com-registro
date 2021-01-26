@@ -67,6 +67,7 @@ return [
         ],
     ],
     'maquina'        => [
+        
         'title'          => 'Máquinas',
         'title_singular' => 'Máquina',
         'fields'         => [
