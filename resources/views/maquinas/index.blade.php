@@ -64,7 +64,7 @@
                                 {{ $maquina->tipo_maquina->descricao ?? '' }}
                             </td>
                             <td>
-                                {{ $maquina->pessoas->nome ?? '' }}
+                                {{ $maquina->proprietario->nome ?? '' }}
                             </td>
                             <td>
                                 @can('maquina_ver')
