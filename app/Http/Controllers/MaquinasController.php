@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyMaquinaRequest;
 use App\Http\Requests\StoreMaquinaRequest;
@@ -10,10 +13,11 @@ use App\Role;
 use App\Maquina;
 use App\TipoMaquina;
 use App\Pessoa;
+use App\SaldoPeriodo;
+use App\Helpers\Helpers as Helper;
+
 use Gate;
 use Auth;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class MaquinasController extends Controller
 {
@@ -58,7 +62,7 @@ class MaquinasController extends Controller
         
         $valor_hora = $request['valor_hora'];
         $valor_hora = number_format($valor_hora, 2, ',', '.');
-        $created_by = \Auth::user()->id;
+        $created_by = Auth::user()->id;
 
         $maquinas = new Maquina([            
             'proprietario_pessoa_id' => $request->proprietario_pessoa_id,
@@ -145,18 +149,67 @@ class MaquinasController extends Controller
     public function get_valor_hora(Request $request)
     {
         if (!empty($request)) {
+            $existe_saldo = false;
             $maquina = Maquina::find(intval($request->id));
-            $str_time = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "00:$1:$2", $request->tempo);
-            sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
-            $time_seconds = $hours * 3600 + $minutes * 60 + $seconds;
-            $valor_hora = $maquina->valor_hora * $time_seconds;
+            $saldo = SaldoPeriodo::where('ano_exercicio', date('Y', strtotime(str_replace('/', '-', $request->data_realizacao))))->where('pessoa_id', Auth::user()->id)->first();
 
-            return response()->json([
-                'success' => true,
-                'data' => number_format($valor_hora, 2, ',', '.')
-            ]);
+            if (!empty($saldo)) {
+                if ($maquina->tipo_maquina_id == "1") {
+                    if ($saldo->saldo_pesadas > 0) {
+                        $existe_saldo = true;
+                    }
+                }
+
+                if ($maquina->tipo_maquina_id == "2") {
+                    if ($saldo->saldo_leves > 0) {
+                        $existe_saldo = true;
+                    }
+                }
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'data' => 'Você não possui saldo!'
+                ]);
+            }
+
+            if ($existe_saldo) {
+                $str_time = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "$1:$2:00", $request->tempo);
+                sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
+                $time_seconds = $hours * 3600 + $minutes * 60 + $seconds;
+                $valor_hora = (float) $maquina->valor_hora * $time_seconds;
+
+                if ($maquina->tipo_maquina_id == "1") {
+                    $saldo->saldo_pesadas = $saldo->saldo_pesadas - Helper::convertHoursToFloat($request->tempo);
+                    if ($saldo->saldo_pesadas < 0) {
+                        return response()->json([
+                            'success' => true,
+                            'data' => 'Você não possui saldo!'
+                        ]);
+                    }
+                }
+
+                if ($maquina->tipo_maquina_id == "2") {
+                    $saldo->saldo_leves = $saldo->saldo_leves - Helper::convertHoursToFloat($request->tempo);
+                    if ($saldo->saldo_leves < 0) {
+                        return response()->json([
+                            'success' => true,
+                            'data' => 'Você não possui saldo!'
+                        ]);
+                    }
+                }
+
+                return response()->json([
+                    'success' => true,
+                    'data' => number_format($valor_hora, 2, ',', '.')
+                ]);
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'data' => 'Você não possui saldo!'
+                ]);
+            }
         }
-        return respose()->json([
+        return response()->json([
             'success' => false,
             'data' => 'Ocorreu um erro!'
         ]);

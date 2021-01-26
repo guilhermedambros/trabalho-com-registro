@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyServicoRequest;
 use App\Http\Requests\StoreServicoRequest;
@@ -10,11 +13,12 @@ use App\Role;
 use App\Servico;
 use App\Maquina;
 use App\Pessoa;
+use App\SaldoPeriodo;
+use App\Helpers\Helpers as Helper;
+
 use Gate;
 use Auth;
 use DB;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class ServicosController extends Controller
 {
@@ -52,15 +56,43 @@ class ServicosController extends Controller
                 'data_realizacao' => $request->data_realizacao,
                 'beneficiario_pessoa_id' => $request->beneficiario_pessoa_id,
             ]);
-
             $servico->save();
+
+            $saldos = SaldoPeriodo::where('pessoa_id', Auth::user()->id)->where('ano_exercicio', date('Y', strtotime(str_replace('/', '-', $request->data_realizacao))))->first();
+            $saldo_leves = 0.0;
+            $saldo_pesadas = 0.0;
+
             $sync_data = [];
             if (!empty($request['pivot_maquina_id'])) {
                 for ($i=0; $i < count($request['pivot_maquina_id']); $i++) {
                     $sync_data[$i]['maquina_id'] = $request['pivot_maquina_id'][$i];
                     $sync_data[$i]['tempo'] = $request['pivot_tempo'][$i];
-                    $sync_data[$i]['valor'] = str_replace(",",".",str_replace(".","",$request['pivot_valor'][$i])) ?: 0;
+                    $sync_data[$i]['valor_total'] = str_replace(",",".",str_replace(".","",$request['pivot_valor_total'][$i])) ?: 0;
+                    $sync_data[$i]['valor_subsidiado'] = 0;
+                    $maquina = Maquina::find($request['pivot_maquina_id'][$i]);
+
+                    if ($maquina->tipo_maquina_id == "1") {
+                        $saldo_pesadas = (float) $saldos->saldo_pesadas - $saldo_pesadas - Helper::convertHoursToFloat($sync_data[$i]['tempo']);
+                    } elseif ($maquina->tipo_maquina_id == "2") {
+                        $saldo_leves = (float) $saldos->saldo_leves - $saldo_leves - Helper::convertHoursToFloat($sync_data[$i]['tempo']);
+                    }
                 }
+            }
+
+            if ($saldo_leves < 0) {
+                DB::rollback();
+                return redirect()->route('servicos.index')->with('error', 'Ocorreu um erro!');
+            } else {
+                $saldos->saldo_leves = $saldo_leves;
+                $saldos->save();
+            }
+
+            if ($saldo_pesadas < 0) {
+                DB::rollback();
+                return redirect()->route('servicos.index')->with('error', 'Ocorreu um erro!');
+            } else {
+                $saldos->saldo_pesadas = $saldo_pesadas;
+                $saldos->save();
             }
 
             $servico->maquinas()->sync($sync_data);
@@ -107,7 +139,7 @@ class ServicosController extends Controller
         foreach ($servicos->maquinas as $key => $maquina) {
             $servico_maquinas[$key][$maquina->pivot->maquina_id]['maquina_id'] = $maquina->pivot->maquina_id;
             $servico_maquinas[$key][$maquina->pivot->maquina_id]['tempo'] = $maquina->pivot->tempo;
-            $servico_maquinas[$key][$maquina->pivot->maquina_id]['valor'] = $maquina->pivot->valor;
+            $servico_maquinas[$key][$maquina->pivot->maquina_id]['valor_total'] = $maquina->pivot->valor_total;
         }
 
         return view('servicos.edit', compact('servicos', 'maquinas', 'pessoas', 'servico_maquinas'));
@@ -132,7 +164,7 @@ class ServicosController extends Controller
             for ($i=0; $i < count($request['pivot_maquina_id']); $i++) {
                 $sync_data[$i]['maquina_id'] = $request['pivot_maquina_id'][$i];
                 $sync_data[$i]['tempo'] = $request['pivot_tempo'][$i];
-                $sync_data[$i]['valor'] = str_replace(",",".",str_replace(".","",$request['pivot_valor'][$i]));
+                $sync_data[$i]['valor_total'] = str_replace(",",".",str_replace(".","",$request['pivot_valor_total'][$i]));
             }
             $servico->maquinas()->sync($sync_data);
         }

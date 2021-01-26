@@ -71,7 +71,7 @@
             @if (isset($servicos->maquinas))
                 @foreach ($servicos->maquinas as $maquina)
                     @php $tempo = $maquina['pivot']['tempo'] @endphp
-                    @php $valor = $maquina['pivot']['valor'] @endphp
+                    @php $valor = $maquina['pivot']['valor_total'] @endphp
                     <div id="div-maquinas" class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
                         <div class="w-full px-2 md:w-1/4">
                             <label class="text-xs" for="pivot.maquina">Máquina</label>
@@ -86,12 +86,12 @@
                             </select>
                         </div>
                         <div class="w-full px-2 md:w-1/4">
-                            <label class="text-xs" for="pivot.valor">Tempo (h:m:s)</label>
-                            <input class="tempo-valor w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline hour-minute" type="text" id="tempo" name="pivot.tempo[]" value="{{$tempo}}" required />
+                            <label class="text-xs" for="pivot.valor_total">Tempo (h:m)</label>
+                            <input class="tempo-valor_total w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline hour-minute" type="text" id="tempo" name="pivot.tempo[]" value="{{$tempo}}" required />
                         </div>
                         <div class="w-full px-2 md:w-1/4">
                             <label class="text-xs" for="formGridCode_last">Valor (R$)</label>
-                            <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" id="valor" name="pivot.valor[]" value="{{number_format($valor, 2, ',', '.')}}" readonly="readonly" />
+                            <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" id="valor" name="pivot.valor_total[]" value="{{number_format($valor, 2, ',', '.')}}" readonly="readonly" />
                         </div>
                         <div class="w-full md:w-1/4">
                             <button id="remove-field" type="button" class="remove-field btn-md mt-6 btn-red rounded-md">Remover Máquina</button>
@@ -113,12 +113,12 @@
                         </select>
                     </div>
                     <div class="w-full px-2 md:w-1/4">
-                        <label class="text-xs" for="pivot.valor">Tempo (h:m:s)</label>
+                        <label class="text-xs" for="pivot.tempo">Tempo (h:m)</label>
                         <input class="tempo-valor w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline hour-minute" type="text" id="tempo" name="pivot.tempo[]" required />
                     </div>
                     <div class="w-full px-2 md:w-1/4">
-                        <label class="text-xs" for="formGridCode_last">Valor (R$)</label>
-                        <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" id="valor" name="pivot.valor[]" readonly="readonly" />
+                        <label class="text-xs" for="pivot.valor_total">Valor (R$)</label>
+                        <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" id="valor" name="pivot.valor_total[]" readonly="readonly" />
                     </div>
                     <div class="w-full md:w-1/4">
                         <button id="remove-field" type="button" class="remove-field btn-md mt-6 btn-red rounded-md">Remover Máquina</button>
@@ -201,7 +201,8 @@
                         credentials: "same-origin",
                         body: JSON.stringify({
                             id: this.value,
-                            tempo: tempo.value
+                            tempo: tempo.value,
+                            data_realizacao: document.getElementById('data_realizacao').value
                         })
                     })
                     .then(function(resp) {
@@ -234,7 +235,8 @@
                         credentials: "same-origin",
                         body: JSON.stringify({
                             id: id.value,
-                            tempo: this.value
+                            tempo: this.value,
+                            data_realizacao: document.getElementById('data_realizacao').value
                         })
                     })
                     .then(function(resp) {

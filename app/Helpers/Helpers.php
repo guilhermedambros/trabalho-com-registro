@@ -9,13 +9,9 @@ class Helpers {
 
     static function removeSpecialChar($value)
     {
-        // $result  = preg_replace('/[^a-zA-Z0-9\s]/', '', $value);
-        // $result  = preg_replace('/[^a-zA-Z0-9]/', '', $value);
-        // return $result;
         $value = str_replace(' ', '-', $value); // Replaces all spaces with hyphens.
         $value = str_replace('-', '', $value); // Replaces all spaces with hyphens.
         $value = preg_replace('/[^A-Za-z0-9\-]/', '', $value); // Removes special chars.
-        
         return preg_replace('/-+/', '-', $value); // Replaces multiple hyphens with single one.
     }
 
@@ -58,6 +54,17 @@ class Helpers {
         return $text;
     }
 
+    // Formato esperado H:m
+    static function convertHoursToFloat($time)
+    {
+        if (!empty($time)) {
+            $aux = explode(':', $time);
+            $hours = $aux[0];
+            $minutes = $aux[1];
+            return $hours + round($minutes / 60, 2);
+        }
+        return "Ocorreu um erro!";
+    }
     
    
 }
