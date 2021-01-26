@@ -31,7 +31,7 @@ class MaquinasController extends Controller
         //
         abort_if(Gate::denies('maquina_acessar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $maquinas = Maquina::orderBy('nome')->get();
+        $maquinas = Maquina::orderBy('descricao')->get();
         return view('maquinas.index', compact('maquinas'));
     }
 
@@ -82,9 +82,11 @@ class MaquinasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Maquina $maquina)
     {
         //
+        abort_if(Gate::denies('maquina_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return view('maquinas.show', compact('maquina'));
     }
 
     /**

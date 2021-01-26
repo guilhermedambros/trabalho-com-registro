@@ -27,7 +27,7 @@ class ServicosController extends Controller
     {
         abort_if(Gate::denies('servico_acessar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $servicos = Servico::orderBy('nome')->get();
+        $servicos = Servico::all();
         return view('servicos.index', compact('servicos'));
     }
 
