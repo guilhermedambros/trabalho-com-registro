@@ -71,8 +71,8 @@ class SaldoPeriodo extends Model implements Auditable
         foreach($pessoas_sem_saldo_no_periodo as $produtor){
             $saldo_periodo = new SaldoPeriodo();
             $saldo_periodo->ano_exercicio = date('Y');
-            $saldo_periodo->saldo_pesadas = 40;
-            $saldo_periodo->saldo_leves = (in_array(1, $produtor->tipo_pessoas->pluck('id')->toArray())) ? 10 : 0;
+            $saldo_periodo->saldo_pesadas = 10;
+            $saldo_periodo->saldo_leves = (in_array(1, $produtor->tipo_pessoas->pluck('id')->toArray())) ? 40 : 0;
             $saldo_periodo->pessoa_id = $produtor->id;
             $saldo_periodo->created_by = \Auth::user()->id;
             if(!$saldo_periodo->save()){
