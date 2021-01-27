@@ -39,6 +39,14 @@
                 </tr>
                 <tr>
                     <th>
+                        {{ trans('cruds.tipo_maquina.fields.tipo_bonificacao') }}
+                    </th>
+                    <td>
+                        {{ $tipo_maquina->tipo_bonificacao ?? '' }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
                         {{ trans('cruds.tipo_maquina.fields.created_at') }}
                     </th>
                     <td>

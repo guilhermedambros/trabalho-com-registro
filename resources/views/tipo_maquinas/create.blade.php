@@ -30,6 +30,21 @@
                 @if($errors->has('valor_hora_subsidiado'))
                     <p class="invalid-feedback">{{ $errors->first('valor_hora_subsidiado') }}</p>
                 @endif
+            </div> 
+            <div class="mb-3">
+                <label for="tipo_bonificacao" class="text-xs required">{{ trans('cruds.tipo_maquina.fields.tipo_bonificacao') }}</label>
+
+                <div class="form-group">
+                <select  id="tipo_bonificacao" name="tipo_bonificacao" class="{{ $errors->has('tipo_bonificacao') ? ' is-invalid' : '' }} select" required>
+                    <option value="">{{ trans('global.select') }}</option>
+                    @foreach($tipos_bonificacao as $key => $value)
+                        <option value="{{$key}}">{{ $value }}</option>
+                    @endforeach
+                </select>
+                </div>
+                @if($errors->has('tipo_bonificacao'))
+                    <p class="invalid-feedback">{{ $errors->first('tipo_bonificacao') }}</p>
+                @endif
             </div>
             
         </div>

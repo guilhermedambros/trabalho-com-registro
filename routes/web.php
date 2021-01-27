@@ -58,3 +58,7 @@ Route::post('maquinas/get_valor_hora', 'MaquinasController@get_valor_hora')->nam
 // Servicos
 Route::delete('servicos/destroy', 'ServicosController@massDestroy')->name('servicos.massDestroy');
 Route::resource('servicos', 'ServicosController');
+
+//Relatórios
+Route::get('relatorios/saldos', 'RelatoriosController@index')->name('relatorios.saldos.index');
+Route::post('relatorios/saldos/gerar', 'RelatoriosController@gera_relatorio')->name('relatorios.saldos.gerar');

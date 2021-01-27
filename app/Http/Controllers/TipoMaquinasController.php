@@ -26,8 +26,8 @@ class TipoMaquinasController extends Controller
     {
         abort_if(Gate::denies('tipo_maquina_criar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        
-        return view('tipo_maquinas.create');
+        $tipos_bonificacao = config('app.tipo_bonificacao');
+        return view('tipo_maquinas.create', compact('tipos_bonificacao'));
     }
 
     public function store(StoreTipoMaquinaRequest $request)
@@ -41,7 +41,9 @@ class TipoMaquinasController extends Controller
     public function edit(TipoMaquina $tipo_maquina)
     {
         abort_if(Gate::denies('tipo_maquina_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return view('tipo_maquinas.edit', compact('tipo_maquina'));
+        $tipos_bonificacao = config('app.tipo_bonificacao');
+        
+        return view('tipo_maquinas.edit', compact('tipo_maquina', 'tipos_bonificacao'));
 
     }
 

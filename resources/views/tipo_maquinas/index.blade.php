@@ -30,6 +30,9 @@
                             {{ trans('cruds.tipo_maquina.fields.valor_hora_subsidiado') }}
                         </th>
                         <th>
+                            {{ trans('cruds.tipo_maquina.fields.tipo_bonificacao') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -49,7 +52,9 @@
                             <td>
                                 {{ $tipo_maquina->valor_hora_subsidiado ?? '' }}
                             </td>
-                            
+                            <td>
+                                {{ $tipo_maquina->tipo_bonificacao ?? '' }}
+                            </td>
                             
                             <td>
                                 @can('tipo_maquina_ver')

@@ -8,7 +8,7 @@
         </a>
     </div>
 
-    <form method="POST" action="{{ route("tipo_maquinas.update", [$tipo_maquina->id]) }}">
+    <form method="POST" action="{{ route('tipo_maquinas.update', [$tipo_maquina->id]) }}">
         @method('PUT')
         @csrf
         <div class="body">
@@ -31,6 +31,23 @@
                 </div>
                 @if($errors->has('valor_hora_subsidiado'))
                     <p class="invalid-feedback">{{ $errors->first('valor_hora_subsidiado') }}</p>
+                @endif
+            </div>
+            <div class="mb-3">
+                <label for="tipo_bonificacao" class="text-xs required">{{ trans('cruds.tipoS_maquina.fields.tipo_bonificacao') }}</label>
+
+                <div class="form-group">
+                <select  id="tipo_bonificacao" name="tipo_bonificacao" class="{{ $errors->has('tipo_bonificacao') ? ' is-invalid' : '' }} select" required>
+                    <option value="">{{ trans('global.select') }}</option>
+                        @php $selected_value = $tipo_maquina->tipo_bonificacao ?? 0; @endphp
+               
+                        @foreach($tipos_bonificacao as $key => $value)
+                            <option value="{{$key}}" {{($selected_value == $key) ? 'selected' : ''}}>{{ $value }}</option>
+                        @endforeach
+                </select>
+                </div>
+                @if($errors->has('tipo_bonificacao'))
+                    <p class="invalid-feedback">{{ $errors->first('tipo_bonificacao') }}</p>
                 @endif
             </div>
             

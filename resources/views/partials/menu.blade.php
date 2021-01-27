@@ -102,7 +102,7 @@
             </a>
         @endcan
         @can('relatorios_acessar')
-            <a class="nav-link{{ request()->is('relatorios*') ? ' active' : '' }}" href="#">
+            <a class="nav-link{{ request()->is('relatorios*') ? ' active' : '' }}" href="{{ route('relatorios.saldos.index') }}">
                 <i class="fa-fw fas fa-print">
 
                 </i>

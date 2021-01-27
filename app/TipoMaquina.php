@@ -24,6 +24,7 @@ class TipoMaquina extends Model implements Auditable
         'id',
         'descricao',
         'valor_hora_subsidiado',
+        'tipo_bonificacao',
     ];
 
 

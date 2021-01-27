@@ -190,6 +190,7 @@ return [
             'modified_by'           => 'Alterado por',
             'deleted_by'            => 'Excluído por', 
             'created_at'            => 'Criado em',
+            'tipo_bonificacao'      => 'Tipo da bonificação',
             'created_at_helper'     => '',
             'updated_at'            => 'Última atualização',
             'updated_at_helper'     => '',
