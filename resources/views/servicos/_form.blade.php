@@ -87,7 +87,7 @@
                         </div>
                         <div class="w-full px-2 md:w-1/4">
                             <label class="text-xs" for="pivot.valor_total">Tempo (h:m)</label>
-                            <input class="tempo-valor_total w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline hour-minute" type="text" id="tempo" name="pivot.tempo[]" value="{{$tempo}}" required />
+                            <input class="tempo-valor w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline hour-minute" type="text" id="tempo" name="pivot.tempo[]" value="{{$tempo}}" required />
                         </div>
                         <div class="w-full px-2 md:w-1/4">
                             <label class="text-xs" for="formGridCode_last">Valor (R$)</label>
@@ -246,7 +246,12 @@
                     })
                     .then(function(resp) {
                         if (resp) {
-                            valor.value = resp['data']
+                            if (resp['success'] == false) {
+                                alertify.alert('Informação', resp['data'])
+                                valor.value = ''
+                            } else {
+                                valor.value = resp['data']
+                            }
                         }
                         return resp;
                     })

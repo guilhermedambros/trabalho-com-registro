@@ -160,11 +160,38 @@ class ServicosController extends Controller
         $servico->update();
         $sync_data = [];
         if (!empty($request['pivot_maquina_id'])) {
+            $saldos = SaldoPeriodo::where('pessoa_id', Auth::user()->id)->where('ano_exercicio', date('Y', strtotime(str_replace('/', '-', $request->data_realizacao))))->first();
+            $saldo_leves = 0.0;
+            $saldo_pesadas = 0.0;
+
             $servico->maquinas()->wherePivot('servico_id', $id)->detach();
             for ($i=0; $i < count($request['pivot_maquina_id']); $i++) {
                 $sync_data[$i]['maquina_id'] = $request['pivot_maquina_id'][$i];
                 $sync_data[$i]['tempo'] = $request['pivot_tempo'][$i];
                 $sync_data[$i]['valor_total'] = str_replace(",",".",str_replace(".","",$request['pivot_valor_total'][$i]));
+                $sync_data[$i]['valor_subsidiado'] = 0;
+
+                $maquina = Maquina::find($request['pivot_maquina_id'][$i]);
+
+                if ($maquina->tipo_maquina_id == "1") {
+                    $saldo_pesadas = (float) $saldos->saldo_pesadas - $saldo_pesadas - Helper::convertHoursToFloat($sync_data[$i]['tempo']);
+                } elseif ($maquina->tipo_maquina_id == "2") {
+                    $saldo_leves = (float) $saldos->saldo_leves - $saldo_leves - Helper::convertHoursToFloat($sync_data[$i]['tempo']);
+                }
+            }
+
+            if ($saldo_leves < 0) {
+                return redirect()->route('servicos.index')->with('error', 'Você não possui saldo!');
+            } else {
+                $saldos->saldo_leves = $saldo_leves;
+                $saldos->save();
+            }
+
+            if ($saldo_pesadas < 0) {
+                return redirect()->route('servicos.index')->with('error', 'Você não possui saldo!');
+            } else {
+                $saldos->saldo_pesadas = $saldo_pesadas;
+                $saldos->save();
             }
             $servico->maquinas()->sync($sync_data);
         }

@@ -193,7 +193,7 @@ class MaquinasController extends Controller
                     $saldo->saldo_pesadas = $saldo->saldo_pesadas - Helper::convertHoursToFloat($request->tempo);
                     if ($saldo->saldo_pesadas < 0) {
                         return response()->json([
-                            'success' => true,
+                            'success' => false,
                             'data' => 'Você não possui saldo!'
                         ]);
                     }
@@ -203,7 +203,7 @@ class MaquinasController extends Controller
                     $saldo->saldo_leves = $saldo->saldo_leves - Helper::convertHoursToFloat($request->tempo);
                     if ($saldo->saldo_leves < 0) {
                         return response()->json([
-                            'success' => true,
+                            'success' => false,
                             'data' => 'Você não possui saldo!'
                         ]);
                     }
@@ -215,7 +215,7 @@ class MaquinasController extends Controller
                 ]);
             } else {
                 return response()->json([
-                    'success' => true,
+                    'success' => false,
                     'data' => 'Você não possui saldo!'
                 ]);
             }
