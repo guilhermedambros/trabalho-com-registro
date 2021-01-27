@@ -5,14 +5,16 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 use Carbon\Carbon;
 
 use App\Traits\RecordSignature;
 use App\User;
 
-class Servico extends Model
+class Servico extends Model implements Auditable
 {
     use SoftDeletes, HasFactory, RecordSignature;
+    use \OwenIt\Auditing\Auditable;
     public $table = 'servicos';
     
     protected $dates = [

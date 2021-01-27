@@ -84,7 +84,6 @@ class MaquinasController extends Controller
      */
     public function show(Maquina $maquina)
     {
-        //
         abort_if(Gate::denies('maquina_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('maquinas.show', compact('maquina'));
     }
@@ -97,13 +96,10 @@ class MaquinasController extends Controller
      */
     public function edit($id)
     {
-        //
         $maquinas = Maquina::find($id);
-        $id = $maquinas->id;
-        $pessoas = Pessoa::where('id', '=', $maquinas->proprietario_pessoa_id)->get();
-        $tipo_maquinas = TipoMaquina::where('id', '=', $maquinas->tipo_maquina_id)->get();
+        $pessoas = Pessoa::all();
+        $tipo_maquinas = TipoMaquina::all();
         $valor_hora = $maquinas->valor_hora;
-
         return view('maquinas.edit', compact('id', 'maquinas', 'pessoas', 'tipo_maquinas', 'valor_hora'));
     }
 
@@ -119,17 +115,11 @@ class MaquinasController extends Controller
         $request->validate([
             'valor_hora' => 'required',
         ]);
-
         $maquinas = Maquina::find($id);
-        
         $maquinas->update($request->all());
-        
-        $updated_by = \Auth::user()->id;
-    
-        if($maquinas->save()){
+        if ($maquinas->save()) {
             return redirect()->route('maquinas.index')->with(['tipo'=>'success', 'message' => 'Máquina ' . $maquinas->descricao . ' editada com sucesso!']);
         }
-
         return redirect()->back()->with(['tipo'=>'danger', 'message' => 'Não foi possível editar a máquina!'])->withInput();
     }
 
@@ -142,9 +132,7 @@ class MaquinasController extends Controller
     public function destroy(Maquina $maquina)
     {
         abort_if(Gate::denies('maquina_excluir'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $maquina->delete();
-
         return back();
     }
 
