@@ -81,7 +81,7 @@ class ServicosController extends Controller
 
             if ($saldo_leves < 0) {
                 DB::rollback();
-                return redirect()->route('servicos.index')->with('error', 'Ocorreu um erro!');
+                return redirect()->route('servicos.create')->with('message', 'Você não possui saldo!');
             } else {
                 $saldos->saldo_leves = $saldo_leves;
                 $saldos->save();
@@ -89,7 +89,7 @@ class ServicosController extends Controller
 
             if ($saldo_pesadas < 0) {
                 DB::rollback();
-                return redirect()->route('servicos.index')->with('error', 'Ocorreu um erro!');
+                return redirect()->route('servicos.create')->with('message', 'Você não possui saldo!');
             } else {
                 $saldos->saldo_pesadas = $saldo_pesadas;
                 $saldos->save();

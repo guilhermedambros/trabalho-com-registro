@@ -41,7 +41,7 @@
                 <label for="valor_hora" class="number-xs required">{{ trans('cruds.maquina.fields.valor_hora') }}</label>
 
                 <div class="form-group">
-                    <input type="money" id="valor_hora" name="valor_hora" class="money text" value="{{$maquinas->valor_hora}}" required>
+                    <input type="money" id="valor_hora" name="valor_hora" class="money text" value="{{$maquinas->valor_hora ?? null}}" required>
                 </div>
                 @if($errors->has('valor_hora'))
                     <p class="invalid-feedback">{{ $errors->first('valor_hora') }}</p>

@@ -10,15 +10,15 @@
 <div class="main-card">
 
     @if (session()->has('message'))
-    <div class="alert alert-success">
-        <strong>{{ session('message') }}</strong>
-    </div>
+        <div class="alert alert-success">
+            <strong>{{ session('message') }}</strong>
+        </div>
     @endif
     
     @error('message')
-    <div class="alert alert-danger">
-        <strong>{{ session('errors')->first('message') }}</strong>
-    </div>
+        <div class="alert alert-danger">
+            <strong>{{ session('errors')->first('message') }}</strong>
+        </div>
     @enderror
 
     <div class="header">
@@ -89,9 +89,7 @@
                                         <input type="submit" class="btn-sm btn-red" value="{{ trans('global.delete') }}">
                                     </form>
                                 @endcan
-
                             </td>
-
                         </tr>
                     @endforeach
                 </tbody>

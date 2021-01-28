@@ -5,6 +5,12 @@
         {{ $title }} {{ trans('cruds.servico.title_singular') }}
     </div>
 
+    @error('message')
+        <div class="alert alert-danger">
+            <strong>{{ session('errors')->first('message') }}</strong>
+        </div>
+    @enderror
+
     <form method="POST" action="{{ route($routes, old('id') ?? $servicos->id ?? null) }}" enctype="multipart/form-data">
         @csrf
         @method($method)
