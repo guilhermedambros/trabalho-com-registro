@@ -141,70 +141,29 @@ class MaquinasController extends Controller
             $maquina = Maquina::find(intval($request->id));
             $saldo = SaldoPeriodo::where('ano_exercicio', date('Y', strtotime(str_replace('/', '-', $request->data_realizacao))))->where('pessoa_id', Auth::user()->id)->first();
 
-            // if (!empty($saldo)) {
-            //     if ($maquina->tipo_maquina_id == "1") {
-            //         if ($saldo->saldo_pesadas > 0) {
-            //             $existe_saldo = true;
-            //         }
-            //     }
+            if (!strpos($request->tempo, ':')) {
+                $request->tempo = substr($request->tempo, 0, 2) . ':' . substr($request->tempo, 2, 2);
+            }
 
-            //     if ($maquina->tipo_maquina_id == "2") {
-            //         if ($saldo->saldo_leves > 0) {
-            //             $existe_saldo = true;
-            //         }
-            //     }
-            // } else {
-            //     return response()->json([
-            //         'success' => true,
-            //         'data' => 'Você não possui saldo!'
-            //     ]);
-            // }
+            $str_time = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "$1:$2:00", $request->tempo);
+            sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
+            $time_seconds = $hours * 3600 + $minutes * 60 + $seconds;
 
-            // if ($existe_saldo) {
-                $str_time = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "$1:$2:00", $request->tempo);
-                sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
-                $time_seconds = $hours * 3600 + $minutes * 60 + $seconds;
+            // // MAQUINAS PESADAS
+            if ($maquina->tipo_maquina_id == "1") {
+                $valor_hora = ((float) $maquina->valor_hora * 0.5) * $time_seconds;
+            }
 
-                // // MAQUINAS PESADAS
-                if ($maquina->tipo_maquina_id == "1") {
-                    $valor_hora = ((float) $maquina->valor_hora * 0.5) * $time_seconds;
-                }
+            // MAQUINAS LEVES
+            if ($maquina->tipo_maquina_id == "2") {
+                $valor_hora = (float) $maquina->valor_hora * $time_seconds;
+            }
 
-                // MAQUINAS LEVES
-                if ($maquina->tipo_maquina_id == "2") {
-                    $valor_hora = (float) $maquina->valor_hora * $time_seconds;
-                }
 
-                // if ($maquina->tipo_maquina_id == "1") {
-                //     $saldo->saldo_pesadas = $saldo->saldo_pesadas - Helper::convertHoursToFloat($request->tempo);
-                //     if ($saldo->saldo_pesadas < 0) {
-                //         return response()->json([
-                //             'success' => false,
-                //             'data' => 'Você não possui saldo!'
-                //         ]);
-                //     }
-                // }
-
-                // if ($maquina->tipo_maquina_id == "2") {
-                //     $saldo->saldo_leves = $saldo->saldo_leves - Helper::convertHoursToFloat($request->tempo);
-                //     if ($saldo->saldo_leves < 0) {
-                //         return response()->json([
-                //             'success' => false,
-                //             'data' => 'Você não possui saldo!'
-                //         ]);
-                //     }
-                // }
-
-                return response()->json([
-                    'success' => true,
-                    'data' => number_format($valor_hora, 2, ',', '.')
-                ]);
-            // } else {
-            //     return response()->json([
-            //         'success' => false,
-            //         'data' => 'Você não possui saldo!'
-            //     ]);
-            // }
+            return response()->json([
+                'success' => true,
+                'data' => number_format($valor_hora, 2, ',', '.')
+            ]);
         }
         return response()->json([
             'success' => false,
