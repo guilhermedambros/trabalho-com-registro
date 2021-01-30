@@ -59,8 +59,8 @@ class ServicosController extends Controller
             $servico->save();
 
             $saldos = SaldoPeriodo::where('pessoa_id', Auth::user()->id)->where('ano_exercicio', date('Y', strtotime(str_replace('/', '-', $request->data_realizacao))))->first();
-            $saldo_leves = 0.0;
-            $saldo_pesadas = 0.0;
+            $saldo_leves = $saldos->saldo_leves;
+            $saldo_pesadas = $saldos->saldo_pesadas;
 
             $sync_data = [];
             if (!empty($request['pivot_maquina_id'])) {
@@ -72,9 +72,9 @@ class ServicosController extends Controller
                     $maquina = Maquina::find($request['pivot_maquina_id'][$i]);
 
                     if ($maquina->tipo_maquina_id == "1") {
-                        $saldo_pesadas = (float) $saldos->saldo_pesadas - $saldo_pesadas - Helper::convertHoursToFloat($sync_data[$i]['tempo']);
+                        $saldo_pesadas = (float) $saldo_pesadas - Helper::convertHoursToFloat($sync_data[$i]['tempo']);
                     } elseif ($maquina->tipo_maquina_id == "2") {
-                        $saldo_leves = (float) $saldos->saldo_leves - $saldo_leves - Helper::convertHoursToFloat($sync_data[$i]['tempo']);
+                        $saldo_leves = (float) $saldo_leves - Helper::convertHoursToFloat($sync_data[$i]['tempo']);
                     }
                 }
             }
