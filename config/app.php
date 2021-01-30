@@ -128,6 +128,11 @@ return [
         'valor' => 'R$',
     ],
 
+    'tipo_bonificacao_maquina' => [
+        'percentual' => 'percentual',
+        'valor' => 'valor',
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
