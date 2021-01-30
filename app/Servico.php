@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Carbon\Carbon;
 
-use App\Traits\RecordSignature;
+use App\Http\Controllers\Traits\RecordSignature;
 use App\User;
 
 class Servico extends Model implements Auditable

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\RecordSignature;
+use App\Http\Controllers\Traits\RecordSignature;
 
 class Maquina extends Model implements Auditable
 {
