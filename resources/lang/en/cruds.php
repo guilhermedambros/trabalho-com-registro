@@ -109,6 +109,8 @@ return [
     'relatorios'         => [
         'title'          => 'Relatórios',
         'title_singular' => 'Relatório',
+        'title_saldos' => 'Saldos no período',
+        'title_servicos' => 'Serviços realizados',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => '',

@@ -58,7 +58,7 @@ class ServicosController extends Controller
             ]);
             $servico->save();
 
-            $saldos = SaldoPeriodo::where('pessoa_id', Auth::user()->id)->where('ano_exercicio', date('Y', strtotime(str_replace('/', '-', $request->data_realizacao))))->first();
+            $saldos = SaldoPeriodo::where('pessoa_id', $request->beneficiario_pessoa_id)->where('ano_exercicio', date('Y', strtotime(str_replace('/', '-', $request->data_realizacao))))->first();
             $saldo_leves = $saldos->saldo_leves;
             $saldo_pesadas = $saldos->saldo_pesadas;
 
@@ -170,7 +170,7 @@ class ServicosController extends Controller
         $servico->update();
         $sync_data = [];
         if (!empty($request['pivot_maquina_id'])) {
-            $saldos = SaldoPeriodo::where('pessoa_id', Auth::user()->id)->where('ano_exercicio', date('Y', strtotime(str_replace('/', '-', $request->data_realizacao))))->first();
+            $saldos = SaldoPeriodo::where('pessoa_id', $request->beneficiario_pessoa_id)->where('ano_exercicio', date('Y', strtotime(str_replace('/', '-', $request->data_realizacao))))->first();
             $saldo_leves = $saldos->saldo_leves;
             $saldo_pesadas = $saldos->saldo_pesadas;
 
