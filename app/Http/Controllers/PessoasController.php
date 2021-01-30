@@ -50,8 +50,8 @@ class PessoasController extends Controller
         $pessoa->complemento = $request->complemento ?? null;
         $pessoa->data_nascimento = $request->data_nascimento ?? null;
         $pessoa->created_by = \Auth::user()->id;
-        //$pessoa->save();
-        //$pessoa->tipo_pessoas()->sync($request->input('tipo_pessoas', []));
+        $pessoa->save();
+        $pessoa->tipo_pessoas()->sync($request->input('tipo_pessoas', []));
         
 
         return redirect()->route('pessoas.index');

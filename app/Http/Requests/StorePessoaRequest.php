@@ -7,7 +7,7 @@ use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
 use App\Helpers\Helpers;
-
+use Illuminate\Validation\Rule;
 class StorePessoaRequest extends FormRequest
 {
     public function authorize()
@@ -24,15 +24,17 @@ class StorePessoaRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'email'    => [
+            /*'email'    => [
                 'required',
                 'unique:pessoas,id,deleted_at,NULL',
-            ],
-            'documento' => [
+            ],*/
+            'email' => ['required', Rule::unique('pessoas')->whereNull('deleted_at')],
+            'documento' => ['required', Rule::unique('pessoas')->whereNull('deleted_at')],
+            /*'documento' => [
                 'string',
                 'required',
                 'unique:pessoas,id,deleted_at,NULL',
-            ],
+            ],*/
             'telefone'  => [
                 'string',
                 'required',
