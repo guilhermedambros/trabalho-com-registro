@@ -137,28 +137,9 @@ class MaquinasController extends Controller
     public function get_valor_hora(Request $request)
     {
         if (!empty($request)) {
-            $existe_saldo = false;
             $maquina = Maquina::find(intval($request->id));
-            $saldo = SaldoPeriodo::where('ano_exercicio', date('Y', strtotime(str_replace('/', '-', $request->data_realizacao))))->where('pessoa_id', Auth::user()->id)->first();
-
-            if (!strpos($request->tempo, ':')) {
-                $request->tempo = substr($request->tempo, 0, 2) . ':' . substr($request->tempo, 2, 2);
-            }
-
-            $str_time = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "$1:$2:00", $request->tempo);
-            sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
-            $time_seconds = $hours * 3600 + $minutes * 60 + $seconds;
-
-            // // MAQUINAS PESADAS
-            if ($maquina->tipo_maquina_id == "1") {
-                $valor_hora = ((float) $maquina->valor_hora * 0.5) * $time_seconds;
-            }
-
-            // MAQUINAS LEVES
-            if ($maquina->tipo_maquina_id == "2") {
-                $valor_hora = (float) $maquina->valor_hora * $time_seconds;
-            }
-
+           
+            $valor_hora = (float) $maquina->valor_hora * Helper::convertHoursToFloat($request->tempo);
 
             return response()->json([
                 'success' => true,

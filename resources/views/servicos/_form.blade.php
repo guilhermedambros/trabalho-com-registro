@@ -245,6 +245,7 @@
                         return resp.json();
                     })
                     .then(function(resp) {
+                        console.log(resp)
                         if (resp) {
                             if (resp['success'] == false) {
                                 alertify.alert('Informação', resp['data'])
