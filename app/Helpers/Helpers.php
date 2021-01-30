@@ -73,7 +73,7 @@ class Helpers {
             $aux = explode('.', $time);
             $hours = str_pad($aux[0], 2, "0", STR_PAD_LEFT);
             $minutes = str_pad($aux[1], 2, "0", STR_PAD_RIGHT);
-            return $hours .':'. str_pad(round(((60 / 100) * $minutes), 2), 2, "0", STR_PAD_RIGHT);
+            return $hours .':'. str_pad(ceil(((60 / 100) * $minutes)), 2, "0", STR_PAD_LEFT);
         }
         return "Ocorreu um erro!";
     }
