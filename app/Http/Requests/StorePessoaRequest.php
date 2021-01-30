@@ -20,28 +20,11 @@ class StorePessoaRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome'     => [
-                'string',
-                'required',
-            ],
-            /*'email'    => [
-                'required',
-                'unique:pessoas,id,deleted_at,NULL',
-            ],*/
+            'nome' => ['string','required',],
             'email' => ['required', Rule::unique('pessoas')->whereNull('deleted_at')],
             'documento' => ['required', Rule::unique('pessoas')->whereNull('deleted_at')],
-            /*'documento' => [
-                'string',
-                'required',
-                'unique:pessoas,id,deleted_at,NULL',
-            ],*/
-            'telefone'  => [
-                'string',
-                'required',
-            ],
-            'tipo_pessoa_id'    => [
-                'integer',
-            ],
+            'telefone'  => ['string','required',],
+            'tipo_pessoa_id' => ['integer',],
         ];
     }
 

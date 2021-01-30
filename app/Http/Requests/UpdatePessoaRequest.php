@@ -7,6 +7,7 @@ use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
 use App\Helpers\Helpers;
+use Illuminate\Validation\Rule;
 
 class UpdatePessoaRequest extends FormRequest
 {
@@ -24,15 +25,8 @@ class UpdatePessoaRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'email'    => [
-                'required',
-                'unique:pessoas,email,' . request()->route('pessoa')->id.',id,deleted_at,NULL',
-            ],
-            'documento' => [
-                'string',
-                'required',
-                'unique:pessoas,documento,' . request()->route('pessoa')->id.',id,deleted_at,NULL',
-            ],
+            'email' => ['required', Rule::unique('pessoas')->whereNull('deleted_at')->where('id', '<>', request()->route('pessoa')->id)],
+            'documento' => ['required', Rule::unique('pessoas')->whereNull('deleted_at')->where('id', '<>', request()->route('pessoa')->id)],
             'telefone'  => [
                 'string',
                 'required',
