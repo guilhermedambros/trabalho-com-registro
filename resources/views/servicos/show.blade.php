@@ -76,11 +76,15 @@
                                     </tr>
                                     <tr>
                                         <th>Valor</th>
-                                        <td>{{ $maquina->pivot->valor }}</td>
+                                        <td>{{ number_format($maquina->pivot->valor_total, 2, ',', '.') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Valor subsidiado</th>
+                                        <td>{{ number_format($maquina->pivot->valor_subsidiado, 2, ',', '.') }}</td>
                                     </tr>
                                     <tr>
                                         <th>Tempo</th>
-                                        <td>{{ $maquina->pivot->tempo }}</td>
+                                        <td>{{ \App\Helpers\Helpers::convertFloattoHours($maquina->pivot->tempo)}} </td>
                                     </tr>
                                 </td>
                                 @endforeach

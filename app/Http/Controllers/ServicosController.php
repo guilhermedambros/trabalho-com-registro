@@ -71,7 +71,13 @@ class ServicosController extends Controller
                     $sync_data[$i]['valor_total'] = str_replace(",",".",str_replace(".","",$request['pivot_valor_total'][$i])) ?: 0;
                     $sync_data[$i]['valor_subsidiado'] = 0;
                     $maquina = Maquina::find($request['pivot_maquina_id'][$i]);
-
+                    //dd(config('app.tipo_bonificacao_maquina.percentual'));
+                    if ($maquina->tipo_maquina->tipo_bonificacao == config('app.tipo_bonificacao_maquina.percentual')) {
+                        //dd($maquina->tipo_maquina->valor_hora_subsidiado);
+                        $sync_data[$i]['valor_subsidiado'] = (str_replace(",",".", $maquina->tipo_maquina->valor_hora_subsidiado) / 100) * $sync_data[$i]['valor_total'];
+                    } elseif ($maquina->tipo_maquina->tipo_bonificacao == config('app.tipo_bonificacao_maquina.valor')) {
+                        $sync_data[$i]['valor_subsidiado'] = $sync_data[$i]['tempo'] * str_replace(",",".", $maquina->tipo_maquina->valor_hora_subsidiado);
+                    }
                     if ($maquina->tipo_maquina_id == "1") {
                         $saldo_pesadas = (float) $saldo_pesadas - $sync_data[$i]['tempo'];
                     } elseif ($maquina->tipo_maquina_id == "2") {
@@ -174,6 +180,12 @@ class ServicosController extends Controller
                 $sync_data[$i]['valor_subsidiado'] = 0;
 
                 $maquina = Maquina::find($request['pivot_maquina_id'][$i]);
+                if ($maquina->tipo_maquina->tipo_bonificacao == config('app.tipo_bonificacao_maquina.percentual')) {
+                        //dd($maquina->tipo_maquina->valor_hora_subsidiado);
+                        $sync_data[$i]['valor_subsidiado'] = (str_replace(",",".", $maquina->tipo_maquina->valor_hora_subsidiado) / 100) * $sync_data[$i]['valor_total'];
+                    } elseif ($maquina->tipo_maquina->tipo_bonificacao == config('app.tipo_bonificacao_maquina.valor')) {
+                        $sync_data[$i]['valor_subsidiado'] = $sync_data[$i]['tempo'] * str_replace(",",".", $maquina->tipo_maquina->valor_hora_subsidiado);
+                    }
 
                 if ($maquina->tipo_maquina_id == "1") {
                     $saldo_pesadas = (float) $saldo_pesadas - $sync_data[$i]['tempo'];
