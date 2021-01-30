@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Carbon\Carbon;
@@ -13,7 +12,7 @@ use App\User;
 
 class Servico extends Model implements Auditable
 {
-    use SoftDeletes, HasFactory, RecordSignature;
+    use HasFactory, RecordSignature;
     use \OwenIt\Auditing\Auditable;
     public $table = 'servicos';
     
@@ -33,7 +32,6 @@ class Servico extends Model implements Auditable
         'numero',
         'created_by',
         'modified_by',
-        'deleted_by',
     ];
 
     public function setDataRealizacaoAttribute($date)

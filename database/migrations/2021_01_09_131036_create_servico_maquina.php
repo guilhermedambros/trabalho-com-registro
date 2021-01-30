@@ -15,7 +15,7 @@ class CreateServicoMaquina extends Migration
     {
         Schema::create('servico_maquina', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('servico_id')->constrained('servicos');
+            $table->foreignId('servico_id')->constrained('servicos')->onDelete('cascade');
             $table->foreignId('maquina_id')->constrained('maquinas');
             $table->integer('tempo');
             $table->decimal('valor_total', 8, 2);

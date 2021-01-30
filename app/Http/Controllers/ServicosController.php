@@ -72,26 +72,28 @@ class ServicosController extends Controller
                     $maquina = Maquina::find($request['pivot_maquina_id'][$i]);
 
                     if ($maquina->tipo_maquina_id == "1") {
-                        $saldo_pesadas = (float) $saldos->saldo_pesadas - $saldo_pesadas - Helper::convertHoursToFloat($sync_data[$i]['tempo']);
+                        $saldo_pesadas += Helper::convertHoursToFloat($sync_data[$i]['tempo']);
                     } elseif ($maquina->tipo_maquina_id == "2") {
-                        $saldo_leves = (float) $saldos->saldo_leves - $saldo_leves - Helper::convertHoursToFloat($sync_data[$i]['tempo']);
+                        $saldo_leves += Helper::convertHoursToFloat($sync_data[$i]['tempo']);
                     }
                 }
             }
 
-            if ($saldo_leves < 0) {
-                DB::rollback();
-                return redirect()->route('servicos.create')->with('message', 'Você não possui saldo!');
-            } else {
-                $saldos->saldo_leves = $saldo_leves;
-                $saldos->save();
-            }
-
+            $saldo_pesadas = (float) $saldos->saldo_pesadas - $saldo_pesadas;
             if ($saldo_pesadas < 0) {
                 DB::rollback();
                 return redirect()->route('servicos.create')->with('message', 'Você não possui saldo!');
             } else {
                 $saldos->saldo_pesadas = $saldo_pesadas;
+                $saldos->save();
+            }
+
+            $saldo_leves = (float) $saldos->saldo_leves - $saldo_leves;
+            if ($saldo_leves < 0) {
+                DB::rollback();
+                return redirect()->route('servicos.create')->with('message', 'Você não possui saldo!');
+            } else {
+                $saldos->saldo_leves = $saldo_leves;
                 $saldos->save();
             }
 
@@ -173,14 +175,22 @@ class ServicosController extends Controller
                 $sync_data[$i]['valor_subsidiado'] = 0;
 
                 $maquina = Maquina::find($request['pivot_maquina_id'][$i]);
-
                 if ($maquina->tipo_maquina_id == "1") {
-                    $saldo_pesadas = (float) $saldos->saldo_pesadas - $saldo_pesadas - Helper::convertHoursToFloat($sync_data[$i]['tempo']);
+                    $saldo_pesadas += Helper::convertHoursToFloat($sync_data[$i]['tempo']);
                 } elseif ($maquina->tipo_maquina_id == "2") {
-                    $saldo_leves = (float) $saldos->saldo_leves - $saldo_leves - Helper::convertHoursToFloat($sync_data[$i]['tempo']);
+                    $saldo_leves += Helper::convertHoursToFloat($sync_data[$i]['tempo']);
                 }
             }
 
+            $saldo_pesadas = (float) $saldos->saldo_pesadas - $saldo_pesadas;
+            if ($saldo_pesadas < 0) {
+                return redirect()->route('servicos.index')->with('error', 'Você não possui saldo!');
+            } else {
+                $saldos->saldo_pesadas = $saldo_pesadas;
+                $saldos->save();
+            }
+            
+            $saldo_leves = (float) $saldos->saldo_leves - $saldo_leves;
             if ($saldo_leves < 0) {
                 return redirect()->route('servicos.index')->with('error', 'Você não possui saldo!');
             } else {
@@ -188,12 +198,6 @@ class ServicosController extends Controller
                 $saldos->save();
             }
 
-            if ($saldo_pesadas < 0) {
-                return redirect()->route('servicos.index')->with('error', 'Você não possui saldo!');
-            } else {
-                $saldos->saldo_pesadas = $saldo_pesadas;
-                $saldos->save();
-            }
             $servico->maquinas()->sync($sync_data);
         }
         return redirect()->route('servicos.index')->with('message', 'Serviço atualizado!');
@@ -212,11 +216,22 @@ class ServicosController extends Controller
         $servico = Servico::findOrFail($id);
         $msg = 'Ocorreu um erro!';
         $typeMsg = 'error';
+
+        $saldos = SaldoPeriodo::where('pessoa_id', Auth::user()->id)->where('ano_exercicio', date('Y', strtotime(str_replace('/', '-', $servico->data_realizacao))))->first();
+
+        foreach ($servico->maquinas as $maquinas) {
+            $maquina = Maquina::find($maquinas->pivot->maquina_id);
+            if ($maquina->tipo_maquina_id == "1") {
+                $saldos->saldo_pesadas = (float) $saldos->saldo_pesadas + Helper::convertHoursToFloat($maquinas->pivot->tempo);
+            } elseif ($maquina->tipo_maquina_id == "2") {
+                $saldos->saldo_leves = (float) $saldos->saldo_leves + Helper::convertHoursToFloat($maquinas->pivot->tempo);
+            }
+        }
+
         if ($servico->delete()) {
             $msg = 'Servico excluído!';
             $typeMsg = 'success';
-            $servico->deleted_by = Auth::user()->id;
-            $servico->update();
+            $saldos->save();
         }
 
         return redirect()->route('servicos.index')->with($typeMsg, $msg);
