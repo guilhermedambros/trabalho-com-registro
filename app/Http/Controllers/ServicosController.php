@@ -53,7 +53,7 @@ class ServicosController extends Controller
                 'descricao' => $request->descricao,
                 'endereco' => $request->endereco,
                 'numero' => $request->numero,
-                'data_realizacao' => $request->data_realizacao,
+                'data_realizacao' => $request->data_realizacao . ' ' . date('H:i:s'),
                 'beneficiario_pessoa_id' => $request->beneficiario_pessoa_id,
             ]);
             $servico->save();
@@ -155,6 +155,7 @@ class ServicosController extends Controller
     public function update(UpdateServicoRequest $request, $id)
     {
         $servico = Servico::find($id);
+        $request->data_realizacao = $request->data_realizacao . ' ' . date('H:i:s');
         $servico->fill($request->all());
 
         $servico->update();
