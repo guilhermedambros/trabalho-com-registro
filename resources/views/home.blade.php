@@ -41,7 +41,7 @@
             Bem vindo ao sistema {{ trans('panel.site_title') }}
         @endif
         <div class="bg-gray-200 flex justify-between items-center py-20 px-20">
-        @can('produtor_acessar')
+        @can('maquina_acessar')
         <div class="mr-4 text-center">
             <img src="{{ asset('storage/img_avatar.png') }}" alt="" class="w-full mr-2 rounded">
             <a href="{{ route('pessoas.index') }}" class="img-fluid" role="button" aria-pressed="true">Produtor</a>

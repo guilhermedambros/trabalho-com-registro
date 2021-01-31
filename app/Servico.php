@@ -12,7 +12,7 @@ use App\User;
 
 class Servico extends Model
 {
-    use SoftDeletes, HasFactory, RecordSignature;
+    use SoftDeletes, HasFactory;
     public $table = 'servicos';
     
     protected $dates = [
