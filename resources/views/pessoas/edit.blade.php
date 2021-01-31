@@ -130,10 +130,10 @@
                 @endif
             </div>
             <div class="mb-3">
-                <label for="data_associacao" class="text-xs required">{{ trans('cruds.pessoa.fields.data_associacao') }}</label>
+                <label for="data_associacao" class="text-xs ">{{ trans('cruds.pessoa.fields.data_associacao') }}</label>
 
                 <div class="form-group">
-                    <input type="data_associacao" id="data_associacao" required name="data_associacao" class="date {{ $errors->has('data_associacao') ? ' is-invalid' : '' }}" value="{{ old('data_associacao', $pessoa->data_associacao) }}" autocomplete="off">
+                    <input type="data_associacao" id="data_associacao"  name="data_associacao" class="date {{ $errors->has('data_associacao') ? ' is-invalid' : '' }}" value="{{ old('data_associacao', $pessoa->data_associacao) }}" autocomplete="off">
                 </div>
                 @if($errors->has('data_associacao'))
                     <p class="invalid-feedback">{{ $errors->first('data_associacao') }}</p>

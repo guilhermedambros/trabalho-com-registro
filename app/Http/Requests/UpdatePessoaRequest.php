@@ -22,7 +22,7 @@ class UpdatePessoaRequest extends FormRequest
     {
         return [
             'nome' => ['string','required',],
-            'data_associacao' => ['string','required',],
+            'data_associacao' => [Rule::requiredIf(in_array(1/*tipo associado*/, $this->input('tipo_pessoas', []))),],
             'endereco' => ['string','required',],
             'issqn' => [Rule::requiredIf(in_array(5/*tipo prestador*/, $this->input('tipo_pessoas', []))), 'numeric', 'between:0,100',],
             'email' => [Rule::unique('pessoas')->whereNull('deleted_at')->whereNotNull('email')->where('id', '<>', request()->route('pessoa')->id)],
