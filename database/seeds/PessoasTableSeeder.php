@@ -14,12 +14,12 @@ class PessoasTableSeeder extends Seeder
     public function run()
     {
         $pessoas = [
-            ['nome' => 'Pessoa Associada', 'email' => 'pa@mail.com', 'created_by' => 1, 'documento' => '12345678910', 'telefone' => '54996048965'],
-            ['nome' => 'Pessoa Não Associada', 'email' => 'pna@mail.com', 'created_by' => 1, 'documento' => '12345678911', 'telefone' => '54996048965'],
-            ['nome' => 'Pessoa Prestadora', 'email' => 'pp@mail.com', 'created_by' => 1, 'documento' => '12345678912', 'telefone' => '54996048965'],
-            ['nome' => 'Pessoa Associada e Prestadora', 'email' => 'pap@mail.com', 'created_by' => 1, 'documento' => '12345678913', 'telefone' => '54996048965'],
-            ['nome' => 'Pessoa Outros', 'email' => 'po@mail.com', 'created_by' => 1, 'documento' => '12345678914', 'telefone' => '54996048965'],
-            ['nome' => 'Pessoa Terceiro', 'email' => 'pt@mail.com', 'created_by' => 1, 'documento' => '12345678915', 'telefone' => '54996048965'],
+            ['nome' => 'Pessoa Associada', 'email' => 'pa@mail.com', 'created_by' => 1, 'inscricao' => '366100', 'endereco' => 'Endereço padrão', 'data_associacao' => '01/01/2021', 'issqn' => null],
+            ['nome' => 'Pessoa Não Associada', 'email' => 'pna@mail.com', 'created_by' => 1, 'inscricao' => '366100', 'endereco' => 'Endereço padrão', 'data_associacao' => '01/01/2021', 'issqn' => null],
+            ['nome' => 'Pessoa Prestadora', 'email' => 'pp@mail.com', 'created_by' => 1, 'inscricao' => '366100', 'endereco' => 'Endereço padrão', 'data_associacao' => '01/01/2021', 'issqn' => 4.0],
+            ['nome' => 'Pessoa Associada e Prestadora', 'email' => 'pap@mail.com', 'created_by' => 1, 'inscricao' => '366100', 'endereco' => 'Endereço padrão', 'data_associacao' => '01/01/2021', 'issqn' => 2.5],
+            ['nome' => 'Pessoa Outros', 'email' => 'po@mail.com', 'created_by' => 1, 'inscricao' => '366100', 'endereco' => 'Endereço padrão', 'data_associacao' => '01/01/2021', 'issqn' => null],
+            ['nome' => 'Pessoa Terceiro', 'email' => 'pt@mail.com', 'created_by' => 1, 'inscricao' => '366100', 'endereco' => 'Endereço padrão', 'data_associacao' => '01/01/2021', 'issqn' => null],
 
         ];
 

@@ -28,9 +28,7 @@ class MaquinasController extends Controller
      */
     public function index()
     {
-        //
         abort_if(Gate::denies('maquina_acessar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $maquinas = Maquina::orderBy('descricao')->get();
         return view('maquinas.index', compact('maquinas'));
     }
@@ -42,10 +40,10 @@ class MaquinasController extends Controller
      */
     public function create()
     {
+        $maquinas = [];
         $pessoas = Pessoa::all();
-        $maquinas = Maquina::all();
         $tipo_maquinas = TipoMaquina::all();
-        return view('maquinas.create', compact('pessoas', 'maquinas','tipo_maquinas'));
+        return view('maquinas.create', compact('pessoas', 'maquinas', 'tipo_maquinas'));
     }
 
     /**
@@ -84,7 +82,6 @@ class MaquinasController extends Controller
      */
     public function show(Maquina $maquina)
     {
-        //
         abort_if(Gate::denies('maquina_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('maquinas.show', compact('maquina'));
     }
@@ -97,13 +94,10 @@ class MaquinasController extends Controller
      */
     public function edit($id)
     {
-        //
         $maquinas = Maquina::find($id);
-        $id = $maquinas->id;
-        $pessoas = Pessoa::where('id', '=', $maquinas->proprietario_pessoa_id)->get();
-        $tipo_maquinas = TipoMaquina::where('id', '=', $maquinas->tipo_maquina_id)->get();
+        $pessoas = Pessoa::all();
+        $tipo_maquinas = TipoMaquina::all();
         $valor_hora = $maquinas->valor_hora;
-
         return view('maquinas.edit', compact('id', 'maquinas', 'pessoas', 'tipo_maquinas', 'valor_hora'));
     }
 
@@ -119,17 +113,11 @@ class MaquinasController extends Controller
         $request->validate([
             'valor_hora' => 'required',
         ]);
-
         $maquinas = Maquina::find($id);
-        
         $maquinas->update($request->all());
-        
-        $updated_by = \Auth::user()->id;
-    
-        if($maquinas->save()){
+        if ($maquinas->save()) {
             return redirect()->route('maquinas.index')->with(['tipo'=>'success', 'message' => 'Máquina ' . $maquinas->descricao . ' editada com sucesso!']);
         }
-
         return redirect()->back()->with(['tipo'=>'danger', 'message' => 'Não foi possível editar a máquina!'])->withInput();
     }
 
@@ -142,83 +130,21 @@ class MaquinasController extends Controller
     public function destroy(Maquina $maquina)
     {
         abort_if(Gate::denies('maquina_excluir'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $maquina->delete();
-
         return back();
     }
 
     public function get_valor_hora(Request $request)
     {
         if (!empty($request)) {
-            $existe_saldo = false;
             $maquina = Maquina::find(intval($request->id));
-            $saldo = SaldoPeriodo::where('ano_exercicio', date('Y', strtotime(str_replace('/', '-', $request->data_realizacao))))->where('pessoa_id', Auth::user()->id)->first();
+           
+            $valor_hora = (float) $maquina->valor_hora * Helper::convertHoursToFloat($request->tempo);
 
-            if (!empty($saldo)) {
-                if ($maquina->tipo_maquina_id == "1") {
-                    if ($saldo->saldo_pesadas > 0) {
-                        $existe_saldo = true;
-                    }
-                }
-
-                if ($maquina->tipo_maquina_id == "2") {
-                    if ($saldo->saldo_leves > 0) {
-                        $existe_saldo = true;
-                    }
-                }
-            } else {
-                return response()->json([
-                    'success' => true,
-                    'data' => 'Você não possui saldo!'
-                ]);
-            }
-
-            if ($existe_saldo) {
-                $str_time = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "$1:$2:00", $request->tempo);
-                sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
-                $time_seconds = $hours * 3600 + $minutes * 60 + $seconds;
-
-                // MAQUINAS PESADAS
-                if ($maquina->tipo_maquina_id == "1") {
-                    $valor_hora = ((float) $maquina->valor_hora * 0.5) * $time_seconds;
-                }
-
-                // MAQUINAS LEVES
-                if ($maquina->tipo_maquina_id == "2") {
-                    $valor_hora = (float) $maquina->valor_hora * $time_seconds;
-                }
-
-                if ($maquina->tipo_maquina_id == "1") {
-                    $saldo->saldo_pesadas = $saldo->saldo_pesadas - Helper::convertHoursToFloat($request->tempo);
-                    if ($saldo->saldo_pesadas < 0) {
-                        return response()->json([
-                            'success' => false,
-                            'data' => 'Você não possui saldo!'
-                        ]);
-                    }
-                }
-
-                if ($maquina->tipo_maquina_id == "2") {
-                    $saldo->saldo_leves = $saldo->saldo_leves - Helper::convertHoursToFloat($request->tempo);
-                    if ($saldo->saldo_leves < 0) {
-                        return response()->json([
-                            'success' => false,
-                            'data' => 'Você não possui saldo!'
-                        ]);
-                    }
-                }
-
-                return response()->json([
-                    'success' => true,
-                    'data' => number_format($valor_hora, 2, ',', '.')
-                ]);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'data' => 'Você não possui saldo!'
-                ]);
-            }
+            return response()->json([
+                'success' => true,
+                'data' => number_format($valor_hora, 2, ',', '.')
+            ]);
         }
         return response()->json([
             'success' => false,

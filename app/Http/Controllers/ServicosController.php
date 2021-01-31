@@ -53,45 +53,54 @@ class ServicosController extends Controller
                 'descricao' => $request->descricao,
                 'endereco' => $request->endereco,
                 'numero' => $request->numero,
-                'data_realizacao' => $request->data_realizacao,
+                'data_realizacao' => $request->data_realizacao . ' ' . date('H:i:s'),
                 'beneficiario_pessoa_id' => $request->beneficiario_pessoa_id,
             ]);
             $servico->save();
 
-            $saldos = SaldoPeriodo::where('pessoa_id', Auth::user()->id)->where('ano_exercicio', date('Y', strtotime(str_replace('/', '-', $request->data_realizacao))))->first();
-            $saldo_leves = 0.0;
-            $saldo_pesadas = 0.0;
+            $saldos = SaldoPeriodo::where('pessoa_id', $request->beneficiario_pessoa_id)->where('ano_exercicio', date('Y', strtotime(str_replace('/', '-', $request->data_realizacao))))->first();
+            $saldo_leves = $saldos->saldo_leves;
+            $saldo_pesadas = $saldos->saldo_pesadas;
 
             $sync_data = [];
             if (!empty($request['pivot_maquina_id'])) {
+               
                 for ($i=0; $i < count($request['pivot_maquina_id']); $i++) {
                     $sync_data[$i]['maquina_id'] = $request['pivot_maquina_id'][$i];
-                    $sync_data[$i]['tempo'] = $request['pivot_tempo'][$i];
+                    $sync_data[$i]['tempo'] = Helper::convertHoursToFloat($request['pivot_tempo'][$i]);
                     $sync_data[$i]['valor_total'] = str_replace(",",".",str_replace(".","",$request['pivot_valor_total'][$i])) ?: 0;
                     $sync_data[$i]['valor_subsidiado'] = 0;
                     $maquina = Maquina::find($request['pivot_maquina_id'][$i]);
-
+                    //dd(config('app.tipo_bonificacao_maquina.percentual'));
+                    if ($maquina->tipo_maquina->tipo_bonificacao == config('app.tipo_bonificacao_maquina.percentual')) {
+                        //dd($maquina->tipo_maquina->valor_hora_subsidiado);
+                        $sync_data[$i]['valor_subsidiado'] = (str_replace(",",".", $maquina->tipo_maquina->valor_hora_subsidiado) / 100) * $sync_data[$i]['valor_total'];
+                    } elseif ($maquina->tipo_maquina->tipo_bonificacao == config('app.tipo_bonificacao_maquina.valor')) {
+                        $sync_data[$i]['valor_subsidiado'] = $sync_data[$i]['tempo'] * str_replace(",",".", $maquina->tipo_maquina->valor_hora_subsidiado);
+                    }
                     if ($maquina->tipo_maquina_id == "1") {
-                        $saldo_pesadas = (float) $saldos->saldo_pesadas - $saldo_pesadas - Helper::convertHoursToFloat($sync_data[$i]['tempo']);
+                        $saldo_pesadas = (float) $saldo_pesadas - $sync_data[$i]['tempo'];
                     } elseif ($maquina->tipo_maquina_id == "2") {
-                        $saldo_leves = (float) $saldos->saldo_leves - $saldo_leves - Helper::convertHoursToFloat($sync_data[$i]['tempo']);
+                        $saldo_leves = (float) $saldo_leves - $sync_data[$i]['tempo'];
                     }
                 }
             }
 
-            if ($saldo_leves < 0) {
+            // $saldo_pesadas = (float) $saldos->saldo_pesadas - $saldo_pesadas;
+            if ($saldo_pesadas < 0) {
                 DB::rollback();
-                return redirect()->route('servicos.index')->with('error', 'Ocorreu um erro!');
+                return redirect()->route('servicos.create')->with('message', 'Você não possui saldo!');
             } else {
-                $saldos->saldo_leves = $saldo_leves;
+                $saldos->saldo_pesadas = $saldo_pesadas;
                 $saldos->save();
             }
 
-            if ($saldo_pesadas < 0) {
+            // $saldo_leves = (float) $saldos->saldo_leves - $saldo_leves;
+            if ($saldo_leves < 0) {
                 DB::rollback();
-                return redirect()->route('servicos.index')->with('error', 'Ocorreu um erro!');
+                return redirect()->route('servicos.create')->with('message', 'Você não possui saldo!');
             } else {
-                $saldos->saldo_pesadas = $saldo_pesadas;
+                $saldos->saldo_leves = $saldo_leves;
                 $saldos->save();
             }
 
@@ -155,31 +164,47 @@ class ServicosController extends Controller
     public function update(UpdateServicoRequest $request, $id)
     {
         $servico = Servico::find($id);
+        $request->data_realizacao = $request->data_realizacao . ' ' . date('H:i:s');
         $servico->fill($request->all());
 
         $servico->update();
         $sync_data = [];
         if (!empty($request['pivot_maquina_id'])) {
-            $saldos = SaldoPeriodo::where('pessoa_id', Auth::user()->id)->where('ano_exercicio', date('Y', strtotime(str_replace('/', '-', $request->data_realizacao))))->first();
-            $saldo_leves = 0.0;
-            $saldo_pesadas = 0.0;
+            $saldos = SaldoPeriodo::where('pessoa_id', $request->beneficiario_pessoa_id)->where('ano_exercicio', date('Y', strtotime(str_replace('/', '-', $request->data_realizacao))))->first();
+            $saldo_leves = $saldos->saldo_leves;
+            $saldo_pesadas = $saldos->saldo_pesadas;
 
             $servico->maquinas()->wherePivot('servico_id', $id)->detach();
             for ($i=0; $i < count($request['pivot_maquina_id']); $i++) {
                 $sync_data[$i]['maquina_id'] = $request['pivot_maquina_id'][$i];
-                $sync_data[$i]['tempo'] = $request['pivot_tempo'][$i];
+                $sync_data[$i]['tempo'] = Helper::convertHoursToFloat($request['pivot_tempo'][$i]);
                 $sync_data[$i]['valor_total'] = str_replace(",",".",str_replace(".","",$request['pivot_valor_total'][$i]));
                 $sync_data[$i]['valor_subsidiado'] = 0;
 
                 $maquina = Maquina::find($request['pivot_maquina_id'][$i]);
+                if ($maquina->tipo_maquina->tipo_bonificacao == config('app.tipo_bonificacao_maquina.percentual')) {
+                        //dd($maquina->tipo_maquina->valor_hora_subsidiado);
+                        $sync_data[$i]['valor_subsidiado'] = (str_replace(",",".", $maquina->tipo_maquina->valor_hora_subsidiado) / 100) * $sync_data[$i]['valor_total'];
+                    } elseif ($maquina->tipo_maquina->tipo_bonificacao == config('app.tipo_bonificacao_maquina.valor')) {
+                        $sync_data[$i]['valor_subsidiado'] = $sync_data[$i]['tempo'] * str_replace(",",".", $maquina->tipo_maquina->valor_hora_subsidiado);
+                    }
 
                 if ($maquina->tipo_maquina_id == "1") {
-                    $saldo_pesadas = (float) $saldos->saldo_pesadas - $saldo_pesadas - Helper::convertHoursToFloat($sync_data[$i]['tempo']);
+                    $saldo_pesadas = (float) $saldo_pesadas - $sync_data[$i]['tempo'];
                 } elseif ($maquina->tipo_maquina_id == "2") {
-                    $saldo_leves = (float) $saldos->saldo_leves - $saldo_leves - Helper::convertHoursToFloat($sync_data[$i]['tempo']);
+                    $saldo_leves = (float)  $saldo_leves - $sync_data[$i]['tempo'];
                 }
             }
 
+            // $saldo_pesadas = (float) $saldos->saldo_pesadas - $saldo_pesadas;
+            if ($saldo_pesadas < 0) {
+                return redirect()->route('servicos.index')->with('error', 'Você não possui saldo!');
+            } else {
+                $saldos->saldo_pesadas = $saldo_pesadas;
+                $saldos->save();
+            }
+            
+            // $saldo_leves = (float) $saldos->saldo_leves - $saldo_leves;
             if ($saldo_leves < 0) {
                 return redirect()->route('servicos.index')->with('error', 'Você não possui saldo!');
             } else {
@@ -187,12 +212,6 @@ class ServicosController extends Controller
                 $saldos->save();
             }
 
-            if ($saldo_pesadas < 0) {
-                return redirect()->route('servicos.index')->with('error', 'Você não possui saldo!');
-            } else {
-                $saldos->saldo_pesadas = $saldo_pesadas;
-                $saldos->save();
-            }
             $servico->maquinas()->sync($sync_data);
         }
         return redirect()->route('servicos.index')->with('message', 'Serviço atualizado!');
@@ -211,11 +230,22 @@ class ServicosController extends Controller
         $servico = Servico::findOrFail($id);
         $msg = 'Ocorreu um erro!';
         $typeMsg = 'error';
+
+        $saldos = SaldoPeriodo::where('pessoa_id', Auth::user()->id)->where('ano_exercicio', date('Y', strtotime(str_replace('/', '-', $servico->data_realizacao))))->first();
+
+        foreach ($servico->maquinas as $maquinas) {
+            $maquina = Maquina::find($maquinas->pivot->maquina_id);
+            if ($maquina->tipo_maquina_id == "1") {
+                $saldos->saldo_pesadas = (float) $saldos->saldo_pesadas + Helper::convertHoursToFloat($maquinas->pivot->tempo);
+            } elseif ($maquina->tipo_maquina_id == "2") {
+                $saldos->saldo_leves = (float) $saldos->saldo_leves + Helper::convertHoursToFloat($maquinas->pivot->tempo);
+            }
+        }
+
         if ($servico->delete()) {
             $msg = 'Servico excluído!';
             $typeMsg = 'success';
-            $servico->deleted_by = Auth::user()->id;
-            $servico->update();
+            $saldos->save();
         }
 
         return redirect()->route('servicos.index')->with($typeMsg, $msg);

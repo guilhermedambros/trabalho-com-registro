@@ -5,6 +5,12 @@
         {{ $title }} {{ trans('cruds.servico.title_singular') }}
     </div>
 
+    @error('message')
+        <div class="alert alert-danger">
+            <strong>{{ session('errors')->first('message') }}</strong>
+        </div>
+    @enderror
+
     <form method="POST" action="{{ route($routes, old('id') ?? $servicos->id ?? null) }}" enctype="multipart/form-data">
         @csrf
         @method($method)
@@ -87,7 +93,7 @@
                         </div>
                         <div class="w-full px-2 md:w-1/4">
                             <label class="text-xs" for="pivot.valor_total">Tempo (h:m)</label>
-                            <input class="tempo-valor w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline hour-minute" type="text" id="tempo" name="pivot.tempo[]" value="{{$tempo}}" required />
+                            <input class="tempo-valor w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline hour-minute" type="text" id="tempo" name="pivot.tempo[]" value="{{\App\Helpers\Helpers::convertFloattoHours($tempo)}}" required />
                         </div>
                         <div class="w-full px-2 md:w-1/4">
                             <label class="text-xs" for="formGridCode_last">Valor (R$)</label>
@@ -156,19 +162,11 @@
                     if (newSelect.childNodes.length == 9) {
                         if (document.querySelectorAll('.id-maquinas').length < optionsLength-1) {
                             newDiv.appendChild(newSelect);
-                            // newSelect.childNodes[1].childNodes[3].childNodes[1].remove();
-                            // document.querySelectorAll('.id-maquinas').forEach((key,val) => {
-                            //     newSelect.childNodes[1].childNodes[3].options[key.selectedIndex] = null;
-                            // });
                             document.getElementById('servicos').appendChild(newDiv);
                         }
                     } else {
                         if (document.querySelectorAll('.id-maquinas').length < optionsLength-1) {
                             newDiv.appendChild(newSelect);
-                            // newSelect.childNodes[5].childNodes[1].childNodes[1].remove();
-                            // document.querySelectorAll('.id-maquinas').forEach((key,val) => {
-                            //     newSelect.childNodes[1].childNodes[3].options[key.selectedIndex] = null;
-                            // });
                             document.getElementById('maquinas').appendChild(newDiv);
                         }
                     }
@@ -226,6 +224,8 @@
                 let id = this.parentElement.parentElement.childNodes[1].childNodes[3]
                 let valor = this.parentElement.parentElement.childNodes[5].childNodes[3]
                 if (id.value && e.target.value.length > 4) {
+                    let tempo = this.value.substring(0,5)
+                    console.log(tempo)
                     fetch(`{{route('maquinas.get_valor_hora')}}`, {
                         method: 'post',
                         headers: {
@@ -237,7 +237,7 @@
                         credentials: "same-origin",
                         body: JSON.stringify({
                             id: id.value,
-                            tempo: this.value,
+                            tempo: tempo,
                             data_realizacao: document.getElementById('data_realizacao').value
                         })
                     })
@@ -245,6 +245,7 @@
                         return resp.json();
                     })
                     .then(function(resp) {
+                        console.log(resp)
                         if (resp) {
                             if (resp['success'] == false) {
                                 alertify.alert('Informação', resp['data'])
@@ -262,40 +263,6 @@
             })
 
             document.addEventListener('click',function(e) {
-
-                // document.querySelectorAll('.id-maquinas').forEach(maquinas => {
-                //     maquinas.addEventListener('change', function() {
-                        // let tempo = this.parentElement.parentElement.childNodes[3].childNodes[3]
-                        // let valor = this.parentElement.parentElement.childNodes[5].childNodes[3]
-                        // fetch(`{{route('maquinas.get_valor_hora')}}`, {
-                        //     method: 'post',
-                        //     headers: {
-                        //         "Content-Type": "application/json",
-                        //         "Accept": "application/json, text-plain, */*",
-                        //         "X-Requested-With": "XMLHttpRequest",
-                        //         "X-CSRF-TOKEN": token
-                        //     },
-                        //     credentials: "same-origin",
-                        //     body: JSON.stringify({
-                        //         id: this.value,
-                        //         tempo: tempo.value
-                        //     })
-                        // })
-                        // .then(function(resp) {
-                        //     return resp.json();
-                        // })
-                        // .then(function(resp) {
-                        //     if (resp) {
-                        //         valor.value = resp['data']
-                        //     }
-                        //     return resp;
-                        // })
-                        // .catch(function(error) {
-                        //     console.log(error);
-                        // })
-                //     })
-                // })
-
                 if (e.target && e.target.classList.contains('number')) {
                     VMasker(document.querySelectorAll(".number")).maskNumber();
                 }

@@ -7,7 +7,7 @@ use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
 use App\Helpers\Helpers;
-
+use Illuminate\Validation\Rule;
 class StorePessoaRequest extends FormRequest
 {
     public function authorize()
@@ -20,26 +20,12 @@ class StorePessoaRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome'     => [
-                'string',
-                'required',
-            ],
-            'email'    => [
-                'required',
-                'unique:pessoas,id,deleted_at,NULL',
-            ],
-            'documento' => [
-                'string',
-                'required',
-                'unique:pessoas,id,deleted_at,NULL',
-            ],
-            'telefone'  => [
-                'string',
-                'required',
-            ],
-            'tipo_pessoa_id'    => [
-                'integer',
-            ],
+            'nome' => ['string','required',],
+            'data_associacao' => [Rule::requiredIf(in_array(1/*tipo associado*/, $this->input('tipo_pessoas', []))),],
+            'endereco' => ['string','required',],
+            'issqn' => [Rule::requiredIf(in_array(5/*tipo prestador*/, $this->input('tipo_pessoas', []))), 'numeric', 'between:0,100',],
+            'email' => [Rule::unique('pessoas')->whereNull('deleted_at')->whereNotNull('email')],
+            'documento' => [Rule::unique('pessoas')->whereNull('deleted_at')->whereNotNull('documento')],
         ];
     }
 
@@ -49,8 +35,8 @@ class StorePessoaRequest extends FormRequest
         $this->merge([
             'documento' => Helpers::removeSpecialChar($this->documento),//remove caracteres do documento
             'telefone' => Helpers::removeSpecialChar($this->telefone),//remove caracteres do telefone
-            'celular' => Helpers::removeSpecialChar($this->celular),//remove caracteres do celular
             'cep' => Helpers::removeSpecialChar($this->cep),//remove caracteres do cep
+            'issqn' => str_replace(",",".",str_replace(".","",$this->issqn))
         ]);
     }
 }

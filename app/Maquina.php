@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use App\Http\Controllers\Traits\RecordSignature;
 
 class Maquina extends Model implements Auditable
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, RecordSignature;
     use \OwenIt\Auditing\Auditable;
     public $table = 'maquinas';
     
@@ -44,7 +44,7 @@ class Maquina extends Model implements Auditable
     public function servicos()
     {
         return $this->belongsToMany(Servico::class, 'servico_maquina', 'maquina_id', 'servico_id')
-                    ->withPivot('valor', 'tempo')
+                    ->withPivot('valor_total', 'tempo', 'valor_subsidiado')
                     ->withTimestamps();
     }
 }

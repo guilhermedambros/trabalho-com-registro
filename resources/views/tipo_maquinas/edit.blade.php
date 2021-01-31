@@ -34,7 +34,7 @@
                 @endif
             </div>
             <div class="mb-3">
-                <label for="tipo_bonificacao" class="text-xs required">{{ trans('cruds.tipoS_maquina.fields.tipo_bonificacao') }}</label>
+                <label for="tipo_bonificacao" class="text-xs required">{{ trans('cruds.tipo_maquina.fields.tipo_bonificacao') }}</label>
 
                 <div class="form-group">
                 <select  id="tipo_bonificacao" name="tipo_bonificacao" class="{{ $errors->has('tipo_bonificacao') ? ' is-invalid' : '' }} select" required>
@@ -54,6 +54,9 @@
         </div>
 
         <div class="footer">
+            <a class="btn-md btn-blue rounded-md" href="{{ route('tipo_maquinas.index') }}">
+                {{ trans('global.back_to_list') }}
+            </a>
             <button type="submit" class="submit-button">{{ trans('global.save') }}</button>
         </div>
     </form>

@@ -19,6 +19,7 @@ class Pessoa extends Model implements Auditable
         'updated_at',
         'deleted_at',
         'data_nascimento',
+        'data_associacao',
     ];
 
     protected $fillable = [
@@ -28,18 +29,17 @@ class Pessoa extends Model implements Auditable
         'email',
         'inscricao',
         'telefone',
-        'celular',
+        'data_associacao',
         'cep',
         'endereco',
         'bairro',
         'numero',
         'complemento',
-        'cidade',
-        'estado',
         'created_by',
         'modified_by',
         'deleted_by',
         'data_nascimento',
+        'issqn',
     ];
 
     public function saldo_periodos()
@@ -60,6 +60,23 @@ class Pessoa extends Model implements Auditable
     {
         $value = str_replace('-', '/', $this->attributes['data_nascimento']);
         return $value;
+    }
+
+    public function setDataAssociacaoAttribute($date) {
+        $date = str_replace('/', '-', $date );
+        $date = date("d-m-Y", strtotime($date));
+        $this->attributes['data_associacao'] = $date;
+    }
+    public function getDataAssociacaoAttribute()
+    {
+        $value = str_replace('-', '/', $this->attributes['data_associacao']);
+        return $value;
+    }
+
+    public function getIssqnAttribute()
+    {
+        $parts = explode('.', $this->attributes['issqn']);
+        return str_pad($parts[0], 2, "0", STR_PAD_LEFT).'.'.str_pad($parts[1] ?? 0, 2, "0", STR_PAD_RIGHT);
     }
 
     public function tipo_pessoas()

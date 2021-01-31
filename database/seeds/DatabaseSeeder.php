@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             TipoPessoasTableSeeder::class,
             TipoMaquinasTableSeeder::class,
             PessoasTableSeeder::class,
+            MaquinasTableSeeder::class,
         ]);
     }
 }

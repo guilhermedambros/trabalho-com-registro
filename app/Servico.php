@@ -3,16 +3,21 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 use Carbon\Carbon;
 
-use App\Traits\RecordSignature;
+use App\Http\Controllers\Traits\RecordSignature;
 use App\User;
 
-class Servico extends Model
+class Servico extends Model implements Auditable
 {
+<<<<<<< HEAD
     use SoftDeletes, HasFactory;
+=======
+    use HasFactory, RecordSignature;
+    use \OwenIt\Auditing\Auditable;
+>>>>>>> 44d758828d45bac875772c733f404d246ca2e75c
     public $table = 'servicos';
     
     protected $dates = [
@@ -31,7 +36,6 @@ class Servico extends Model
         'numero',
         'created_by',
         'modified_by',
-        'deleted_by',
     ];
 
     public function setDataRealizacaoAttribute($date)

@@ -60,5 +60,7 @@ Route::delete('servicos/destroy', 'ServicosController@massDestroy')->name('servi
 Route::resource('servicos', 'ServicosController');
 
 //Relatórios
-Route::get('relatorios/saldos', 'RelatoriosController@index')->name('relatorios.saldos.index');
-Route::post('relatorios/saldos/gerar', 'RelatoriosController@gera_relatorio')->name('relatorios.saldos.gerar');
+Route::get('relatorios/saldos', 'RelatoriosController@index_saldos')->name('relatorios.saldos.index');
+Route::post('relatorios/saldos/gerar', 'RelatoriosController@gera_relatorio_saldos')->name('relatorios.saldos.gerar');
+Route::get('relatorios/servicos', 'RelatoriosController@index_servicos')->name('relatorios.servicos.index');
+Route::post('relatorios/servicos/gerar', 'RelatoriosController@gera_relatorio_servicos')->name('relatorios.servicos.gerar');

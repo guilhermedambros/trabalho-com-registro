@@ -27,7 +27,7 @@
                         @endif
                     </div>
                     <div class="mb-3">
-                        <label for="pessoa" class="text-xs">{{ trans('cruds.saldo_periodo.fields.pessoa') }}</label>
+                        <label for="pessoa" class="text-xs">{{ trans('cruds.saldo_periodo.fields.pessoa_id') }}</label>
 
                         <div class="form-group">
                             <select  id="pessoa" name="pessoa" class="{{ $errors->has('pessoa') ? ' is-invalid' : '' }} " >
