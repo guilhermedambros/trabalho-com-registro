@@ -34,7 +34,7 @@
                         {{ trans('cruds.pessoa.fields.email') }}
                     </th>
                     <td>
-                        {{ $pessoa->email }}
+                        {{ $pessoa->email ?? ''}}
                     </td>
                 </tr>
                 <tr>
@@ -42,7 +42,7 @@
                         {{ trans('cruds.pessoa.fields.documento') }}
                     </th>
                     <td>
-                        {{ $pessoa->documento }}
+                        {{ $pessoa->documento ?? ''}}
                     </td>
                 </tr>
                 <tr>
@@ -63,10 +63,10 @@
                 </tr>
                 <tr>
                     <th>
-                        {{ trans('cruds.pessoa.fields.celular') }}
+                        {{ trans('cruds.pessoa.fields.data_associacao') }}
                     </th>
                     <td>
-                        {{ $pessoa->celular ?? '' }}
+                        {{ $pessoa->data_associacao ?? '' }}
                     </td>
                 </tr>
                 <tr>
@@ -111,10 +111,10 @@
                 </tr>
                 <tr>
                     <th>
-                        {{ trans('cruds.pessoa.fields.cidade') }}
+                        {{ trans('cruds.pessoa.fields.issqn') }}
                     </th>
                     <td>
-                        {{ $pessoa->cidade ?? '' }}
+                        {{ $pessoa->issqn ?? '' }}
                     </td>
                 </tr>
                 <tr>

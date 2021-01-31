@@ -21,19 +21,14 @@ class UpdatePessoaRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome'     => [
-                'string',
-                'required',
-            ],
-            'email' => ['required', Rule::unique('pessoas')->whereNull('deleted_at')->where('id', '<>', request()->route('pessoa')->id)],
-            'documento' => ['required', Rule::unique('pessoas')->whereNull('deleted_at')->where('id', '<>', request()->route('pessoa')->id)],
-            'telefone'  => [
-                'string',
-                'required',
-            ],
-            'tipo_pessoa_id'    => [
-                'integer',
-            ],
+            'nome' => ['string','required',],
+            'data_associacao' => ['string','required',],
+            'endereco' => ['string','required',],
+            'issqn' => [Rule::requiredIf(in_array(5/*tipo prestador*/, $this->input('tipo_pessoas', []))), 'numeric', 'between:0,100',],
+            'email' => [Rule::unique('pessoas')->whereNull('deleted_at')->whereNotNull('email')->where('id', '<>', request()->route('pessoa')->id)],
+            'documento' => [Rule::unique('pessoas')->whereNull('deleted_at')->whereNotNull('documento')->where('id', '<>', request()->route('pessoa')->id)],
+
+            
         ];
     }
 
@@ -43,8 +38,8 @@ class UpdatePessoaRequest extends FormRequest
         $this->merge([
             'documento' => Helpers::removeSpecialChar($this->documento),//remove caracteres do documento
             'telefone' => Helpers::removeSpecialChar($this->telefone),//remove caracteres do telefone
-            'celular' => Helpers::removeSpecialChar($this->celular),//remove caracteres do celular
             'cep' => Helpers::removeSpecialChar($this->cep),//remove caracteres do cep
+            'issqn' => str_replace(",",".",str_replace(".","",$this->issqn))
         ]);
     }
 }

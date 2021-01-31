@@ -22,52 +22,42 @@
                 @endif
             </div>
             <div class="mb-3">
-                <label for="email" class="text-xs required">{{ trans('cruds.pessoa.fields.email') }}</label>
+                <label for="email" class="text-xs">{{ trans('cruds.pessoa.fields.email') }}</label>
 
                 <div class="form-group">
-                    <input type="email" id="email" name="email" class="{{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('email') }}" required>
+                    <input type="email" id="email" name="email" class="{{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('email') }}">
                 </div>
                 @if($errors->has('email'))
                     <p class="invalid-feedback">{{ $errors->first('email') }}</p>
                 @endif
             </div>
             <div class="mb-3">
-                <label for="documento" class="text-xs required">{{ trans('cruds.pessoa.fields.documento') }}</label>
+                <label for="documento" class="text-xs">{{ trans('cruds.pessoa.fields.documento') }}</label>
 
                 <div class="form-group">
-                    <input type="documento" id="documento" name="documento" class="cpf {{ $errors->has('documento') ? ' is-invalid' : '' }}" value="{{ old('documento') }}" required>
+                    <input type="documento" id="documento" name="documento" class="cpf {{ $errors->has('documento') ? ' is-invalid' : '' }}" value="{{ old('documento') }}">
                 </div>
                 @if($errors->has('documento'))
                     <p class="invalid-feedback">{{ $errors->first('documento') }}</p>
                 @endif
             </div>
             <div class="mb-3">
-                <label for="telefone" class="text-xs required">{{ trans('cruds.pessoa.fields.telefone') }}</label>
+                <label for="telefone" class="text-xs">{{ trans('cruds.pessoa.fields.telefone') }}</label>
 
                 <div class="form-group">
-                    <input type="telefone" id="telefone" name="telefone" class=" phone {{ $errors->has('telefone') ? ' is-invalid' : '' }}" value="{{ old('telefone') }}" required>
+                    <input type="telefone" id="telefone" name="telefone" class=" phone {{ $errors->has('telefone') ? ' is-invalid' : '' }}" value="{{ old('telefone') }}">
                 </div>
                 @if($errors->has('telefone'))
                     <p class="invalid-feedback">{{ $errors->first('telefone') }}</p>
                 @endif
             </div>
             <div class="mb-3">
-                <label for="celular" class="text-xs">{{ trans('cruds.pessoa.fields.celular') }}</label>
-
-                <div class="form-group">
-                    <input type="celular" id="celular" name="celular" class="phone {{ $errors->has('celular') ? ' is-invalid' : '' }}" value="{{ old('celular') }}" >
-                </div>
-                @if($errors->has('celular'))
-                    <p class="invalid-feedback">{{ $errors->first('celular') }}</p>
-                @endif
-            </div>
-            <div class="mb-3">
-                <label for="tipo_pessoas" class="text-xs">{{ trans('cruds.pessoa.fields.tipo_pessoa') }}</label>
+                <label for="tipo_pessoas" class="text-xs required">{{ trans('cruds.pessoa.fields.tipo_pessoa') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn-sm btn-indigo select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                     <span class="btn-sm btn-indigo deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                 </div>
-                <select class="select2{{ $errors->has('tipo_pessoas') ? ' is-invalid' : '' }}" name="tipo_pessoas[]" id="tipo_pessoas" multiple>
+                <select class="select2{{ $errors->has('tipo_pessoas') ? ' is-invalid' : '' }}" name="tipo_pessoas[]" id="tipo_pessoas" multiple required>
                     @foreach($tipo_pessoas as $id => $tipo_pessoas)
                         <option value="{{ $id }}" {{ in_array($id, old('tipo_pessoas', [])) ? 'selected' : '' }}>{{ $tipo_pessoas }}</option>
                     @endforeach
@@ -78,10 +68,10 @@
             </div>
             
             <div class="mb-3">
-                <label for="inscricao" class="text-xs">{{ trans('cruds.pessoa.fields.inscricao') }}</label>
+                <label for="inscricao" class="text-xs required">{{ trans('cruds.pessoa.fields.inscricao') }}</label>
 
                 <div class="form-group">
-                    <input type="inscricao" id="inscricao" name="inscricao" class="{{ $errors->has('inscricao') ? ' is-invalid' : '' }}" value="{{ old('inscricao', 366100) }}">
+                    <input required type="inscricao" id="inscricao" name="inscricao" class="{{ $errors->has('inscricao') ? ' is-invalid' : '' }}" value="{{ old('inscricao', 366100) }}">
                 </div>
                 @if($errors->has('inscricao'))
                     <p class="invalid-feedback">{{ $errors->first('inscricao') }}</p>
@@ -98,20 +88,10 @@
                 @endif
             </div>
             <div class="mb-3">
-                <label for="cidade" class="text-xs">{{ trans('cruds.pessoa.fields.cidade') }}</label>
+                <label for="endereco" class="text-xs required">{{ trans('cruds.pessoa.fields.endereco') }}</label>
 
                 <div class="form-group">
-                    <input type="cidade" id="cidade" name="cidade" class="{{ $errors->has('cidade') ? ' is-invalid' : '' }}" value="{{ old('cidade') }}">
-                </div>
-                @if($errors->has('cidade'))
-                    <p class="invalid-feedback">{{ $errors->first('cidade') }}</p>
-                @endif
-            </div>
-            <div class="mb-3">
-                <label for="endereco" class="text-xs">{{ trans('cruds.pessoa.fields.endereco') }}</label>
-
-                <div class="form-group">
-                    <input type="endereco" id="endereco" name="endereco" class="{{ $errors->has('endereco') ? ' is-invalid' : '' }}" value="{{ old('endereco') }}">
+                    <input type="endereco" id="endereco"  required name="endereco" class="{{ $errors->has('endereco') ? ' is-invalid' : '' }}" value="{{ old('endereco') }}">
                 </div>
                 @if($errors->has('endereco'))
                     <p class="invalid-feedback">{{ $errors->first('endereco') }}</p>
@@ -148,13 +128,33 @@
                 @endif
             </div>
             <div class="mb-3">
+                <label for="data_associacao" class="text-xs required">{{ trans('cruds.pessoa.fields.data_associacao') }}</label>
+
+                <div class="form-group">
+                    <input type="data_associacao" id="data_associacao" required name="data_associacao" class="date {{ $errors->has('data_associacao') ? ' is-invalid' : '' }}" value="{{ old('data_associacao') }}" autocomplete="off">
+                </div>
+                @if($errors->has('data_associacao'))
+                    <p class="invalid-feedback">{{ $errors->first('data_associacao') }}</p>
+                @endif
+            </div>
+            <div class="mb-3">
                 <label for="data_nascimento" class="text-xs">{{ trans('cruds.pessoa.fields.data_nascimento') }}</label>
 
                 <div class="form-group">
-                    <input type="data_nascimento" id="data_nascimento" name="data_nascimento" class="datepicker {{ $errors->has('data_nascimento') ? ' is-invalid' : '' }}" value="{{ old('data_nascimento') }}" autocomplete="off">
+                    <input type="data_nascimento" id="data_nascimento" name="data_nascimento" class="date {{ $errors->has('data_nascimento') ? ' is-invalid' : '' }}" value="{{ old('data_nascimento') }}" autocomplete="off">
                 </div>
                 @if($errors->has('data_nascimento'))
                     <p class="invalid-feedback">{{ $errors->first('data_nascimento') }}</p>
+                @endif
+            </div>
+            <div class="mb-3">
+                <label for="issqn" class="text-xs">{{ trans('cruds.pessoa.fields.issqn') }}</label>
+
+                <div class="form-group">
+                    <input type="issqn" id="issqn" name="issqn" class="money {{ $errors->has('issqn') ? ' is-invalid' : '' }}" value="{{ old('issqn') }}" autocomplete="off">
+                </div>
+                @if($errors->has('issqn'))
+                    <p class="invalid-feedback">{{ $errors->first('issqn') }}</p>
                 @endif
             </div>
             
