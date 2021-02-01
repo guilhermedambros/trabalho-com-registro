@@ -40,31 +40,6 @@
         @else
             Bem vindo ao sistema {{ trans('panel.site_title') }}
         @endif
-<<<<<<< HEAD
-        <div class="bg-gray-200 flex justify-between items-center py-20 px-20">
-        @can('maquina_acessar')
-        <div class="mr-4 text-center">
-            <img src="{{ asset('storage/img_avatar.png') }}" alt="" class="w-full mr-2 rounded">
-            <a href="{{ route('pessoas.index') }}" class="img-fluid" role="button" aria-pressed="true">Produtor</a>
-        </div>
-        @endcan
-        @can('maquina_acessar')
-        <div class="mr-5 text-center">
-            <img src="{{ asset('storage/tractor-emoji.png') }}" alt="" class="w-full mr-2 rounded">
-            <a href="{{ route('maquinas.index') }}" class="img-fluid" role="button" aria-pressed="true">Máquinas</a>
-        </div>
-        @endcan
-        @can('servico_acessar')
-        <div class="mr-5 text-center">
-            <img src="{{ asset('storage/servicos_maquinas.jpg') }}" alt="" class="w-full mr-2 rounded">
-            <a href="{{ route('servicos.index') }}" class="img-fluid" role="button" aria-pressed="true">Serviços</a>
-        </div>
-        @endcan
-        @can('relatorios_acessar')
-        <div class="mr-5 text-center">
-            <img src="{{ asset('storage/relatorio.png') }}" alt="" class="w-full mr-2 rounded">
-            <a href="#" class="img-fluid" role="button" aria-pressed="true"> Gerar Relatório</a>
-=======
             <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1">
             @can('pessoa_acessar')
             <!-- light mode -->
@@ -159,7 +134,6 @@
             </div>
             @endcan
         
->>>>>>> 44d758828d45bac875772c733f404d246ca2e75c
         </div>
     </div>
        
