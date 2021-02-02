@@ -48,7 +48,7 @@ class PessoasController extends Controller
         $pessoa->complemento = $request->complemento ?? null;
         $pessoa->data_nascimento = $request->data_nascimento ?? null;
         $pessoa->data_associacao = $request->data_associacao ?? null;
-        $pessoa->issqn = $request->issqn;
+        $pessoa->issqn = $request->issqn ?? null;
         $pessoa->created_by = \Auth::user()->id;
         $pessoa->save();
         //dd($pessoa);
