@@ -59,8 +59,8 @@ class Helpers {
     {
         if (!empty($time)) {
             $aux = explode(':', $time);
-            $hours = $aux[0];
-            $minutes = $aux[1];
+            $hours = substr($aux[0], 0, 2);
+            $minutes = $aux[1] ?? substr($time, 2);
             return $hours + round($minutes / 60, 2);
         }
         return "Ocorreu um erro!";

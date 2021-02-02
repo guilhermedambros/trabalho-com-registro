@@ -64,8 +64,8 @@
                     @php $valor = $maquina['pivot']['valor_total'] @endphp
                     <div id="div-maquinas" class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
                         <div class="w-full px-2 md:w-1/4">
-                            <label class="text-xs" for="pivot.maquina">Máquina</label>
-                            <select class="id-maquinas w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" name="pivot.maquina_id[]" required>
+                            <label class="text-xs required" for="pivot.maquina">Máquina</label>
+                            <select required class="id-maquinas w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" name="pivot.maquina_id[]" required>
                                 {{$selectedvalue = $maquina->id}}
                                 <option value=""></option>
                                 @foreach ($maquinas as $key => $maquina)
@@ -76,12 +76,12 @@
                             </select>
                         </div>
                         <div class="w-full px-2 md:w-1/4">
-                            <label class="text-xs" for="pivot.valor_total">Tempo (h:m)</label>
-                            <input class="tempo-valor w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline hour-minute" type="text" id="tempo" name="pivot.tempo[]" value="{{\App\Helpers\Helpers::convertFloattoHours($tempo)}}" required />
+                            <label class="text-xs required" for="pivot.valor_total">Tempo (h:m)</label>
+                            <input required class="tempo-valor w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline hour-minute" type="text" id="tempo" name="pivot.tempo[]" value="{{\App\Helpers\Helpers::convertFloattoHours($tempo)}}" required />
                         </div>
                         <div class="w-full px-2 md:w-1/4">
-                            <label class="text-xs" for="formGridCode_last">Valor (R$)</label>
-                            <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" id="valor" name="pivot.valor_total[]" value="{{number_format($valor, 2, ',', '.')}}" readonly="readonly" />
+                            <label class="text-xs required" for="formGridCode_last">Valor (R$)</label>
+                            <input required class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" id="valor" name="pivot.valor_total[]" value="{{number_format($valor, 2, ',', '.')}}" readonly="readonly" />
                         </div>
                         <div class="w-full md:w-1/4">
                             <button id="remove-field" type="button" class="remove-field btn-md mt-6 btn-red rounded-md">Remover Máquina</button>
@@ -108,7 +108,7 @@
                     </div>
                     <div class="w-full px-2 md:w-1/4">
                         <label class="text-xs" for="pivot.valor_total">Valor (R$)</label>
-                        <input class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" id="valor" name="pivot.valor_total[]" readonly="readonly" />
+                        <input class="valor-maquina w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" id="valor" name="pivot.valor_total[]" readonly="readonly" />
                     </div>
                     <div class="w-full md:w-1/4">
                         <button id="remove-field" type="button" class="remove-field btn-md mt-6 btn-red rounded-md">Remover Máquina</button>
@@ -147,6 +147,8 @@
                         if (document.querySelectorAll('.id-maquinas').length < optionsLength-1) {
                             newDiv.appendChild(newSelect);
                             document.getElementById('servicos').appendChild(newDiv);
+                            document.querySelectorAll('.valor-maquina')[document.querySelectorAll('.valor-maquina').length -1].value=''
+                            document.querySelectorAll('.tempo-valor')[document.querySelectorAll('.tempo-valor').length -1].value=''
                         }
                     } else {
                         if (document.querySelectorAll('.id-maquinas').length < optionsLength-1) {
@@ -207,9 +209,9 @@
             $(document).on('keyup', '.tempo-valor', function(e) {
                 let id = this.parentElement.parentElement.childNodes[1].childNodes[3]
                 let valor = this.parentElement.parentElement.childNodes[5].childNodes[3]
-                if (id.value && e.target.value.length > 4) {
+                if (id.value && e.target.value.length > 4 && e.target.value.includes(':')) {
+
                     let tempo = this.value.substring(0,5)
-                    console.log(tempo)
                     fetch(`{{route('maquinas.get_valor_hora')}}`, {
                         method: 'post',
                         headers: {
