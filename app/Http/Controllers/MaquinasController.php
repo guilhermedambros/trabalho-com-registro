@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyMaquinaRequest;
 use App\Http\Requests\StoreMaquinaRequest;
-use App\Http\Requests\UpdatePessoaRequest;
+use App\Http\Requests\UpdateMaquinaRequest;
 use App\Role;
 use App\Maquina;
 use App\TipoMaquina;
@@ -54,20 +54,14 @@ class MaquinasController extends Controller
      */
     public function store(StoreMaquinaRequest $request)
     {
-        $request->validate([
-            'valor_hora' => 'required',
-        ]);
         
-        $valor_hora = $request['valor_hora'];
-        $valor_hora = number_format($valor_hora, 2, ',', '.');
-        $created_by = Auth::user()->id;
 
         $maquinas = new Maquina([            
             'proprietario_pessoa_id' => $request->proprietario_pessoa_id,
             'descricao' => $request->descricao,
-            'valor_hora' => $valor_hora,
+            'valor_hora' => $request['valor_hora'],
             'tipo_maquina_id' => $request->tipo_maquina_id,
-            'created_by' => $created_by,
+            'created_by' => Auth::user()->id,
         ]);
             
         $maquinas->save();
@@ -110,9 +104,7 @@ class MaquinasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'valor_hora' => 'required',
-        ]);
+        
         $maquinas = Maquina::find($id);
         $maquinas->update($request->all());
         if ($maquinas->save()) {
@@ -150,5 +142,13 @@ class MaquinasController extends Controller
             'success' => false,
             'data' => 'Ocorreu um erro!'
         ]);
+    }
+
+
+    public function massDestroy(MassDestroyMaquinaRequest $request)
+    {
+        Maquina::whereIn('id', request('ids'))->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
