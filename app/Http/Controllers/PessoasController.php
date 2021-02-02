@@ -47,10 +47,11 @@ class PessoasController extends Controller
         $pessoa->numero = $request->numero ?? null;
         $pessoa->complemento = $request->complemento ?? null;
         $pessoa->data_nascimento = $request->data_nascimento ?? null;
-        $pessoa->data_associacao = $request->data_associacao;
+        $pessoa->data_associacao = $request->data_associacao ?? null;
         $pessoa->issqn = $request->issqn;
         $pessoa->created_by = \Auth::user()->id;
         $pessoa->save();
+        //dd($pessoa);
         $pessoa->tipo_pessoas()->sync($request->input('tipo_pessoas', []));
         
 
@@ -60,6 +61,7 @@ class PessoasController extends Controller
     public function edit(Pessoa $pessoa)
     {
         abort_if(Gate::denies('pessoa_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //dd($pessoa);
         $tipo_pessoas = TipoPessoa::all()->pluck('descricao', 'id');
         $pessoa->documento = Helpers::removeSpecialChar($pessoa->documento);
         return view('pessoas.edit', compact('tipo_pessoas', 'pessoa'));
@@ -69,8 +71,9 @@ class PessoasController extends Controller
     public function update(UpdatePessoaRequest $request, Pessoa $pessoa)
     {
         //$request->input('tipo_pessoas') = Helpers::removeSpecialChar($request->input('tipo_pessoas'));
-        //dd($request);
+        //dd($request->all());
         $pessoa->update($request->all());
+        
         $pessoa->tipo_pessoas()->sync($request->input('tipo_pessoas', []));
 
         return redirect()->route('pessoas.index');

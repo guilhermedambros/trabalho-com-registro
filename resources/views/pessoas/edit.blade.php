@@ -133,7 +133,7 @@
                 <label for="data_associacao" class="text-xs ">{{ trans('cruds.pessoa.fields.data_associacao') }}</label>
 
                 <div class="form-group">
-                    <input type="data_associacao" id="data_associacao"  name="data_associacao" class="date {{ $errors->has('data_associacao') ? ' is-invalid' : '' }}" value="{{ old('data_associacao', $pessoa->data_associacao) }}" autocomplete="off">
+                    <input type="data_associacao" id="data_associacao"  name="data_associacao" class="date {{ $errors->has('data_associacao') ? ' is-invalid' : '' }}" value="{{ old('data_associacao') ?? $pessoa->data_associacao ?? null }}" autocomplete="off">
                 </div>
                 @if($errors->has('data_associacao'))
                     <p class="invalid-feedback">{{ $errors->first('data_associacao') }}</p>
@@ -143,7 +143,7 @@
                 <label for="data_nascimento" class="text-xs">{{ trans('cruds.pessoa.fields.data_nascimento') }}</label>
 
                 <div class="form-group">
-                    <input type="data_nascimento" id="data_nascimento" name="data_nascimento" class="datepicker {{ $errors->has('data_nascimento') ? ' is-invalid' : '' }}" value="{{ old('data_nascimento', $pessoa->data_nascimento) }}" autocomplete="off">
+                    <input type="data_nascimento" id="data_nascimento" name="data_nascimento" class="datepicker {{ $errors->has('data_nascimento') ? ' is-invalid' : '' }}" value="{{ old('data_nascimento') ?? $pessoa->data_nascimento ?? null }}" autocomplete="off">
                 </div>
                 @if($errors->has('data_nascimento'))
                     <p class="invalid-feedback">{{ $errors->first('data_nascimento') }}</p>

@@ -52,25 +52,34 @@ class Pessoa extends Model implements Auditable
     }
 
     public function setDataNascimentoAttribute($date) {
-        $date = str_replace('/', '-', $date );
-        $date = date("d-m-Y", strtotime($date));
-        $this->attributes['data_nascimento'] = $date;
+        if(!is_null($date)){
+            $date = str_replace('/', '-', $date );
+            $date = date("d-m-Y", strtotime($date));
+            $this->attributes['data_nascimento'] = $date;
+        }else{
+            $this->attributes['data_nascimento'] = null;
+        }
     }
     public function getDataNascimentoAttribute()
     {
-        $value = str_replace('-', '/', $this->attributes['data_nascimento']);
-        return $value;
+        return (!is_null($this->attributes['data_nascimento'])) ? str_replace('-', '/', $this->attributes['data_nascimento']) : null;
+
     }
 
     public function setDataAssociacaoAttribute($date) {
-        $date = str_replace('/', '-', $date );
-        $date = date("d-m-Y", strtotime($date));
-        $this->attributes['data_associacao'] = $date;
+       
+        if(!is_null($date)){
+            $date = str_replace('/', '-', $date );
+            $date = date("d-m-Y", strtotime($date));
+            $this->attributes['data_associacao'] = $date;
+        }else{
+            $this->attributes['data_associacao'] = null;
+        }
+        
     }
     public function getDataAssociacaoAttribute()
     {
-        $value = str_replace('-', '/', $this->attributes['data_associacao']);
-        return $value;
+        return (!is_null($this->attributes['data_associacao'])) ? str_replace('-', '/', $this->attributes['data_associacao']) : null;
     }
 
     public function getIssqnAttribute()

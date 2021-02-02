@@ -25,7 +25,7 @@ class CreatePessoas extends Migration
             $table->string('bairro')->nullable();
             $table->string('numero')->nullable();
             $table->string('complemento')->nullable();
-            $table->date('data_associacao');
+            $table->date('data_associacao')->nullable();
             $table->date('data_nascimento')->nullable();
             $table->decimal('issqn', 8, 2)->nullable();
             $table->unsignedInteger('created_by');
