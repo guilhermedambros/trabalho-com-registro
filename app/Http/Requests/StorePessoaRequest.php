@@ -36,7 +36,7 @@ class StorePessoaRequest extends FormRequest
             'documento' => Helpers::removeSpecialChar($this->documento),//remove caracteres do documento
             'telefone' => Helpers::removeSpecialChar($this->telefone),//remove caracteres do telefone
             'cep' => Helpers::removeSpecialChar($this->cep),//remove caracteres do cep
-            'issqn' => str_replace(",",".",str_replace(".","",$this->issqn))
+            'issqn' => str_replace(",",".",str_replace(".","",$this->issqn ?? 0))
         ]);
     }
 }
