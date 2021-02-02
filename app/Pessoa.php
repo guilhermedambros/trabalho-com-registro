@@ -46,6 +46,10 @@ class Pessoa extends Model implements Auditable
     {
         return $this->hasMany(SaldoPeriodo::class);
     }
+    public function maquinas()
+    {
+        return $this->hasMany(Maquina::class);
+    }
     public function servicos()
     {
         return $this->hasMany(Servico::class);

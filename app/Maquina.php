@@ -44,7 +44,7 @@ class Maquina extends Model implements Auditable
     public function servicos()
     {
         return $this->belongsToMany(Servico::class, 'servico_maquina', 'maquina_id', 'servico_id')
-                    ->withPivot('valor_total', 'tempo', 'valor_subsidiado')
+                    ->withPivot('valor_total', 'valor_subsidiado', 'valor_issqn', 'tempo')
                     ->withTimestamps();
     }
 }
