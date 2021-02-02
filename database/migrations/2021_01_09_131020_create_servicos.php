@@ -15,7 +15,6 @@ class CreateServicos extends Migration
     {
         Schema::create('servicos', function (Blueprint $table) {
             $table->id();
-            $table->string('descricao');
             $table->string('numero')->unique();
             $table->string('endereco');
             $table->dateTime('data_realizacao');

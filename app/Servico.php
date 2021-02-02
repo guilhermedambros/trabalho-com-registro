@@ -12,12 +12,8 @@ use App\User;
 
 class Servico extends Model implements Auditable
 {
-<<<<<<< HEAD
-    use SoftDeletes, HasFactory;
-=======
     use HasFactory, RecordSignature;
     use \OwenIt\Auditing\Auditable;
->>>>>>> 44d758828d45bac875772c733f404d246ca2e75c
     public $table = 'servicos';
     
     protected $dates = [
@@ -29,7 +25,6 @@ class Servico extends Model implements Auditable
 
     protected $fillable = [
         'id',
-        'descricao',
         'endereco',
         'data_realizacao',
         'beneficiario_pessoa_id',
@@ -59,7 +54,7 @@ class Servico extends Model implements Auditable
     public function maquinas()
     {
         return $this->belongsToMany(Maquina::class, 'servico_maquina', 'servico_id', 'maquina_id')
-                    ->withPivot('valor_total', 'valor_subsidiado', 'tempo')
+                    ->withPivot('valor_total', 'valor_subsidiado', 'valor_issqn', 'tempo')
                     ->withTimestamps();
     }
 

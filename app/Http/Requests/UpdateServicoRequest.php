@@ -21,10 +21,7 @@ class UpdateServicoRequest extends FormRequest
     {
         return [
             'numero' => ['required', Rule::unique('servicos')->ignore($this->servico)],
-            'descricao' => [
-                'string',
-                'required',
-            ],
+            
             'data_realizacao'  => [
                 'string',
                 'required',

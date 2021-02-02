@@ -19,10 +19,6 @@ class StoreServicoRequest extends FormRequest
     public function rules()
     {
         return [
-            'descricao'  => [
-                'string',
-                'required',
-            ],
             'endereco'  => [
                 'string',
                 'required',

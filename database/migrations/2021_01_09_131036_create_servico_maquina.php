@@ -20,6 +20,7 @@ class CreateServicoMaquina extends Migration
             $table->decimal('tempo', 8, 2);
             $table->decimal('valor_total', 8, 2);
             $table->decimal('valor_subsidiado', 8, 2);
+            $table->decimal('valor_issqn', 8, 2);
             $table->timestamps();
         });
 

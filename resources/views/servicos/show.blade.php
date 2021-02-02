@@ -71,16 +71,16 @@
                                 @foreach ($servico->maquinas as $maquina)
                                 <td>
                                     <tr>
-                                        <th>Descrição</th>
-                                        <td>{{ $maquina->descricao }}</td>
-                                    </tr>
-                                    <tr>
                                         <th>Valor</th>
                                         <td>{{ number_format($maquina->pivot->valor_total, 2, ',', '.') }}</td>
                                     </tr>
                                     <tr>
                                         <th>Valor subsidiado</th>
                                         <td>{{ number_format($maquina->pivot->valor_subsidiado, 2, ',', '.') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Valor ISSQN</th>
+                                        <td>{{ number_format($maquina->pivot->valor_issqn, 2, ',', '.') }}</td>
                                     </tr>
                                     <tr>
                                         <th>Tempo</th>

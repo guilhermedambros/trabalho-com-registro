@@ -66,6 +66,11 @@
                             {{ session('message') }}
                         </div>
                     @endif
+                    @if(session('error'))
+                        <div class="alert danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
                     @if($errors->count() > 0)
                         <div class="alert danger">
                             <ul class="list-none">

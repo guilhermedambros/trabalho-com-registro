@@ -15,7 +15,7 @@ use App\Maquina;
 use App\Pessoa;
 use App\SaldoPeriodo;
 use App\Helpers\Helpers as Helper;
-
+use Redirect;
 use Gate;
 use Auth;
 use DB;
@@ -46,6 +46,7 @@ class ServicosController extends Controller
 
     public function store(StoreServicoRequest $request)
     {
+        
         DB::beginTransaction();
         $success = false;
         try {
@@ -59,6 +60,9 @@ class ServicosController extends Controller
             $servico->save();
 
             $saldos = SaldoPeriodo::where('pessoa_id', $request->beneficiario_pessoa_id)->where('ano_exercicio', date('Y', strtotime(str_replace('/', '-', $request->data_realizacao))))->first();
+            if (is_null($saldos)) {
+                return Redirect::back()->with('error', 'Saldo não encontrado para o produtor. Verifique esse controle!')->withInput();
+            }
             $saldo_leves = $saldos->saldo_leves;
             $saldo_pesadas = $saldos->saldo_pesadas;
 
@@ -78,6 +82,13 @@ class ServicosController extends Controller
                     } elseif ($maquina->tipo_maquina->tipo_bonificacao == config('app.tipo_bonificacao_maquina.valor')) {
                         $sync_data[$i]['valor_subsidiado'] = $sync_data[$i]['tempo'] * str_replace(",",".", $maquina->tipo_maquina->valor_hora_subsidiado);
                     }
+                    if (is_null($maquina->proprietario->issqn)) {
+                        DB::rollback();
+                        return Redirect::back()->with('error', 'O proprietário ('.$maquina->proprietario->nome.') da máquina não possui o % de ISSQN cadastrado. Favor revisar o cadastro dele!')->withInput();
+                        
+                    }
+                    $sync_data[$i]['valor_issqn'] = ($sync_data[$i]['valor_total'] / 100) * $maquina->proprietario->issqn;
+                    $sync_data[$i]['valor_subsidiado'] = $sync_data[$i]['valor_subsidiado'] - $sync_data[$i]['valor_issqn'];
                     if ($maquina->tipo_maquina_id == "1") {
                         $saldo_pesadas = (float) $saldo_pesadas - $sync_data[$i]['tempo'];
                     } elseif ($maquina->tipo_maquina_id == "2") {
@@ -89,7 +100,7 @@ class ServicosController extends Controller
             // $saldo_pesadas = (float) $saldos->saldo_pesadas - $saldo_pesadas;
             if ($saldo_pesadas < 0) {
                 DB::rollback();
-                return redirect()->route('servicos.create')->with('message', 'Você não possui saldo!');
+                return Redirect::back()->with('error', 'Produtor sem saldo suficiente!')->withInput();
             } else {
                 $saldos->saldo_pesadas = $saldo_pesadas;
                 $saldos->save();
@@ -98,7 +109,7 @@ class ServicosController extends Controller
             // $saldo_leves = (float) $saldos->saldo_leves - $saldo_leves;
             if ($saldo_leves < 0) {
                 DB::rollback();
-                return redirect()->route('servicos.create')->with('message', 'Você não possui saldo!');
+                return Redirect::back()->with('error', 'Produtor sem saldo suficiente!')->withInput();
             } else {
                 $saldos->saldo_leves = $saldo_leves;
                 $saldos->save();
@@ -171,6 +182,9 @@ class ServicosController extends Controller
         $sync_data = [];
         if (!empty($request['pivot_maquina_id'])) {
             $saldos = SaldoPeriodo::where('pessoa_id', $request->beneficiario_pessoa_id)->where('ano_exercicio', date('Y', strtotime(str_replace('/', '-', $request->data_realizacao))))->first();
+            if (is_null($saldos)) {
+                return Redirect::back()->with('error', 'Saldo não encontrado para o produtor. Verifique esse controle!')->withInput();
+            }
             $saldo_leves = $saldos->saldo_leves;
             $saldo_pesadas = $saldos->saldo_pesadas;
 
@@ -183,11 +197,18 @@ class ServicosController extends Controller
 
                 $maquina = Maquina::find($request['pivot_maquina_id'][$i]);
                 if ($maquina->tipo_maquina->tipo_bonificacao == config('app.tipo_bonificacao_maquina.percentual')) {
-                        //dd($maquina->tipo_maquina->valor_hora_subsidiado);
-                        $sync_data[$i]['valor_subsidiado'] = (str_replace(",",".", $maquina->tipo_maquina->valor_hora_subsidiado) / 100) * $sync_data[$i]['valor_total'];
-                    } elseif ($maquina->tipo_maquina->tipo_bonificacao == config('app.tipo_bonificacao_maquina.valor')) {
-                        $sync_data[$i]['valor_subsidiado'] = $sync_data[$i]['tempo'] * str_replace(",",".", $maquina->tipo_maquina->valor_hora_subsidiado);
-                    }
+                    //dd($maquina->tipo_maquina->valor_hora_subsidiado);
+                    $sync_data[$i]['valor_subsidiado'] = (str_replace(",",".", $maquina->tipo_maquina->valor_hora_subsidiado) / 100) * $sync_data[$i]['valor_total'];
+                } elseif ($maquina->tipo_maquina->tipo_bonificacao == config('app.tipo_bonificacao_maquina.valor')) {
+                    $sync_data[$i]['valor_subsidiado'] = $sync_data[$i]['tempo'] * str_replace(",",".", $maquina->tipo_maquina->valor_hora_subsidiado);
+                }
+                if (is_null($maquina->proprietario->issqn)) {
+                    DB::rollback();
+                    return Redirect::back()->with('error', 'O proprietário ('.$maquina->proprietario->nome.') da máquina não possui o % de ISSQN cadastrado. Favor revisar o cadastro dele!')->withInput();
+                    
+                }
+                $sync_data[$i]['valor_issqn'] = ($sync_data[$i]['valor_total'] / 100) * $maquina->proprietario->issqn;
+                $sync_data[$i]['valor_subsidiado'] = $sync_data[$i]['valor_subsidiado'] - $sync_data[$i]['valor_issqn'];
 
                 if ($maquina->tipo_maquina_id == "1") {
                     $saldo_pesadas = (float) $saldo_pesadas - $sync_data[$i]['tempo'];
@@ -198,7 +219,7 @@ class ServicosController extends Controller
 
             // $saldo_pesadas = (float) $saldos->saldo_pesadas - $saldo_pesadas;
             if ($saldo_pesadas < 0) {
-                return redirect()->route('servicos.index')->with('error', 'Você não possui saldo!');
+                return Redirect::back()->with('error', 'Produtor sem saldo suficiente!')->withInput();
             } else {
                 $saldos->saldo_pesadas = $saldo_pesadas;
                 $saldos->save();
@@ -206,7 +227,7 @@ class ServicosController extends Controller
             
             // $saldo_leves = (float) $saldos->saldo_leves - $saldo_leves;
             if ($saldo_leves < 0) {
-                return redirect()->route('servicos.index')->with('error', 'Você não possui saldo!');
+                return Redirect::back()->with('error', 'Produtor sem saldo suficiente!')->withInput();
             } else {
                 $saldos->saldo_leves = $saldo_leves;
                 $saldos->save();

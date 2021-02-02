@@ -5,26 +5,10 @@
         {{ $title }} {{ trans('cruds.servico.title_singular') }}
     </div>
 
-    @error('message')
-        <div class="alert alert-danger">
-            <strong>{{ session('errors')->first('message') }}</strong>
-        </div>
-    @enderror
-
     <form method="POST" action="{{ route($routes, old('id') ?? $servicos->id ?? null) }}" enctype="multipart/form-data">
         @csrf
         @method($method)
         <div id="servicos" class="body">
-            <div class="mb-3">
-                <label for="descricao" class="text-xs required">{{ trans('cruds.servico.fields.descricao') }}</label>
-
-                <div class="form-group">
-                    <input type="text" id="descricao" name="descricao" class="{{ $errors->has('descricao') ? ' is-invalid' : '' }}" value="{{ old('descricao') ?? $servicos->descricao ?? null }}" required>
-                </div>
-                @if($errors->has('descricao'))
-                    <p class="invalid-feedback">{{ $errors->first('descricao') }}</p>
-                @endif
-            </div>
             <div class="mb-3">
                 <label for="endereco" class="text-xs required">{{ trans('cruds.servico.fields.endereco') }}</label>
 
@@ -61,7 +45,7 @@
                 <div class="form-group">
                     <select  id="beneficiario_pessoa_id" name="beneficiario_pessoa_id" class="{{ $errors->has('beneficiario_pessoa_id') ? ' is-invalid' : '' }} select" required>
                         <option value="">{{ trans('global.select') }}</option>
-                        {{$selectedvalue = $servicos->beneficiario_pessoa_id ?? null}}
+                        {{$selectedvalue = $servicos->beneficiario_pessoa_id ?? old('beneficiario_pessoa_id') ?? null}}
                     @foreach($pessoas as $pessoa)
                         <option value="{{$pessoa->id}}" {{ $selectedvalue == $pessoa->id ? 'selected="selected"' : '' }}>{{ $pessoa->nome }}</option>
                     @endforeach
