@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 
+use App\Pessoa;
+
 class TipoPessoa extends Model  implements Auditable
 {
     use HasFactory;
@@ -24,6 +26,6 @@ class TipoPessoa extends Model  implements Auditable
 
     public function pessoas()
     {
-        return $this->belongsToMany(TipoPessoa::class, 'pessoa_tipo_pessoa', 'tipo_pessoa_id', 'pessoa_id');
+        return $this->hasMany(Pessoa::class);
     }
 }

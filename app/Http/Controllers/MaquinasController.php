@@ -41,7 +41,10 @@ class MaquinasController extends Controller
     public function create()
     {
         $maquinas = [];
-        $pessoas = Pessoa::all();
+        $pessoas = Pessoa::whereHas('tipo_pessoas', function($q)
+        {
+            $q->where('pessoa_tipo_pessoa.tipo_pessoa_id', '5');
+        })->get();
         $tipo_maquinas = TipoMaquina::all();
         return view('maquinas.create', compact('pessoas', 'maquinas', 'tipo_maquinas'));
     }
