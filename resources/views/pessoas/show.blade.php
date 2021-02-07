@@ -45,15 +45,7 @@
                         {{ $pessoa->documento ?? ''}}
                     </td>
                 </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.pessoa.fields.inscricao') }}
-                    </th>
-                    <td>
-                        {{ $pessoa->inscricao ?? '' }}
-                    </td>
-                </tr>
-                <tr>
+               <tr>
                     <th>
                         {{ trans('cruds.pessoa.fields.telefone') }}
                     </th>
@@ -61,62 +53,7 @@
                         {{ $pessoa->telefone ?? '' }}
                     </td>
                 </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.pessoa.fields.data_associacao') }}
-                    </th>
-                    <td>
-                        {{ $pessoa->data_associacao ?? '' }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.pessoa.fields.cep') }}
-                    </th>
-                    <td>
-                        {{ $pessoa->cep ?? '' }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.pessoa.fields.endereco') }}
-                    </th>
-                    <td>
-                        {{ $pessoa->endereco ?? '' }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.pessoa.fields.numero') }}
-                    </th>
-                    <td>
-                        {{ $pessoa->numero ?? '' }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.pessoa.fields.bairro') }}
-                    </th>
-                    <td>
-                        {{ $pessoa->bairro ?? '' }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.pessoa.fields.complemento') }}
-                    </th>
-                    <td>
-                        {{ $pessoa->complemento ?? '' }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.pessoa.fields.issqn') }}
-                    </th>
-                    <td>
-                        {{ $pessoa->issqn ?? '' }}
-                    </td>
-                </tr>
+                
                 <tr>
                     <th>
                         {{ trans('cruds.pessoa.fields.tipo_pessoa') }}

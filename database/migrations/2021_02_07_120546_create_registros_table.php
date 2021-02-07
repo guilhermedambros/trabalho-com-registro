@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTipoMaquinas extends Migration
+class CreateRegistrosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateTipoMaquinas extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_maquinas', function (Blueprint $table) {
+        Schema::create('registros', function (Blueprint $table) {
             $table->id();
-            $table->string('descricao');
-            $table->decimal('valor_hora_subsidiado', 8, 2)->default(0);
+            $table->text('descricao');
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('demanda_id')->constrained('demandas');
+            $table->decimal('tempo', 8, 2);
+            $table->datetime('data_registro');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +32,6 @@ class CreateTipoMaquinas extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo_maquinas');
+        Schema::dropIfExists('registros');
     }
 }

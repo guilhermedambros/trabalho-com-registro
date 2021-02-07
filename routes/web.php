@@ -41,26 +41,10 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
  Route::delete('pessoas/destroy', 'PessoasController@massDestroy')->name('pessoas.massDestroy');
  Route::resource('pessoas', 'PessoasController');
 
- // Tipo Maquina
- Route::delete('tipo_maquinas/destroy', 'TipoMaquinasController@massDestroy')->name('tipo_maquinas.massDestroy');
- Route::resource('tipo_maquinas', 'TipoMaquinasController');
+ // Demandas
+ Route::delete('demandas/destroy', 'DemandasController@massDestroy')->name('demandas.massDestroy');
+ Route::resource('demandas', 'DemandasController');
 
- // Saldo Periodo
- Route::delete('saldo_periodos/destroy', 'SaldoPeriodosController@massDestroy')->name('saldo_periodos.massDestroy');
- Route::get('saldo_periodos/ajusta', 'SaldoPeriodosController@ajusta_saldos_do_periodo_atual')->name('saldo_periodos.ajusta_saldos_do_periodo_atual');
- Route::resource('saldo_periodos', 'SaldoPeriodosController');
+ Route::post('registros/store/{demanda}', 'RegistrosController@store')->name('registros.store');
 
-// Maquinas
-Route::delete('maquinas/destroy', 'MaquinasController@massDestroy')->name('maquinas.massDestroy');
-Route::resource('maquinas', 'MaquinasController');
-Route::post('maquinas/get_valor_hora', 'MaquinasController@get_valor_hora')->name('maquinas.get_valor_hora');
-
-// Servicos
-Route::delete('servicos/destroy', 'ServicosController@massDestroy')->name('servicos.massDestroy');
-Route::resource('servicos', 'ServicosController');
-
-//Relatórios
-Route::get('relatorios/saldos', 'RelatoriosController@index_saldos')->name('relatorios.saldos.index');
-Route::post('relatorios/saldos/gerar', 'RelatoriosController@gera_relatorio_saldos')->name('relatorios.saldos.gerar');
-Route::get('relatorios/servicos', 'RelatoriosController@index_servicos')->name('relatorios.servicos.index');
-Route::post('relatorios/servicos/gerar', 'RelatoriosController@gera_relatorio_servicos')->name('relatorios.servicos.gerar');
+ 

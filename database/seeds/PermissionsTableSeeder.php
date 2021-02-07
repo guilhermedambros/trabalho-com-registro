@@ -74,120 +74,71 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 17,
-                'title' => 'maquina_criar',
-            ],
-            [
-                'id'    => 18,
-                'title' => 'maquina_editar',
-            ],
-            [
-                'id'    => 19,
-                'title' => 'maquina_ver',
-            ],
-            [
-                'id'    => 20,
-                'title' => 'maquina_excluir',
-            ],
-            [
-                'id'    => 21,
-                'title' => 'maquina_acessar',
-            ],
-            [
-                'id'    => 22,
-                'title' => 'servico_criar',
-            ],
-            [
-                'id'    => 23,
-                'title' => 'servico_editar',
-            ],
-            [
-                'id'    => 24,
-                'title' => 'servico_ver',
-            ],
-            [
-                'id'    => 25,
-                'title' => 'servico_excluir',
-            ],
-            [
-                'id'    => 26,
-                'title' => 'servico_acessar',
-            ],
-            [
-                'id'    => 27,
                 'title' => 'pessoa_criar',
             ],
             [
-                'id'    => 28,
+                'id'    => 18,
                 'title' => 'pessoa_editar',
             ],
             [
-                'id'    => 29,
+                'id'    => 19,
                 'title' => 'pessoa_ver',
             ],
             [
-                'id'    => 30,
+                'id'    => 20,
                 'title' => 'pessoa_excluir',
             ],
             [
-                'id'    => 31,
+                'id'    => 21,
                 'title' => 'pessoa_acessar',
             ],
             [
-                'id'    => 32,
+                'id'    => 22,
                 'title' => 'senha_editar',
             ],
             [
-                'id'    => 33,
-                'title' => 'relatorios_acessar',
+            
+                'id'    => 23,
+                'title' => 'demanda_criar',
             ],
             [
-                'id'    => 34,
-                'title' => 'saldos_gerenciamento',
+                'id'    => 24,
+                'title' => 'demanda_editar',
             ],
             [
-                'id'    => 35,
-                'title' => 'saldos_acessar',
+                'id'    => 25,
+                'title' => 'demanda_ver',
             ],
             [
-                'id'    => 36,
-                'title' => 'tipo_maquina_criar',
+                'id'    => 26,
+                'title' => 'demanda_excluir',
             ],
             [
-                'id'    => 37,
-                'title' => 'tipo_maquina_editar',
+                'id'    => 27,
+                'title' => 'demanda_acessar',
             ],
             [
-                'id'    => 38,
-                'title' => 'tipo_maquina_ver',
+            
+                'id'    => 28,
+                'title' => 'registro_criar',
             ],
             [
-                'id'    => 39,
-                'title' => 'tipo_maquina_excluir',
+                'id'    => 29,
+                'title' => 'registro_editar',
             ],
             [
-                'id'    => 40,
-                'title' => 'tipo_maquina_acessar',
+                'id'    => 30,
+                'title' => 'registro_ver',
             ],
             [
-                'id'    => 41,
-                'title' => 'saldo_periodo_criar',
+                'id'    => 31,
+                'title' => 'registro_excluir',
             ],
             [
-                'id'    => 42,
-                'title' => 'saldo_periodo_editar',
+                'id'    => 32,
+                'title' => 'registro_acessar',
             ],
-            [
-                'id'    => 43,
-                'title' => 'saldo_periodo_ver',
-            ],
-            [
-                'id'    => 44,
-                'title' => 'saldo_periodo_excluir',
-            ],
-            [
-                'id'    => 45,
-                'title' => 'saldo_periodo_acessar',
-            ],
+           
         ];
 
         Permission::insert($permissions);

@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'ADA Linha Nova/RS',
+    'site_title' => 'Trabalho Registrado',
 ];

@@ -40,16 +40,6 @@ class PessoasController extends Controller
         $pessoa->email = $request->email ?? null;
         $pessoa->documento = $request->documento ?? null;
         $pessoa->telefone = $request->telefone ?? null;
-        $pessoa->inscricao = $request->inscricao;
-        $pessoa->cep = $request->cep ?? null;
-        $pessoa->endereco = $request->endereco;
-        $pessoa->bairro = $request->bairro ?? null;
-        $pessoa->numero = $request->numero ?? null;
-        $pessoa->complemento = $request->complemento ?? null;
-        $pessoa->data_nascimento = $request->data_nascimento ?? null;
-        $pessoa->data_associacao = $request->data_associacao ?? null;
-        $pessoa->issqn = $request->issqn ?? null;
-        $pessoa->created_by = \Auth::user()->id;
         $pessoa->save();
         //dd($pessoa);
         $pessoa->tipo_pessoas()->sync($request->input('tipo_pessoas', []));

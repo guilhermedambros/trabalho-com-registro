@@ -1,46 +1,36 @@
 @extends('layouts.admin')
 @section('content')
-@can('pessoa_criar')
+@can('demanda_criar')
     <div class="block my-4">
-        <a class="btn-md btn-green" href="{{ route('servicos.create') }}">
-            {{ trans('global.add') }} {{ trans('cruds.servico.title_singular') }}
+        <a class="btn-md btn-green" href="{{ route('demandas.create') }}">
+            {{ trans('global.add') }} {{ trans('cruds.demanda.title_singular') }}
         </a>
     </div>
 @endcan
 <div class="main-card">
-
-    @if (session()->has('message'))
-        <div class="alert alert-success">
-            <strong>{{ session('message') }}</strong>
-        </div>
-    @endif
-    
-    @error('message')
-        <div class="alert alert-danger">
-            <strong>{{ session('errors')->first('message') }}</strong>
-        </div>
-    @enderror
-
     <div class="header">
-        {{ trans('cruds.servico.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.demanda.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="body">
         <div class="w-full">
-            <table class="stripe hover bordered datatable datatable-servico">
+            <table class="stripe hover bordered datatable datatable-Demanda">
                 <thead>
                     <tr>
                         <th width="10">
 
                         </th>
                         <th>
-                            {{ trans('cruds.servico.fields.id') }}
+                            {{ trans('cruds.demanda.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.servico.fields.data_realizacao') }}
+                            {{ trans('cruds.demanda.fields.descricao') }}
                         </th>
                         <th>
-                            {{ trans('cruds.servico.fields.beneficiario_pessoa_id') }}
+                            {{ trans('cruds.demanda.fields.pessoa_id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.demanda.fields.data_prazo') }}
                         </th>
                         <th>
                             &nbsp;
@@ -48,42 +38,46 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($servicos as $key => $servico)
-                        <tr data-entry-id="{{ $servico->id }}">
+                    @foreach($demandas as $key => $demanda)
+                        <tr data-entry-id="{{ $demanda->id }}">
                             <td>
 
                             </td>
                             <td>
-                                {{ $servico->id ?? '' }}
+                                {{ $demanda->id ?? '' }}
                             </td>
                             <td>
-                                {{ $servico->data_realizacao ?? '' }}
+                                {{ $demanda->descricao ?? '' }}
                             </td>
                             <td>
-                                {{ $servico->beneficiario->nome ?? '' }}
+                                {{ $demanda->pessoa->nome ?? '' }}
                             </td>
-                            
                             <td>
-                                @can('servico_ver')
-                                    <a class="btn-sm btn-indigo" href="{{ route('servicos.show', $servico->id) }}">
+                                {{ $demanda->data_prazo ?? '' }}
+                            </td>
+                            <td>
+                                @can('demanda_ver')
+                                    <a class="btn-sm btn-indigo" href="{{ route('demandas.show', $demanda->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @can('servico_editar')
-                                    <a class="btn-sm btn-blue" href="{{ route('servicos.edit', $servico->id) }}">
+                                @can('demanda_editar')
+                                    <a class="btn-sm btn-blue" href="{{ route('demandas.edit', $demanda->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
-                                @can('servico_excluir')
-                                    <form action="{{ route('servicos.destroy', $servico->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                @can('demanda_excluir')
+                                    <form action="{{ route('demandas.destroy', $demanda->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn-sm btn-red" value="{{ trans('global.delete') }}">
                                     </form>
                                 @endcan
+
                             </td>
+
                         </tr>
                     @endforeach
                 </tbody>
@@ -97,11 +91,11 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('pessoa_excluir')
+@can('demanda_excluir')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('servicos.massDestroy') }}",
+    url: "{{ route('demandas.massDestroy') }}",
     className: 'btn-red',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
@@ -132,7 +126,7 @@
     order: [[ 1, 'desc' ]],
     pageLength: 100,
   });
-  let table = $('.datatable-servico:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  let table = $('.datatable-Demanda:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();

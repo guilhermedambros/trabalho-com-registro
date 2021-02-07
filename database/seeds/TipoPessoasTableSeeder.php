@@ -14,11 +14,8 @@ class TipoPessoasTableSeeder extends Seeder
     public function run()
     {
         $tipo_pessoas = [
-            ['descricao' => 'Associado'],
-            ['descricao' => 'Não Associado'],
-            ['descricao' => 'Terceiro'],
-            ['descricao' => 'Outros'],
-            ['descricao' => 'Prestador de serviço'],
+            ['descricao' => 'Contratante'],
+            ['descricao' => 'Contratada'],
         ];
 
         TipoPessoa::insert($tipo_pessoas);
