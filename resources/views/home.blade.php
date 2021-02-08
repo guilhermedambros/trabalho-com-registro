@@ -22,12 +22,12 @@
                 <div class="overflow-hidden shadow-md">
                     <!-- card header -->
                     <div class="px-6 py-4 bg-white border-b border-gray-200 font-bold uppercase">
-                        Cadastro de pessoas
+                        Cadastro de Parceiros
                     </div>
 
                     <!-- card body -->
                     <div class="p-6 bg-white border-b border-gray-200">
-                        Esse cadastro permite manipular informações referentes a associados, prestadores de serviços e outros.
+                        Esse cadastro permite manipular informações referentes a parceiros.
                     </div>
 
                     <!-- card footer -->
@@ -47,11 +47,6 @@
 </div>
 @endsection
 @section('scripts')
-<script>
-function alert_dimiss(){
-    document.getElementById("alert_success_saldo").style.display = 'none';
-}
-</script>
 @parent
 
 @endsection

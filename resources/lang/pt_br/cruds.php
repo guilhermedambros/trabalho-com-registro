@@ -67,8 +67,8 @@ return [
         ],
     ],
     'pessoa'         => [
-        'title'          => 'Produtores',
-        'title_singular' => 'Produtor',
+        'title'          => 'Parceiros',
+        'title_singular' => 'Parceiro',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => '',
