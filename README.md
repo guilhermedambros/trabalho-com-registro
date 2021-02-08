@@ -1,6 +1,6 @@
-## Sistema de registro e controle de bonificação de serviços a produtores rurais
+## Sistema de registro no atendimento de demandas
 
-Projeto baseado em [tailwindcomponents/dashboard theme](https://github.com/tailwindcomponents/dashboard).
+Disponível em: https://trabalho-registrado.herokuapp.com/
 
 
 
