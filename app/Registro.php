@@ -31,14 +31,16 @@ class Registro extends Model  implements Auditable
     public function setDataRegistroAttribute($date)
     {
         $date = str_replace('/', '-', $date);
-        $date = date("d-m-Y", strtotime($date));
+        $date = date("Y-d-m", strtotime($date));
         $this->attributes['data_registro'] = $date;
     }
 
     public function getDataRegistroAttribute()
     {
-        $value = str_replace('-', '/', $this->attributes['data_registro']);
-        return $value;
+        return (!is_null($this->attributes['data_registro'])) ? 
+                explode('-', $this->attributes['data_registro'])[2].'/'.explode('-', $this->attributes['data_registro'])[1].'/'.explode('-', $this->attributes['data_registro'])[0] 
+                : null;
+      
     }
     
     public function demanda()

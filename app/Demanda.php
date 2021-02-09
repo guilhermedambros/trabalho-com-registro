@@ -32,14 +32,15 @@ class Demanda extends Model implements Auditable
     public function setDataInicioAttribute($date)
     {
         $date = str_replace('/', '-', $date);
-        $date = date("d-m-Y", strtotime($date));
+        $date = date("Y-d-m", strtotime($date));
         $this->attributes['data_inicio'] = $date;
     }
 
     public function getDataInicioAttribute()
     {
-        $value = str_replace('-', '/', $this->attributes['data_inicio']);
-        return $value;
+        return (!is_null($this->attributes['data_inicio'])) ? 
+                explode('-', $this->attributes['data_inicio'])[2].'/'.explode('-', $this->attributes['data_inicio'])[1].'/'.explode('-', $this->attributes['data_inicio'])[0] 
+                : null;
     }
 
     public function setDataEntregaAttribute($date) {
@@ -53,7 +54,6 @@ class Demanda extends Model implements Auditable
     }
     public function getDataEntregaAttribute()
     {   
-        $value = str_replace('-', '/', $this->attributes['data_entrega']);
         return (!is_null($this->attributes['data_entrega'])) ? 
                 explode('-', $this->attributes['data_entrega'])[2].'/'.explode('-', $this->attributes['data_entrega'])[1].'/'.explode('-', $this->attributes['data_entrega'])[0] 
                 : null;
@@ -63,7 +63,7 @@ class Demanda extends Model implements Auditable
     public function setDataPrazoAttribute($date) {
         if(!is_null($date)){
             $date = str_replace('/', '-', $date );
-            $date = date("d-m-Y", strtotime($date));
+            $date = date("Y-d-m", strtotime($date));
             $this->attributes['data_prazo'] = $date;
         }else{
             $this->attributes['data_prazo'] = null;
@@ -71,7 +71,9 @@ class Demanda extends Model implements Auditable
     }
     public function getDataPrazoAttribute()
     {
-        return (!is_null($this->attributes['data_prazo'])) ? str_replace('-', '/', $this->attributes['data_prazo']) : null;
+        return (!is_null($this->attributes['data_prazo'])) ? 
+                explode('-', $this->attributes['data_prazo'])[2].'/'.explode('-', $this->attributes['data_prazo'])[1].'/'.explode('-', $this->attributes['data_prazo'])[0] 
+                : null;
 
     }
     
