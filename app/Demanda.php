@@ -45,7 +45,7 @@ class Demanda extends Model implements Auditable
     public function setDataEntregaAttribute($date) {
         if(!is_null($date)){
             $date = str_replace('/', '-', $date );
-            $date = date("d-m-Y", strtotime($date));
+            $date = date("Y-d-m", strtotime($date));
             $this->attributes['data_entrega'] = $date;
         }else{
             $this->attributes['data_entrega'] = null;
