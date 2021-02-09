@@ -50,9 +50,6 @@ class DemandasController extends Controller
 
     public function update(UpdateDemandaRequest $request, Demanda $demanda)
     {
-        if(env('APP_ENV') != 'local'){
-            DB::raw('SET datestyle = dmy;');
-        }
         $demanda->update($request->all());
 
         return redirect()->route('demandas.index');
