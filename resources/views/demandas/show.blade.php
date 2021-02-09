@@ -135,9 +135,7 @@
                     <label for="descricao" class="text-xs required">{{ trans('cruds.registro.fields.descricao') }}</label>
 
                     <div class="form-group">
-                        <textarea type="text" rows="7" id="descricao" name="descricao" class=" resize border rounded-md w-full {{ $errors->has('descricao') ? ' is-invalid' : '' }}" value="{{ old('descricao') }}" required>
-                        {{old('descricao') ?? ''}}
-                        </textarea>
+                        <textarea type="text" rows="7" id="descricao" name="descricao" class=" resize border rounded-md w-full {{ $errors->has('descricao') ? ' is-invalid' : '' }}" required>{{old('descricao') ?? ''}}</textarea>
                     </div>
                     @if($errors->has('descricao'))
                         <p class="invalid-feedback">{{ $errors->first('descricao') }}</p>
