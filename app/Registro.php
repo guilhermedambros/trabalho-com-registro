@@ -31,7 +31,7 @@ class Registro extends Model  implements Auditable
     public function setDataRegistroAttribute($date)
     {
         $date = str_replace('/', '-', $date);
-        $date = date("Y-d-m", strtotime($date));
+        $date = date("Y-m-d", strtotime($date));
         $this->attributes['data_registro'] = $date;
     }
 

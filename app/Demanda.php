@@ -32,7 +32,7 @@ class Demanda extends Model implements Auditable
     public function setDataInicioAttribute($date)
     {
         $date = str_replace('/', '-', $date);
-        $date = date("Y-d-m", strtotime($date));
+        $date = date("Y-m-d", strtotime($date));
         $this->attributes['data_inicio'] = $date;
     }
 
@@ -46,7 +46,7 @@ class Demanda extends Model implements Auditable
     public function setDataEntregaAttribute($date) {
         if(!is_null($date)){
             $date = str_replace('/', '-', $date );
-            $date = date("Y-d-m", strtotime($date));
+            $date = date("Y-m-d", strtotime($date));
             $this->attributes['data_entrega'] = $date;
         }else{
             $this->attributes['data_entrega'] = null;
@@ -63,7 +63,7 @@ class Demanda extends Model implements Auditable
     public function setDataPrazoAttribute($date) {
         if(!is_null($date)){
             $date = str_replace('/', '-', $date );
-            $date = date("Y-d-m", strtotime($date));
+            $date = date("Y-m-d", strtotime($date));
             $this->attributes['data_prazo'] = $date;
         }else{
             $this->attributes['data_prazo'] = null;
