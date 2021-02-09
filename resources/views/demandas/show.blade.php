@@ -7,7 +7,7 @@
 
     <div class="body">
         <div class="block pb-4">
-            <a class="btn-md btn-gray" href="{{ route('pessoas.index') }}">
+            <a class="btn-md btn-gray" href="{{ route('demandas.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
         </div>

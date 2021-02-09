@@ -86,7 +86,7 @@
         </div>
 
         <div class="footer">
-            <a class="btn-md btn-blue rounded-md" href="{{ route('pessoas.index') }}">
+            <a class="btn-md btn-blue rounded-md" href="{{ route('demandas.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
             <button type="submit" class="submit-button">{{ trans('global.save') }}</button>
