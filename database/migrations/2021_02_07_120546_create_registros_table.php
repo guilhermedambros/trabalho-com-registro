@@ -19,7 +19,7 @@ class CreateRegistrosTable extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('demanda_id')->constrained('demandas');
             $table->decimal('tempo', 8, 2);
-            $table->datetime('data_registro');
+            $table->date('data_registro');
             $table->timestamps();
             $table->softDeletes();
         });
