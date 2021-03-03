@@ -86,4 +86,12 @@ class Demanda extends Model implements Auditable
     {
         return $this->hasMany(Registro::class);
     }
+
+    public function registros_no_periodo($mes, $ano)
+    {
+        return Registro::whereYear('data_registro',  $ano)
+                        ->whereMonth('data_registro', $mes)
+                        ->where('demanda_id', $this->id)
+                        ->orderBy('data_registro')->get();
+    }
 }

@@ -125,6 +125,21 @@ return [
             'id'                => 'Código',
         ],
     ],
+    'relatorios'         => [
+        'title'          => 'Relatório de demandas',
+        'title_singular' => 'Relatório de demandas',
+        'fields'         => [
+            'descricao'         => 'Descrição do atendimento',
+            'user_id'           => 'Atendente',
+            'demanda_id'        => 'Demanda de origem',
+            'tempo'             => 'Tempo (h:m)',
+            'data_registro'     => 'Data do atendimento',
+            'created_at'        => 'Criado em',
+            'updated_at'        => 'Última atualização',
+            'deleted_at'        => 'Excluído em',
+            'id'                => 'Código',
+        ],
+    ],
     'list'        => [
         'title'          => 'Listas',
         'title_singular' => 'Lista',

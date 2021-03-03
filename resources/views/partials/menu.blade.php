@@ -74,6 +74,15 @@
                 <span class="mx-4">{{ trans('cruds.demanda.title') }}</span>
             </a>
         @endcan
+        @can('demanda_acessar')
+            <a class="nav-link{{ request()->is('relatorios*') ? ' active' : '' }}" href="{{ route('relatorios.demandas.index') }}">
+                <i class="fa-fw fas fa-users">
+
+                </i>
+
+                <span class="mx-4">{{ trans('cruds.relatorios.title') }}</span>
+            </a>
+        @endcan
         
         @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
             <a class="nav-link{{ request()->is('profile/password') ? ' active' : '' }}" href="{{ route('profile.password.edit') }}">

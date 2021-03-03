@@ -45,6 +45,12 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
  Route::delete('demandas/destroy', 'DemandasController@massDestroy')->name('demandas.massDestroy');
  Route::resource('demandas', 'DemandasController');
 
+
+ //Relatorios
+ Route::get('relatorios/demandas', 'RelatoriosController@index')->name('relatorios.demandas.index');
+ Route::post('relatorios/demandas/gerar', 'RelatoriosController@gerar')->name('relatorios.demandas.gerar');
+
+
  Route::post('registros/store/{demanda}', 'RegistrosController@store')->name('registros.store');
 
  
