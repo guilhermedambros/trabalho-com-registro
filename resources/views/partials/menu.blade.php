@@ -65,6 +65,13 @@
                 <span class="mx-4">{{ trans('cruds.pessoa.title') }}</span>
             </a>
         @endcan
+            <a class="nav-link{{ request()->is('ponto*') ? ' active' : '' }}" href="{{ route('ponto.index') }}">
+                <i class="fa-fw fas fa-clock-o">
+
+                </i>
+
+                <span class="mx-4">ePonto</span>
+            </a>
         @can('demanda_acessar')
             <a class="nav-link{{ request()->is('demandas*') ? ' active' : '' }}" href="{{ route('demandas.index') }}">
                 <i class="fa-fw fas fa-users">

@@ -53,4 +53,8 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 
  Route::post('registros/store/{demanda}', 'RegistrosController@store')->name('registros.store');
 
+  // Demandas
+  Route::match(['get', 'post'], 'ponto', 'PontoController@index')->name('ponto.index');
+  Route::post('ponto/store', 'PontoController@store')->name('ponto.store');
+
  
