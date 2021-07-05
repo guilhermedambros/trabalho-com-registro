@@ -107,15 +107,22 @@
     function calcula_tempos(dia){
         let total_dia = 0;
         let total_almoco = 0;
+        let meio_turno = false;
         let hora_entrada_manha = document.getElementById('turno_1_entrada_'+dia).value;
         let hora_saida_manha = document.getElementById('turno_1_saida_'+dia).value;
         let hora_entrada_tarde = document.getElementById('turno_2_entrada_'+dia).value;
         let hora_saida_tarde = document.getElementById('turno_2_saida_'+dia).value;
         if(hora_entrada_manha !== '' && hora_saida_manha !== ''){
+            meio_turno = true;
             total_dia += convertHoursToFloat(hora_saida_manha) - convertHoursToFloat(hora_entrada_manha);
         }
         if(hora_entrada_tarde !== '' && hora_saida_tarde !== ''){
+            meio_turno = false;
             total_dia += convertHoursToFloat(hora_saida_tarde) - convertHoursToFloat(hora_entrada_tarde);
+        }else if(meio_turno === true && hora_entrada_tarde !== ''){
+            let tempo_restante = 8 - (convertHoursToFloat(hora_saida_manha) - convertHoursToFloat(hora_entrada_manha));
+            let hora_saida = convertHoursToFloat(hora_entrada_tarde) + tempo_restante;
+            alert("Sugestão de saída no turno da tarde: "+convertFloattoHours(hora_saida));
         }
         if(hora_entrada_tarde !== '' && hora_saida_manha !== ''){
             total_almoco += convertHoursToFloat(hora_entrada_tarde) - convertHoursToFloat(hora_saida_manha);
