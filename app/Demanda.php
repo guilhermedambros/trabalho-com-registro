@@ -27,6 +27,7 @@ class Demanda extends Model implements Auditable
         'data_inicio',
         'data_entrega',
         'data_prazo',
+        'user_id',
     ];
 
     public function setDataInicioAttribute($date)
@@ -80,6 +81,11 @@ class Demanda extends Model implements Auditable
     public function pessoa()
     {
         return $this->belongsTo(Pessoa::class);
+    }
+
+    public function usuario()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function registros()

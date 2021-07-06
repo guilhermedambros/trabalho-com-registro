@@ -15,13 +15,13 @@ use Gate;
 use Symfony\Component\HttpFoundation\Response;
 use App\Helpers\Helpers;
 use DB;
+use Auth;
 class DemandasController extends Controller
 {
     public function index()
     {
         abort_if(Gate::denies('demanda_acessar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $demandas = Demanda::orderBy('data_prazo')->get();
+        $demandas = Demanda::where('user_id', Auth::user()->id)->orderBy('data_prazo')->get();
         return view('demandas.index', compact('demandas'));
     }
 
@@ -42,7 +42,9 @@ class DemandasController extends Controller
 
     public function edit(Demanda $demanda)
     {
+
         abort_if(Gate::denies('demanda_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(($demanda->user_id != Auth::user()->id), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $pessoas = Pessoa::orderBy('nome')->get();
         return view('demandas.edit', compact('pessoas', 'demanda'));
 
