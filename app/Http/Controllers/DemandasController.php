@@ -60,14 +60,14 @@ class DemandasController extends Controller
     public function show(Demanda $demanda)
     { //dd(Registro::all());
         abort_if(Gate::denies('demanda_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        abort_if(($demanda->user_id != Auth::user()->id), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('demandas.show', compact('demanda'));
     }
 
     public function destroy(Demanda $demanda)
     {
         abort_if(Gate::denies('demanda_excluir'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        abort_if(($demanda->user_id != Auth::user()->id), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $demanda->delete();
 
         return back();

@@ -68,7 +68,7 @@ class UsersController extends Controller
     public function show(User $user)
     {
         abort_if(Gate::denies('usuario_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        abort_if((!Auth::user()->getIsAdminAttribute() && Auth::user()->id != $user->id), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $user->load('roles');
 
         return view('admin.users.show', compact('user'));
@@ -77,7 +77,7 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
         abort_if(Gate::denies('usuario_excluir'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        abort_if((!Auth::user()->getIsAdminAttribute() && Auth::user()->id != $user->id), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $user->delete();
 
         return back();
