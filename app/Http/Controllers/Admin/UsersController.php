@@ -12,14 +12,15 @@ use App\Pessoa;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use Auth;
 class UsersController extends Controller
 {
     public function index()
     {
         abort_if(Gate::denies('usuario_acessar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $users = User::all();
+        $users = User::where('id', Auth::user()->id)->get();
+        if(Auth::user()->getIsAdminAttribute())
+            $users = User::all();
 
         return view('admin.users.index', compact('users'));
     }
@@ -45,8 +46,10 @@ class UsersController extends Controller
     public function edit(User $user)
     {
         abort_if(Gate::denies('usuario_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $roles = Role::all()->pluck('title', 'id');
+        abort_if((!Auth::user()->getIsAdminAttribute() && Auth::user()->id != $user->id), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $roles = Auth::user()->roles()->pluck('title', 'id');
+        if(Auth::user()->getIsAdminAttribute())
+            $roles = Role::all()->pluck('title', 'id');
         $pessoas = Pessoa::orderBy('nome')->get();
 
         $user->load('roles');

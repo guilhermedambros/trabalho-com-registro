@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Helpers\Helpers;
 use Illuminate\Database\Eloquent\Builder;
 use PDF;
-
+use Auth;
 
 class RelatoriosController extends Controller
 {
@@ -30,10 +30,11 @@ class RelatoriosController extends Controller
     {
         abort_if(Gate::denies('demanda_acessar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         
-        $demandas = Demanda::whereHas('registros', function (Builder $query) use ($request) {
-            $query->whereYear('data_registro',  $request->ano)
-            ->whereMonth('data_registro', $request->mes);
-        })->get();
+        $demandas = Demanda::where('user_id', Auth::user()->id)
+                    ->whereHas('registros', function (Builder $query) use ($request) {
+                        $query->whereYear('data_registro',  $request->ano)
+                        ->whereMonth('data_registro', $request->mes);
+                    })->get();
 
 
         //dd($demandas);
