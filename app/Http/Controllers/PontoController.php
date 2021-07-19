@@ -26,7 +26,10 @@ class PontoController extends Controller
         //dd($request);
         $ultimo_dia_mes = date('t',strtotime($request['ano']."-".$request['mes']."-01"));
         foreach(range(1,$ultimo_dia_mes) as $dia){
-            $ponto = (Ponto::where('data_ponto', $request['ano'].'-'.$request['mes'].'-'.str_pad($dia, 2, '0', STR_PAD_LEFT))->first()) ?? new Ponto();
+            $ponto = (Ponto::where('data_ponto', $request['ano'].'-'.$request['mes'].'-'.str_pad($dia, 2, '0', STR_PAD_LEFT))
+                        ->where('user_id', Auth::user()->id)
+                        ->first()) 
+                    ?? new Ponto();
             $label_padrao = str_pad($dia, 2, '0', STR_PAD_LEFT).$request['mes'].$request['ano'];
             $label_dia = 'dia_'.$label_padrao;
             $label_11 = 'turno_1_entrada_'.$label_padrao;
