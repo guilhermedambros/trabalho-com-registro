@@ -34,9 +34,7 @@ class DemandasController extends Controller
 
     public function store(StoreDemandaRequest $request)
     {
-        Demanda::create($request->all());
-        
-
+        $demanda = Demanda::create($request->all());
         return redirect()->route('demandas.index');
     }
 

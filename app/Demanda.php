@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Auth;
 class Demanda extends Model implements Auditable
 {
     use SoftDeletes;
@@ -29,6 +29,14 @@ class Demanda extends Model implements Auditable
         'data_prazo',
         'user_id',
     ];
+
+    public static function boot(){
+        parent::boot();
+
+        static::saving(function ($model) {
+            $model->user_id = Auth::user()->id;
+        });
+    }
 
     public function setDataInicioAttribute($date)
     {
