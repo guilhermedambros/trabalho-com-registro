@@ -21,22 +21,12 @@ class StorePessoaRequest extends FormRequest
     {
         return [
             'nome' => ['string','required',],
-            'data_associacao' => [Rule::requiredIf(in_array(1/*tipo associado*/, $this->input('tipo_pessoas', []))),],
-            'endereco' => ['string','required',],
-            'issqn' => [Rule::requiredIf(in_array(5/*tipo prestador*/, $this->input('tipo_pessoas', []))), 'numeric', 'between:0,100',],
-            'email' => [Rule::unique('pessoas')->whereNull('deleted_at')->whereNotNull('email')],
-            'documento' => [Rule::unique('pessoas')->whereNull('deleted_at')->whereNotNull('documento')],
+            'tipo_pessoas'   => [
+                'required',
+                'array',
+            ],
         ];
     }
 
-    //metodo utilizado caso haja necessidade de alterar algum campo antes de validar o form
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'documento' => Helpers::removeSpecialChar($this->documento),//remove caracteres do documento
-            'telefone' => Helpers::removeSpecialChar($this->telefone),//remove caracteres do telefone
-            'cep' => Helpers::removeSpecialChar($this->cep),//remove caracteres do cep
-            'issqn' => str_replace(",",".",str_replace(".","",$this->issqn ?? 0))
-        ]);
-    }
+    
 }
