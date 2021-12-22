@@ -61,7 +61,7 @@ class Helpers {
             $aux = explode(':', $time);
             $hours = substr($aux[0], 0, 2);
             $minutes = $aux[1] ?? substr($time, 2);
-            return $hours + round($minutes / 60, 2);
+            return $hours + round($minutes ?? 0 / 60, 2);
         }
         return "Ocorreu um erro!";
     }
